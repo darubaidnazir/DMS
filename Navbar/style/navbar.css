@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.c-head ul li a:hover {
+  cursor: pointer;
+  border-bottom: 2px solid white;
+}
+/*# sourceMappingURL=navbar.css.map */
