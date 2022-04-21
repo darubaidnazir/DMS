@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.signupLogin {
+  background-color: whitesmoke;
+  padding-top: 2%;
+}
+
+.signup-form {
+  width: 30%;
+  border: 2px solid black;
+  border-radius: 30px;
+  margin: auto;
+  cursor: pointer;
+  -webkit-box-shadow: 5px 5px 20px black;
+          box-shadow: 5px 5px 20px black;
+}
+
+.signup-form #signUp {
+  border-bottom: 2px solid black;
+}
+
+.signup-form #login {
+  opacity: .5;
+}
+
+.signup-form #signupPage label {
+  text-align: center;
+}
+
+.signup-form #signupPage input {
+  border-radius: 20px;
+  text-indent: 20px;
+}
+
+.signup-form #loginPage {
+  display: none;
+}
+
+.signup-form #loginPage label {
+  text-align: center;
+}
+
+.signup-form #loginPage input {
+  border-radius: 20px;
+  text-indent: 20px;
+}
+/*# sourceMappingURL=style.css.map */
