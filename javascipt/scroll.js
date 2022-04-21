@@ -3,17 +3,20 @@
 window.addEventListener('scroll',() =>{
     const scrolled = window.scrollY;
     console.log(scrolled);
-    if(scrolled > 50){
+    if(scrolled > 60){
       $(document).ready(function () {
-        $(".navbar-mainbg").css("top","0px");  
+       $("#carouselExampleDark img").css("opacity","0.1");
+        $(".navbar-mainbg").css("top","0px");
+         
 
       });
       
     }else{
       $(document).ready(function () {
         $(".navbar-mainbg").css("top","auto");  
-
+        $("#carouselExampleDark img").css("opacity","1");
       });
     }
 
 });
+
