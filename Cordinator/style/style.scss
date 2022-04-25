@@ -31,17 +31,35 @@
         }
         #signupPage
         {
-            label
-            {
-               
-                text-align: center;
-               
-            }
+        
             input{
                 border-radius: 20px;
                 text-indent: 20px;
                
+               
             }
+            .nmsg{
+                color: red;
+               
+            }
+            .nhidden {
+                 visibility:hidden;
+            }
+            .pmsg{
+                color: red;
+               
+            }
+            .phidden {
+                 visibility:hidden;
+            }
+            .emsg{
+                color: red;
+               
+            }
+            .ehidden {
+                 visibility:hidden;
+            }
+            
         }
     
     #loginPage
@@ -60,3 +78,5 @@
             }
     }
 }
+
+

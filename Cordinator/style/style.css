@@ -28,13 +28,33 @@
   opacity: .5;
 }
 
-.signup-form #signupPage label {
-  text-align: center;
-}
-
 .signup-form #signupPage input {
   border-radius: 20px;
   text-indent: 20px;
+}
+
+.signup-form #signupPage .nmsg {
+  color: red;
+}
+
+.signup-form #signupPage .nhidden {
+  visibility: hidden;
+}
+
+.signup-form #signupPage .pmsg {
+  color: red;
+}
+
+.signup-form #signupPage .phidden {
+  visibility: hidden;
+}
+
+.signup-form #signupPage .emsg {
+  color: red;
+}
+
+.signup-form #signupPage .ehidden {
+  visibility: hidden;
 }
 
 .signup-form #loginPage {
