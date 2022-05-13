@@ -11,9 +11,7 @@
 
 - Back-end Engineer **Zamin Ahmad Dar**
 
-- Front-end Enginner **Faizan Farooq**
 
-- Front-end Enginner **Uzair**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
