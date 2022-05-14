@@ -18,7 +18,10 @@
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: fit-content;
   }
   
   /* The Close Button */
@@ -38,7 +41,7 @@
   }
   @media only screen and (max-width: 500px) {
     .modal-content {
-      width: 95%;
+      width: 100%;
     }
   }
   
