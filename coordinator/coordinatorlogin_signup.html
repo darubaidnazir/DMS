@@ -40,7 +40,16 @@
         </div>
 
         <button id="login" class="inner_button">Login</button>
-        <div>Need a Account? <a href="#" id="signupmodal">Sign up</a></div>
+        <div class="header">
+          Need a Account?
+          <a
+            class="link1"
+            style="cursor: pointer; text-decoration: none; color: blue"
+            href="#"
+            id="signupmodal"
+            >Register</a
+          >
+        </div>
       </form>
 
       <form id="signupform" class="form">
@@ -99,9 +108,15 @@
           <i class="fas fa-exclamation-circle"></i>
           <small>Error message</small>
         </div>
-        <button class="inner_button">Signup</button>
-        <div class="header">
-          Already Have a Account? <a href="#" id="loginmodal">Login</a>
+        <button class="inner_button">Register</button>
+        <div class="header link1">
+          Already Have a Account?
+          <a
+            style="cursor: pointer; text-decoration: none; color: blue"
+            href="#"
+            id="loginmodal"
+            >Login</a
+          >
         </div>
       </form>
     </div>
@@ -115,7 +130,7 @@
   $(document).ready(function () {
     $("#headermessage").text("Coordinator Login");
     $("#signupmodal").click(function () {
-      $("#headermessage").text("Coordinator Sign up");
+      $("#headermessage").text("Coordinator Registration");
       $("#loginform").css("display", "none");
       $("#signupform").css("display", "block");
     });
