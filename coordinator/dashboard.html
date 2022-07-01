@@ -18,6 +18,9 @@
     #addsettingsection {
       display: none;
     }
+    #addteachersection {
+      display: none;
+    }
     .maindashbutton {
       padding: 10px;
       color: red;
@@ -199,15 +202,33 @@
             </a>
           </li>
 
+          <li>
+            <a href="#0">
+              <svg>
+                <use xlink:href="#users"></use>
+              </svg>
+              <span id="addteacher">Add Teacher</span>
+            </a>
+          </li>
+
           <li class="menu-heading">
             <h3>Settings</h3>
           </li>
+
           <li>
             <a href="#0">
               <svg>
                 <use xlink:href="#settings"></use>
               </svg>
               <span id="addsetting">Settings</span>
+            </a>
+          </li>
+          <li>
+            <a href="#1">
+              <svg>
+                <use xlink:href="#settings"></use>
+              </svg>
+              <span id="addsetting">Logout</span>
             </a>
           </li>
 
@@ -374,6 +395,46 @@
           text-align: center;
         }
       </style>
+      <section class="grid" id="addteachersection">
+        <button class="maindashbutton">Main Dashboard</button>
+        <section>
+          <div>
+            <a class="button btnstudent" href="#"> Add Teacher </a>
+            <main>
+              <table>
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Teacher ID</th>
+                    <th>Teacher Name</th>
+                    <th>Teacher Code</th>
+                    <th>Teacher Dob</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th colspan="3"></th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr>
+                    <td data-title="S.No">1</td>
+                    <td data-title="Teacher Id">1552</td>
+                    <td data-title="Teacher Id">Er. Hesam Akhter</td>
+                    <td data-title="Teacher Enrollment">EMP708</td>
+                    <td data-title="Teacher Dob">01-04-1970</td>
+                    <td class="select">
+                      <a class="button" href="#"> Edit </a>
+                      <a class="button" href="#"> remove </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </main>
+          </div>
+        </section>
+      </section>
       <section class="grid" id="addstudentsection">
         <button class="maindashbutton">Main Dashboard</button>
         <section>
@@ -445,24 +506,35 @@
         $("#addstudentsection").css("display", "none");
         $("#addsettingsection").css("display", "none");
         $("#addbatchsection").css("display", "block");
+        $("#addteachersection").css("display", "none");
       });
       $("#addstudent").click(function () {
         $("#maindashboardsection").css("display", "none");
         $("#addbatchsection").css("display", "none");
         $("#addsettingsection").css("display", "none");
         $("#addstudentsection").css("display", "block");
+        $("#addteachersection").css("display", "none");
+      });
+      $("#addteacher").click(function () {
+        $("#maindashboardsection").css("display", "none");
+        $("#addbatchsection").css("display", "none");
+        $("#addsettingsection").css("display", "none");
+        $("#addstudentsection").css("display", "none");
+        $("#addteachersection").css("display", "block");
       });
       $("#addsetting").click(function () {
         $("#maindashboardsection").css("display", "none");
         $("#addstudentsection").css("display", "none");
         $("#addbatchsection").css("display", "none");
         $("#addsettingsection").css("display", "block");
+        $("#addteachersection").css("display", "none");
       });
       $(".maindashbutton").click(function () {
         $("#maindashboardsection").css("display", "grid");
         $("#addstudentsection").css("display", "none");
         $("#addsettingsection").css("display", "none");
         $("#addbatchsection").css("display", "none");
+        $("#addteachersection").css("display", "none");
       });
     });
   </script>
