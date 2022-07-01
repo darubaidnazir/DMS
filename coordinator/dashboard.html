@@ -7,6 +7,24 @@
     <link rel="stylesheet" href="dash.css" />
     <title>Coordinator Dashboard</title>
   </head>
+  <style>
+    #batchsection {
+      display: none;
+    }
+    #addstudentsection {
+      display: none;
+    }
+    #addsettingsection {
+      display: none;
+    }
+    .maindashbutton {
+      padding: 10px;
+      color: red;
+      margin-bottom: 3px;
+      font-weight: bolder;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+  </style>
   <body>
     <svg style="display: none">
       <symbol id="logo" viewBox="0 0 140 59">
@@ -181,41 +199,10 @@
               <svg>
                 <use xlink:href="#users"></use>
               </svg>
-              <span>Users</span>
+              <span id="addstudent">Add Student</span>
             </a>
           </li>
-          <li>
-            <a href="#0">
-              <svg>
-                <use xlink:href="#trends"></use>
-              </svg>
-              <span>Page Link</span>
-            </a>
-          </li>
-          <li>
-            <a href="#0">
-              <svg>
-                <use xlink:href="#collection"></use>
-              </svg>
-              <span>Page Link</span>
-            </a>
-          </li>
-          <li>
-            <a href="#0">
-              <svg>
-                <use xlink:href="#comments"></use>
-              </svg>
-              <span>Page Link</span>
-            </a>
-          </li>
-          <li>
-            <a href="#0">
-              <svg>
-                <use xlink:href="#appearance"></use>
-              </svg>
-              <span>Page Link</span>
-            </a>
-          </li>
+
           <li class="menu-heading">
             <h3>Settings</h3>
           </li>
@@ -224,25 +211,10 @@
               <svg>
                 <use xlink:href="#settings"></use>
               </svg>
-              <span>Settings</span>
+              <span id="addsetting">Settings</span>
             </a>
           </li>
-          <li>
-            <a href="#0">
-              <svg>
-                <use xlink:href="#options"></use>
-              </svg>
-              <span>link</span>
-            </a>
-          </li>
-          <li>
-            <a href="#0">
-              <svg>
-                <use xlink:href="#charts"></use>
-              </svg>
-              <span>Link</span>
-            </a>
-          </li>
+
           <li>
             <div class="switch">
               <input type="checkbox" id="mode" checked />
@@ -296,7 +268,16 @@
         <article>8</article>
       </section>
       <section class="grid" id="addbatchsection">
+        <button class="maindashbutton">Main Dashboard</button>
         <article>Add Batch Section</article>
+      </section>
+      <section class="grid" id="addstudentsection">
+        <button class="maindashbutton">Main Dashboard</button>
+        <article>Add StudentSection</article>
+      </section>
+      <section class="grid" id="addsettingsection">
+        <button class="maindashbutton">Main Dashboard</button>
+        <article>Add Setting Section</article>
       </section>
       <footer class="page-footer">
         <span>Department Management System North Campus</span>
@@ -312,7 +293,27 @@
     $(document).ready(function () {
       $("#addbatch").click(function () {
         $("#maindashboardsection").css("display", "none");
+        $("#addstudentsection").css("display", "none");
+        $("#addsettingsection").css("display", "none");
         $("#addbatchsection").css("display", "block");
+      });
+      $("#addstudent").click(function () {
+        $("#maindashboardsection").css("display", "none");
+        $("#addbatchsection").css("display", "none");
+        $("#addsettingsection").css("display", "none");
+        $("#addstudentsection").css("display", "block");
+      });
+      $("#addsetting").click(function () {
+        $("#maindashboardsection").css("display", "none");
+        $("#addstudentsection").css("display", "none");
+        $("#addsbatchsection").css("display", "none");
+        $("#addsettingsection").css("display", "block");
+      });
+      $(".maindashbutton").click(function () {
+        $("#maindashboardsection").css("display", "grid");
+        $("#addstudentsection").css("display", "none");
+        $("#addsettingsection").css("display", "none");
+        $("#addbatchsection").css("display", "none");
       });
     });
   </script>
