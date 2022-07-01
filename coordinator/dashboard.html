@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="table.css" />
     <link rel="stylesheet" href="dash.css" />
     <title>Coordinator Dashboard</title>
   </head>
@@ -187,11 +188,6 @@
                 <use xlink:href="#pages"></use>
               </svg>
               <span id="addbatch">Add Batch</span>
-              <style>
-                #addbatchsection {
-                  display: none;
-                }
-              </style>
             </a>
           </li>
           <li>
@@ -269,8 +265,95 @@
       </section>
       <section class="grid" id="addbatchsection">
         <button class="maindashbutton">Main Dashboard</button>
-        <article>Add Batch Section</article>
+        <style></style>
+        <div>
+          <h2>
+            Batches
+            <a class="button" href="#"> Add Batche </a>
+          </h2>
+
+          <main>
+            <table>
+              <thead>
+                <tr>
+                  <th>Batch Year</th>
+                  <th>Branch</th>
+                  <th>Current Semster</th>
+                  <th>Total Student's</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th colspan="3"></th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td data-title="Batch Year">2018</td>
+                  <td data-title="Branch">BTech</td>
+                  <td data-title="Current Semester">Ist</td>
+                  <td data-title="Total Student's">60</td>
+                  <td class="select">
+                    <a class="button" href="#"> Edit </a>
+                    <a class="button" href="#"> Delete </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+        </div>
+        <div>
+          <h2>
+            Branch
+            <a class="button" href="#"> Add Branch </a>
+          </h2>
+
+          <main>
+            <table>
+              <thead>
+                <tr>
+                  <th>Branch Name</th>
+                  <th>Hod/Coordinator</th>
+                  <th>Infomation</th>
+                  <th>Estiblished Year</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th colspan="3"></th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td data-title="Branch Name">MTech</td>
+                  <td data-title="Hod">E. Khalid hussain</td>
+                  <td data-title="Information">Info</td>
+                  <td data-title="year">2022</td>
+                  <td class="select">
+                    <a class="button" href="#"> Edit </a>
+                    <a class="button" href="#"> Delete </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+        </div>
       </section>
+      <style>
+        .grid div {
+          padding: 10px;
+          margin: 5px;
+          box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+            rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+            rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        }
+        .grid div h2 {
+          text-align: center;
+          padding: 10px;
+        }
+      </style>
       <section class="grid" id="addstudentsection">
         <button class="maindashbutton">Main Dashboard</button>
         <article>Add StudentSection</article>
