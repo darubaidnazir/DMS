@@ -33,6 +33,13 @@
     #addactivesemestersection {
       display: none;
     }
+    #addsubjectsection {
+      display: none;
+    }
+    .forms{
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    
+    }
     .maindashbutton {
       padding: 10px;
       color: red;
@@ -179,6 +186,14 @@
               <span id="activesemster" class="menu_button">Active Semster</span>
             </a>
           </li>
+          <li>
+            <a href="#0">
+              <svg>
+                <use xlink:href="#pages"></use>
+              </svg>
+              <span id="addsubject" class="menu_button">Add Subject</span>
+            </a>
+          </li>
 
           <li class="menu-heading">
             <h3>Settings</h3>
@@ -209,16 +224,7 @@
                 <span>Dark</span>
               </label>
             </div>
-            <button
-              class="collapse-btn"
-              aria-expanded="true"
-              aria-label="collapse menu"
-            >
-              <svg aria-hidden="true">
-                <use xlink:href="#collapse"></use>
-              </svg>
-              <span>Collapse</span>
-            </button>
+            
           </li>
         </ul>
       </nav>
@@ -296,9 +302,9 @@
                   <td data-title="Batch Coordinator">Dr. Waseem</td>
                   <td data-title="Current Semester">0</td>
                   <td data-title="Total Student's">60</td>
-                  <td data-title="Status" style="color: Green">un-active</td>
+                  <td data-title="Status" style="color: Green">in-active</td>
                   <td class="select">
-                    <a class="btn btn-primary" href="#"> Open Semster</a>
+                    <a class="btn btn-primary" href="#"> Open Semester</a>
                   </td>
                   <td class="select">
                     <div
@@ -306,9 +312,9 @@
                       role="group"
                       aria-label="Basic mixed styles example"
                     >
-                      <button type="button" class="btn btn-danger">edit</button>
+                      <button type="button" class="btn btn-danger">Edit</button>
                       <button type="button" class="btn btn-warning">
-                        delete
+                        Remove
                       </button>
                       <button
                         type="button"
@@ -317,7 +323,7 @@
                         data-bs-target="#batch-information"
                         ;
                       >
-                        more information
+                        More Information
                       </button>
                     </div>
                   </td>
@@ -367,9 +373,9 @@
                       role="group"
                       aria-label="Basic mixed styles example"
                     >
-                      <button type="button" class="btn btn-danger">edit</button>
+                      <button type="button" class="btn btn-danger">Edit</button>
                       <button type="button" class="btn btn-warning">
-                        delete
+                        Remove
                       </button>
                       <button
                         type="button"
@@ -377,7 +383,7 @@
                         data-bs-toggle="modal"
                         data-bs-target="#branch-information"
                       >
-                        more information
+                        More Information
                       </button>
                     </div>
                   </td>
@@ -422,9 +428,10 @@
       </style>
       <section class="grid" id="addteachersection">
         <button class="maindashbutton menu-button">Main Dashboard</button>
+        <button class="btn btn-warning" data-bs-toggle="modal"
+        data-bs-target="#teacher-to-batch-add">Add teacher</button>
         <section>
           <div>
-            <a class="button btnstudent" href="#"> Add Teacher </a>
             <main>
               <table>
                 <thead>
@@ -456,17 +463,18 @@
                         aria-label="Basic mixed styles example"
                       >
                         <button type="button" class="btn btn-danger">
-                          edit
+                          Edit
                         </button>
                         <button type="button" class="btn btn-warning">
-                          delete
+                          Remove
                         </button>
                         <button
                           type="button"
                           class="btn btn-success clickbutton"
-                          id="teacher-information"
+                          data-bs-toggle="modal"
+                          data-bs-target="#teacher-information"
                         >
-                          more information
+                          More Information
                         </button>
                       </div>
                       <div
@@ -474,10 +482,8 @@
                         role="group"
                         aria-label="Basic mixed styles example"
                       >
-                        <button type="button" class="btn btn-danger">
-                          Assign Subject
-                        </button>
-                        <button type="button" class="btn btn-warning">
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#subject-assigned-to-teacher">
                           Subject assigned
                         </button>
                       </div>
@@ -491,19 +497,25 @@
       </section>
       <section class="grid" id="addstudentsection">
         <button class="maindashbutton menu-button">Main Dashboard</button>
+        <button class="btn btn-warning" data-bs-toggle="modal"
+        data-bs-target="#student-to-batch-add">Add Student</button>
         <section>
           <div>
+            <small class="form-text text-muted">Select the Branch First</small>
             <select>
               <option value="0">Select Branch:</option>
               <option value="1">MTech</option>
               <option value="2">BTech</option>
             </select>
+            <small class="form-text text-muted"
+              >Select the Batch to Show Student's Enrolled</small
+            >
             <select>
               <option value="0">Select Batch:</option>
               <option value="1">2018</option>
               <option value="2">2019</option>
             </select>
-            <a class="button btnstudent" href="#"> Add Student </a>
+
             <main>
               <table>
                 <thead>
@@ -535,17 +547,18 @@
                         aria-label="Basic mixed styles example"
                       >
                         <button type="button" class="btn btn-danger">
-                          edit
+                          Edit
                         </button>
                         <button type="button" class="btn btn-warning">
-                          delete
+                          Remove
                         </button>
                         <button
                           type="button"
                           class="btn btn-success clickbutton"
-                          id="student-information"
+                          data-bs-toggle="modal"
+                          data-bs-target="#student-information"
                         >
-                          more information
+                          More Information
                         </button>
                       </div>
                     </td>
@@ -559,7 +572,7 @@
       <section class="grid" id="addactivesemestersection">
         <button class="maindashbutton">Main Dashboard</button>
         <div>
-          <h2>Active Semster</h2>
+          <h2>Active Semester</h2>
 
           <main>
             <table>
@@ -567,7 +580,7 @@
                 <tr>
                   <th>Batch Year</th>
                   <th>Branch Name</th>
-                  <th>Current Semster</th>
+                  <th>Current Semester</th>
                   <th>Total Student's</th>
                   <th>Starting Date</th>
                   <th>Closing Date</th>
@@ -594,14 +607,11 @@
                       role="group"
                       aria-label="Basic mixed styles example"
                     >
-                      <button type="button" class="btn btn-danger">
-                        Add Subject's
-                      </button>
-
                       <button
                         type="button"
                         class="btn btn-success clickbutton"
-                        id="activesemester-information"
+                        data-bs-toggle="modal"
+                        data-bs-target="#active-information-box"
                       >
                         More Information
                       </button>
@@ -612,6 +622,104 @@
             </table>
           </main>
         </div>
+      </section>
+      <section class="grid" id="addsubjectsection">
+        <button class="maindashbutton menu-button">Main Dashboard</button>
+        <button class="btn btn-warning"   data-bs-toggle="modal"
+        data-bs-target="#button-subject-information" >Add Subject to a Semester</button>
+        <section>
+          <div>
+            <small class="form-text text-muted">Select the Branch First</small>
+            <select>
+              <option value="0">Select Branch:</option>
+              <option value="1">MTech</option>
+              <option value="2">BTech</option>
+            </select>
+            <small class="form-text text-muted">Select the Batch</small>
+            <select>
+              <option value="0">Select Batch:</option>
+              <option value="1">2018</option>
+              <option value="2">2019</option>
+            </select>
+            <small class="form-text text-muted"
+              >Select the Semester No to View Subjet's</small
+            >
+            <select>
+              <option value="0">Select Semester No:</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+
+            <main>
+              <table>
+                <thead ><tr ><span style="color:green;"> Selected Semester: Mtech / 2018 / 1-Semester </span></tr></thead>
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Subject Id</th>
+                    <th>Subject Name</th>
+                    <th>Subject Code</th>
+                    <th>Action</th>
+                    <th>Assign Subject</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th colspan="3"></th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr>
+                    <td data-title="S.No">1</td>
+                    <td data-title="Subejct Id">1010010</td>
+                    <td data-title="Subject Name">DataBase</td>
+                    <td data-title="Subject Code">CSE-1717</td>
+
+                    <td class="select">
+                      <div
+                        class="btn-group"
+                        role="group"
+                        aria-label="Basic mixed styles example"
+                      >
+                        <button type="button" class="btn btn-danger">
+                          Edit
+                        </button>
+                        <button type="button" class="btn btn-warning">
+                          Remove
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-success clickbutton"
+                          data-bs-toggle="modal"
+                          data-bs-target="#subject-information"
+                        >
+                          More Information
+                        </button>
+                      </div>
+                      <td class="select">
+                        <div
+                          class="btn-group"
+                          role="group"
+                          aria-label="Basic mixed styles example"
+                        >
+                          
+                          <button
+                            type="button"
+                            class="btn btn-success clickbutton"
+                            data-bs-toggle="modal"
+                            data-bs-target="#assign-teacher"
+                          >
+                            Assign Teacher
+                          </button>
+                        </div>
+                      </td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </main>
+          </div>
+        </section>
       </section>
       <section class="grid" id="addsettingsection">
         <button class="maindashbutton menu-button">Main Dashboard</button>
@@ -725,6 +833,18 @@
                 <small class="form-text text-muted">
                   Enter a valid branch name
                 </small>
+                <div class="form-group">
+                  <lable>Enter Total Semester in the Branch</lable>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="branch-name"
+                    placeholder="eg: 8"
+                  />
+                </div>
+                <small class="form-text text-muted">
+                  Enter a valid Semester Number
+                </small>
 
                 <div class="form-group pt-3">
                   <button class="btn btn-primary">Add Branch</button>
@@ -819,6 +939,483 @@
       </div>
     </div>
     <!-- Branch  informationModal End-->
+
+    <!-- Student Information Modal -->
+    <div
+      class="modal fade"
+      id="student-information"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Student Information
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Student  informationModal End-->
+    <!-- Teacher Information Modal -->
+    <div
+      class="modal fade"
+      id="teacher-information"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Teacher Information
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Teacher  informationModal End-->
+     <!-- Subject Information Modal -->
+     <div
+     class="modal fade"
+     id="subject-information"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true"
+   >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">
+             Subject Information
+           </h5>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"
+           ></button>
+         </div>
+         <div class="modal-body"></div>
+
+         <div class="modal-footer">
+           <button
+             type="button"
+             class="btn btn-secondary"
+             data-bs-dismiss="modal"
+           >
+             Close
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
+   <!-- Subejct  informationModal End-->
+   <!-- Subject assigned to teacherInformation Modal -->
+   <div
+   class="modal fade"
+   id="subject-assigned-to-teacher"
+   tabindex="-1"
+   aria-labelledby="exampleModalLabel"
+   aria-hidden="true"
+ >
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">
+           Subject Assigned to Teacher
+         </h5>
+         <button
+           type="button"
+           class="btn-close"
+           data-bs-dismiss="modal"
+           aria-label="Close"
+         ></button>
+       </div>
+       <div class="modal-body"></div>
+
+       <div class="modal-footer">
+         <button
+           type="button"
+           class="btn btn-secondary"
+           data-bs-dismiss="modal"
+         >
+           Close
+         </button>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Subejct assigned to teacher informationModal End-->
+ <!-- Active Semester Information Modal -->
+ <div
+ class="modal fade"
+ id="active-information-box"
+ tabindex="-1"
+ aria-labelledby="exampleModalLabel"
+ aria-hidden="true"
+>
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">
+        Active Semester Information
+       </h5>
+       <button
+         type="button"
+         class="btn-close"
+         data-bs-dismiss="modal"
+         aria-label="Close"
+       ></button>
+     </div>
+     <div class="modal-body"></div>
+
+     <div class="modal-footer">
+       <button
+         type="button"
+         class="btn btn-secondary"
+         data-bs-dismiss="modal"
+       >
+         Close
+       </button>
+     </div>
+   </div>
+ </div>
+</div>
+<!-- Active Semester  informationModal End-->
+    <!-- Assign teacher Information Modal -->
+    <div
+      class="modal fade"
+      id="assign-teacher"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Assign Subject to Teacher
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Assign Teacher  informationModal End-->
+     <!-- Add Subject  Information Modal -->
+     <div
+     class="modal fade"
+     id="button-subject-information"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true"
+   >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">
+             Add Subejct's to Semester
+           </h5>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"
+           ></button>
+         </div>
+         <div class="modal-body">
+
+          <div class="row py-5 m-3 forms" id="form">
+            <div class="col-md-10">
+        <div class="form-group mt-2">
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option selected>Select a Branch</option>
+                        <option value="1">Mtech</option>
+                      </select>
+                    </div>
+                     <div class="form-group mt-2">
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option selected>Select a Batch</option>
+                        <option value="1">2018</option>
+                      </select>
+                    </div>
+                     <div class="form-group mt-2">
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option selected>Select a Semester</option>
+                        <option value="1">1</option>
+                      </select>
+                    </div>
+    
+    
+        
+       <div class="form-group mt-2" >
+        <lable>Enter Subject Name</lable>
+        <input type="text" class="form-control" id="enter-subject-name" placeholder="eg: Database">
+    </div>
+     <small class="form-text text-muted mt-1" >
+        Enter a valid Subject Name
+     </small>
+        <div class="form-group mt-2" >
+        <lable>Enter Subject Code</lable>
+        <input type="text" class="form-control" id="enter-subject-code" placeholder="eg: CSE-1717">
+    </div>
+     <small class="form-text text-muted mt-1">
+        Enter a valid Subject Code
+     </small>
+    
+    
+    
+    
+        <div class="form-group pt-3">
+        <button class="btn btn-primary">Add Subject</button>
+    </div>
+        
+    </div>
+    
+    </div>
+    
+         </div>
+
+         <div class="modal-footer">
+           <button
+             type="button"
+             class="btn btn-secondary"
+             data-bs-dismiss="modal"
+           >
+             Close
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
+   <!-- Add Subject  informationModal End-->
+    <!-- Add Student Information Modal -->
+    <div
+      class="modal fade"
+      id="student-to-batch-add"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Add Student 
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row py-5 m-3 forms" id="form">
+              <div class="col-md-10">
+          <div class="form-group mt-2">
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                        >
+                          <option selected>Select a Branch</option>
+                          <option value="1">Mtech</option>
+                        </select>
+                      </div>
+                       <div class="form-group mt-2">
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                        >
+                          <option selected>Select a Batch</option>
+                          <option value="1">2018</option>
+                        </select>
+                      </div>
+          <div class="form-group mt-2" >
+          <lable>Enter Email of Student</lable>
+          <input type="email" class="form-control" id="enter-student-email" placeholder="eg: example@gmail.com">
+          </div>
+          <small class="form-text text-muted mt-1" >
+          Enter a valid Email
+          </small>
+          <div class="form-group mt-2" >
+          <lable>Enter Student Date of Birth</lable>
+          <input type="text" class="form-control" id="enter-subject-code" placeholder="eg: 01-04-2000">
+      </div>
+       <small class="form-text text-muted mt-1">
+          Enter a valid Dob
+       </small>
+      
+      
+      
+      
+          <div class="form-group pt-3">
+          <button class="btn btn-primary">Add Student</button>
+      </div>
+          
+      </div>
+      
+      </div>
+      
+
+
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Add Student  informationModal End-->
+      <!-- Add teacher Information Modal -->
+      <div
+      class="modal fade"
+      id="teacher-to-batch-add"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Add teacher 
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row py-5 m-3 forms" id="form">
+              <div class="col-md-10">
+          
+          <div class="form-group mt-2" >
+          <lable>Enter Username of Teacher</lable>
+          <input type="email" class="form-control" id="enter-teacher-username" placeholder="eg: waseembakshi121">
+          </div>
+          <small class="form-text text-muted mt-1" >
+          Enter a valid username
+          </small>
+          <div class="form-group mt-2" >
+          <lable>Enter Employee ID of Teacher</lable>
+          <input type="text" class="form-control" id="enter-emp-id" placeholder="eg: Emp-121">
+      </div>
+       <small class="form-text text-muted mt-1">
+          Enter a valid Employee ID
+       </small>
+       <div class="form-group mt-2" >
+        <lable>Enter Position of the Teacher</lable>
+        <input type="text" class="form-control" id="enter-emp-id" placeholder="eg: Assistant Professor / Contracual Employee">
+    </div>
+    <div class="form-group mt-2" >
+      <lable>Enter Phone Number of the Teacher</lable>
+      <input type="text" class="form-control" id="enter-phonenumber" placeholder="eg: 9622922604">
+  </div>
+     
+  <small class="form-text text-muted mt-1">
+    Enter a valid Phone Number
+ </small>
+      
+      
+      
+          <div class="form-group pt-3">
+          <button class="btn btn-primary">Add Teacher</button>
+      </div>
+          
+      </div>
+      
+      </div>
+      
+
+
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Add Student  informationModal End-->
   </body>
   <script src="dash.js"></script>
   <script
@@ -833,6 +1430,7 @@
       myArray[2] = "addbatchsection";
       myArray[3] = "addteachersection";
       myArray[4] = "addactivesemestersection";
+      myArray[5] = "addsubjectsection";
       $(".menu_button").click(function () {
         $("#maindashboardsection").css("display", "none");
         var getId = this.id;
@@ -847,6 +1445,8 @@
           getId = "addactivesemestersection";
         } else if (getId == "addsetting") {
           getId = "addsettingsection";
+        } else if (getId == "addsubject") {
+          getId = "addsubjectsection";
         }
 
         for (var i = 0; i < myArray.length; i++) {
