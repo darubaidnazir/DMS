@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS only -->
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,6 +14,7 @@
     />
     <link rel="stylesheet" href="table.css" />
     <link rel="stylesheet" href="dash.css" />
+
     <title>Coordinator Dashboard</title>
   </head>
   <style>
@@ -149,7 +151,7 @@
               <svg>
                 <use xlink:href="#pages"></use>
               </svg>
-              <span id="addbatch">Add Batch</span>
+              <span id="addbatch" class="menu_button">Add Batch</span>
             </a>
           </li>
           <li>
@@ -157,7 +159,7 @@
               <svg>
                 <use xlink:href="#users"></use>
               </svg>
-              <span id="addstudent">Add Student</span>
+              <span id="addstudent" class="menu_button">Add Student</span>
             </a>
           </li>
 
@@ -166,7 +168,7 @@
               <svg>
                 <use xlink:href="#users"></use>
               </svg>
-              <span id="addteacher">Add Teacher</span>
+              <span id="addteacher" class="menu_button">Add Teacher</span>
             </a>
           </li>
           <li>
@@ -174,7 +176,7 @@
               <svg>
                 <use xlink:href="#pages"></use>
               </svg>
-              <span id="activesemster">Active Semster</span>
+              <span id="activesemster" class="menu_button">Active Semster</span>
             </a>
           </li>
 
@@ -187,7 +189,7 @@
               <svg>
                 <use xlink:href="#settings"></use>
               </svg>
-              <span id="addsetting">Settings</span>
+              <span id="addsetting" class="menu_button">Settings</span>
             </a>
           </li>
           <li>
@@ -252,12 +254,20 @@
         <article>8</article>
       </section>
       <section class="grid" id="addbatchsection">
-        <button class="maindashbutton">Main Dashboard</button>
+        <button class="maindashbutton menu-button">Main Dashboard</button>
         <style></style>
         <div>
           <h2>
             Batch
-            <a class="btn btn-light" href="#"> Add Batch</a>
+
+            <button
+              type="button"
+              class="btn btn-light"
+              data-bs-toggle="modal"
+              data-bs-target="#batch-year-modal"
+            >
+              Add Batch
+            </button>
           </h2>
 
           <main>
@@ -303,7 +313,8 @@
                       <button
                         type="button"
                         class="btn btn-success clickbutton"
-                        id="batch-information"
+                        data-bs-toggle="modal"
+                        data-bs-target="#batch-information"
                         ;
                       >
                         more information
@@ -318,7 +329,14 @@
         <div>
           <h2>
             Branch
-            <a class="btn btn-light" href="#"> Add Branch </a>
+            <button
+              type="button"
+              class="btn btn-light"
+              data-bs-toggle="modal"
+              data-bs-target="#add-branch-modal"
+            >
+              Add Branch
+            </button>
           </h2>
 
           <main>
@@ -356,7 +374,8 @@
                       <button
                         type="button"
                         class="btn btn-success clickbutton"
-                        id="branch-information"
+                        data-bs-toggle="modal"
+                        data-bs-target="#branch-information"
                       >
                         more information
                       </button>
@@ -402,7 +421,7 @@
         }
       </style>
       <section class="grid" id="addteachersection">
-        <button class="maindashbutton">Main Dashboard</button>
+        <button class="maindashbutton menu-button">Main Dashboard</button>
         <section>
           <div>
             <a class="button btnstudent" href="#"> Add Teacher </a>
@@ -471,7 +490,7 @@
         </section>
       </section>
       <section class="grid" id="addstudentsection">
-        <button class="maindashbutton">Main Dashboard</button>
+        <button class="maindashbutton menu-button">Main Dashboard</button>
         <section>
           <div>
             <select>
@@ -595,13 +614,211 @@
         </div>
       </section>
       <section class="grid" id="addsettingsection">
-        <button class="maindashbutton">Main Dashboard</button>
+        <button class="maindashbutton menu-button">Main Dashboard</button>
         Add SettingSection
       </section>
       <footer class="page-footer">
         <span>Department Management System North Campus</span>
       </footer>
     </section>
+
+    <!-- Button trigger modal -->
+
+    <!-- Batch Modal -->
+    <div
+      class="modal fade"
+      id="batch-year-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Add Batch Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row py-5 m-3 forms" id="form">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <lable>Enter Batch Year</lable>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="batch-year"
+                    placeholder="eg: 2018"
+                  />
+                </div>
+                <small class="form-text text-muted"> Enter a Valid Year </small>
+
+                <div class="form-group mt-5">
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected>Select a Branch</option>
+                    <option value="1">Mtech</option>
+                  </select>
+                </div>
+
+                <div class="form-group pt-3">
+                  <button class="btn btn-primary">Add Batch</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Batch Modal End-->
+
+    <!-- Branch Modal -->
+    <div
+      class="modal fade"
+      id="add-branch-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Add Branch Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row py-5 m-3 forms" id="form">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <lable>Enter Branch name</lable>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="branch-name"
+                    placeholder="eg: MTech"
+                  />
+                </div>
+                <small class="form-text text-muted">
+                  Enter a valid branch name
+                </small>
+
+                <div class="form-group pt-3">
+                  <button class="btn btn-primary">Add Branch</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Branch Modal End-->
+
+    <!-- Batch Information Modal -->
+    <div
+      class="modal fade"
+      id="batch-information"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Batch Information
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Batch information Modal End-->
+
+    <!-- Branch Information Modal -->
+    <div
+      class="modal fade"
+      id="branch-information"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Branch Information
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Branch  informationModal End-->
   </body>
   <script src="dash.js"></script>
   <script
@@ -610,59 +827,51 @@
   ></script>
   <script>
     $(document).ready(function () {
-      $("#addbatch").click(function () {
+      var myArray = new Array();
+      myArray[0] = "addstudentsection";
+      myArray[1] = "addsettingsection";
+      myArray[2] = "addbatchsection";
+      myArray[3] = "addteachersection";
+      myArray[4] = "addactivesemestersection";
+      $(".menu_button").click(function () {
         $("#maindashboardsection").css("display", "none");
-        $("#addstudentsection").css("display", "none");
-        $("#addsettingsection").css("display", "none");
-        $("#addbatchsection").css("display", "block");
-        $("#addteachersection").css("display", "none");
-        $("#addactivesemestersection").css("display", "none");
-      });
-      $("#addstudent").click(function () {
-        $("#maindashboardsection").css("display", "none");
-        $("#addbatchsection").css("display", "none");
-        $("#addsettingsection").css("display", "none");
-        $("#addstudentsection").css("display", "block");
-        $("#addteachersection").css("display", "none");
-        $("#addactivesemestersection").css("display", "none");
-      });
-      $("#addteacher").click(function () {
-        $("#maindashboardsection").css("display", "none");
-        $("#addbatchsection").css("display", "none");
-        $("#addsettingsection").css("display", "none");
-        $("#addstudentsection").css("display", "none");
-        $("#addactivesemestersection").css("display", "none");
-        $("#addteachersection").css("display", "block");
-      });
-      $("#addsetting").click(function () {
-        $("#maindashboardsection").css("display", "none");
-        $("#addstudentsection").css("display", "none");
-        $("#addbatchsection").css("display", "none");
-        $("#addsettingsection").css("display", "block");
-        $("#addteachersection").css("display", "none");
-        $("#addactivesemestersection").css("display", "none");
+        var getId = this.id;
+        alert(getId);
+        if (getId == "addbatch") {
+          getId = "addbatchsection";
+        } else if (getId == "addstudent") {
+          getId = "addstudentsection";
+        } else if (getId == "addteacher") {
+          getId = "addteachersection";
+        } else if (getId == "activesemster") {
+          getId = "addactivesemestersection";
+        } else if (getId == "addsetting") {
+          getId = "addsettingsection";
+        }
+
+        for (var i = 0; i < myArray.length; i++) {
+          if (myArray[i] == getId) {
+            continue;
+          } else {
+            $("#" + myArray[i]).css("display", "none");
+          }
+        }
+        $("#" + getId).css("display", "block");
       });
       $(".maindashbutton").click(function () {
+        alert("main");
+        for (var i = 0; i < myArray.length; i++) {
+          $("#" + myArray[i]).css("display", "none");
+        }
         $("#maindashboardsection").css("display", "grid");
-        $("#addstudentsection").css("display", "none");
-        $("#addsettingsection").css("display", "none");
-        $("#addbatchsection").css("display", "none");
-        $("#addteachersection").css("display", "none");
-        $("#addactivesemestersection").css("display", "none");
-      });
-      $("#activesemster").click(function () {
-        $("#maindashboardsection").css("display", "none");
-        $("#addstudentsection").css("display", "none");
-        $("#addbatchsection").css("display", "none");
-        $("#addsettingsection").css("display", "none");
-        $("#addteachersection").css("display", "none");
-        $("#addactivesemestersection").css("display", "block");
-      });
-
-      $(".clickbutton").click(function () {
-        var data = this.id;
-        alert(data);
       });
     });
   </script>
+
+  <!-- JavaScript Bundle with Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"
+  ></script>
 </html>
