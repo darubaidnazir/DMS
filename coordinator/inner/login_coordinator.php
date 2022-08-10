@@ -3,31 +3,29 @@
  class login extends db_connection{
       protected $email;
       protected $password;
-    function __construct($email , $password){
+      function __construct($email , $password){
           parent::__construct(); 
           $this->email = trim(htmlspecialchars($email));
           $this->password = trim(htmlspecialchars($password));
           if($this->validate()){
-           if($this->checkEmailExists()){ 
-         //  echo 3;
-           
-               
-           }else{
-            echo 1;
-            // email or password wrong
-           }
+            if($this->checkEmailExists()){ 
+               //  echo 3;    
+            }else{
+              echo 1;
+              // email or password wrong
+             }
           }else{
             echo 0;
             // input validate
-          }
-    }
-    private function validate(){
-      if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-        return false;
+           }
       }
+      private function validate(){
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+          return false;
+        }  
         return true;
-    }
-    private function checkEmailExists(){
+      }
+      private function checkEmailExists(){
         $sql = $this->conn->prepare("SELECT * FROM coordinator WHERE email = ?");
         $sql->bindParam(1,$this->email);
         $sql->execute();
@@ -43,19 +41,15 @@
                 exit();
                 
                 return true;
-             }else{
+              }else{
               
                 return false;
-             }
-             
-
+              }
         }else{
             return false;
         }
 
-        
-    }
-
+      }
  }
  
  //if (isset($_POST['emailogin']) && isset($_POST['connection'])){
