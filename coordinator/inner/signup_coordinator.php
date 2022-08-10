@@ -43,16 +43,12 @@ class registations extends db_connection{
         }if (!preg_match('/^[0-9]*$/', $this->phonenumber)) {
           return false;
          } 
-         if(strlen($this->phonenumber) > 10 && strlen($this->phonenumber) < 10 ){
+         if(strlen($this->phonenumber) != 10 ){
           return false;
          }
-         if (strlen($this->password) < 8 && strlen($this->confirmpassword) < 8){
+         if (strlen($this->password) < 8 || $this->password !== $this->confirmpassword){
           return false;
          }
-         if($this->password !== $this->confirmpassword){
-          return false;
-         }
-       
         return true;
       }
       private function checkEmail(){
