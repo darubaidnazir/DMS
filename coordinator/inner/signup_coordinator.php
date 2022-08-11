@@ -1,6 +1,6 @@
 <?php
 include_once('db_connection.php');
-class registrations extends db_connection{
+class registations extends db_connection{
        protected $email;
        protected $username;
        protected $phonenumber;
@@ -78,7 +78,7 @@ class registrations extends db_connection{
            echo 3;
         }
         else{
-          echo "User registations failed";
+         // echo "User registations failed";
           echo 0;
         }
         }catch(PDOException $obj1){

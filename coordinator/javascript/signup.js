@@ -102,10 +102,11 @@ form.addEventListener("submit", (event) => {
         success: function (data) {
           if (data == 0) {
             swal("ohoho!", "Something went wrong! try again later", "error");
-
+            $('#register').html("Register");
 
           } else if (data == 1) {
             swal("ohoho!", "Please enter a valid information", "warning");
+            $('#register').html("Register");
 
           } else if (data == 2) {
             swal("ohoho!", "Email address already in use", "error");
@@ -116,8 +117,10 @@ form.addEventListener("submit", (event) => {
             $('#register').html("Register");
           } else {
             swal("ohoho!", "Something went wrong! try again later", "error");
+            $('#register').html("Register");
           }
         }
+
 
 
 

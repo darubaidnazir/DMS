@@ -24,6 +24,10 @@
     }
 
     private function checkValid(){
+        if($this->get_Semester > 13 || !is_numeric($this->get_Semester) || !preg_match("/^[a-zA-Z-,-.' ]*$/", $this->get_Branch) ){
+            return false;
+           }
+
      return true;
     }
     private function sendData(){

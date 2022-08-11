@@ -24,6 +24,10 @@
     }
 
     private function checkValid(){
+       if(strlen($this->get_Year) != 4  || !is_numeric($this->get_Year) ){
+        return false;
+       }
+
      return true;
     }
     private function sendData(){
