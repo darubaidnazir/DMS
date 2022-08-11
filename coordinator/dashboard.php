@@ -63,15 +63,42 @@ require_once('dbcon.php');
 }
 
 .maindashbutton {
-    padding: 10px;
+     padding: 10px;
     color: red;
     margin-bottom: 3px;
     font-weight: bolder;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+.loading span {
+  display: inline-block;
+  vertical-align: middle;
+  width: .6em;
+  height: .6em;
+  margin: .19em;
+  background: #007DB6;
+  border-radius: .6em;
+  animation: loading 1s infinite alternate;
+}
+#cover {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #141526;
+  z-index: 9999;
+  font-size: 65px;
+  text-align: center;
+  padding-top: 200px;
+  color: #fff;
+  font-family:tahoma;
+}
+
+
 </style>
 
 <body>
+<div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!While we are Fetching Data From the Server...</div>
     <?php
        require_once("svg.php");
        ?>
@@ -1222,7 +1249,10 @@ function loadDataStudent(){
 
     });
 }
-  
+$(window).on('load', function () {
+$("#cover").fadeOut(5000);
+});
+
 </script>
 <script src="javascript/send.js"></script>
 <script src="javascript/dashboard.js"></script>
