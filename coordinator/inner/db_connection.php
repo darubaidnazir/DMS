@@ -28,7 +28,7 @@ class db_connection{
      }
 }
 
-//if(!isset($_POST['connection'])){
-//header("location:home.php");
-//}
+if(!isset($_POST['connection'])){
+header("location:home.php");
+}
 ?>

@@ -97,12 +97,12 @@ class registations extends db_connection{
 
     }
 
- // if (isset($_POST['email_']) && isset($_POST['connection'])){
+  if (isset($_POST['email_']) && isset($_POST['connection'])){
   $run = new registations($_POST['user_name'],$_POST["email_"],$_POST["phone_number"],$_POST["depart_ment"],$_POST["pass_word"],$_POST["password_2"]); 
   $run->closeConnection();
- // }else{
-  //  header("Location:home.php");
-  //}
+  }else{
+    header("Location:../coordinatorlogin_signup.html");
+  }
 
 
 

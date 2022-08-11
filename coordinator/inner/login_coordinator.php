@@ -37,7 +37,7 @@
              if(password_verify($this->password,$pass)){
                 session_start();
                 $_SESSION['active'] = true;
-                $_SESSION['userid'] = $result['id'];
+                $_SESSION['userid'] = $result['coordinatiorid'];
                 $_SESSION['username'] = $result['fullname'];
                echo 3;
                 exit();
@@ -58,12 +58,12 @@
 
  }
  
- //if (isset($_POST['emailogin']) && isset($_POST['connection'])){
+ if (isset($_POST['emaillogin']) && isset($_POST['connection'])){
     $run = new login($_POST['emaillogin'],$_POST['passwordlogin']);
    
     $run->closeConnection();
-   //}else{
-    // header("Location:home.php");
- //  }
+   }else{
+     header("Location:../coordinatorlogin_signup.html");
+  }
   
 ?>
