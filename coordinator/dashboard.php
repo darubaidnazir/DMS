@@ -11,7 +11,7 @@ require_once('dbcon.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS only -->
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
     <link rel="stylesheet" href="table.css" />
@@ -63,45 +63,46 @@ require_once('dbcon.php');
 }
 
 .maindashbutton {
-     padding: 10px;
+    padding: 10px;
     color: red;
     margin-bottom: 3px;
     font-weight: bolder;
-   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
 .loading span {
-  display: inline-block;
-  vertical-align: middle;
-  width: .6em;
-  height: .6em;
-  margin: .19em;
-  background: #007DB6;
-  border-radius: .6em;
-  animation: loading 1s infinite alternate;
+    display: inline-block;
+    vertical-align: middle;
+    width: .6em;
+    height: .6em;
+    margin: .19em;
+    background: #007DB6;
+    border-radius: .6em;
+    animation: loading 1s infinite alternate;
 }
+
 #cover {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background: #141526;
-  z-index: 9999;
-  font-size: 65px;
-  text-align: center;
-  padding-top: 200px;
-  color: #fff;
-  font-family:tahoma;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #141526;
+    z-index: 9999;
+    font-size: 65px;
+    text-align: center;
+    padding-top: 200px;
+    color: #fff;
+    font-family: tahoma;
 }
-
-
 </style>
 
 <body>
-<div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!While we are Fetching Data From the Server...</div>
+    <div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!While we are Fetching
+        Data From the Server...</div>
     <?php
-       require_once("svg.php");
-       ?>
+    require_once("svg.php");
+    ?>
     <header class="page-header">
         <nav>
             <a href="#0" aria-label="forecastr logo" class="logo"> </a>
@@ -195,9 +196,9 @@ require_once('dbcon.php');
         <section class="search-and-user">
 
             <div class="admin-profile">
-                <span class="greeting">Hello <?php  
-               echo $_SESSION['userid'];
-                echo $_SESSION['username'];  ?></span>
+                <span class="greeting">Hello <?php
+                                                echo $_SESSION['userid'];
+                                                echo $_SESSION['username'];  ?></span>
                 <div class="notifications">
 
                 </div>
@@ -234,7 +235,7 @@ require_once('dbcon.php');
                             <tr>
                                 <th>Batch Year</th>
                                 <th>Branch Name</th>
-                                
+
                                 <th>Current Semster</th>
                                 <th>Total Student's</th>
                                 <th>Status</th>
@@ -249,17 +250,17 @@ require_once('dbcon.php');
                         </tfoot>
                         <tbody>
                             <?php
-                     $sql = $conn->prepare("SELECT * FROM `batch` INNER JOIN `branch` ON batch.branchid = branch.branchid WHERE branch.coordinatorid = ? ");
-                     $sql->bindParam(1,$coordinatorid);
-                     $sql->execute();
-                     if ($sql->rowCount() > 0){
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC)){
-                    ?>
+                            $sql = $conn->prepare("SELECT * FROM `batch` INNER JOIN `branch` ON batch.branchid = branch.branchid WHERE branch.coordinatorid = ? ");
+                            $sql->bindParam(1, $coordinatorid);
+                            $sql->execute();
+                            if ($sql->rowCount() > 0) {
+                                while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
 
                             <tr>
                                 <td data-title="Batch Year"><?php echo $row['batchyear']; ?></td>
                                 <td data-title="Branch"><?php echo $row['branchname']; ?></td>
-                                
+
                                 <td data-title="Current Semester"><?php echo $row['currentsemester']; ?></td>
                                 <td data-title="Total Student's"><?php echo $row['batchyear']; ?></td>
                                 <td data-title="Status" style="color: Green">in-active</td>
@@ -269,24 +270,25 @@ require_once('dbcon.php');
                                 <td class="select">
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                         <button type="button" class="btn btn-danger">Edit</button>
-                                        <button type="button" class="btn btn-warning" id="deleteBatch" data-id="<?php echo $row['batchid'];?>">
+                                        <button type="button" class="btn btn-warning" id="deleteBatch"
+                                            data-id="<?php echo $row['batchid']; ?>">
                                             Remove
                                         </button>
-                                        
+
                                     </div>
                                 </td>
                             </tr>
 
                             <?php
-                        }
-                     }else{
-                        echo '<tr>
+                                }
+                            } else {
+                                echo '<tr>
                         <td data-title="Branch Id">No Batch Found   </td>
             </tr>';
-                     }
-                    
-                    
-                    ?>
+                            }
+
+
+                            ?>
                         </tbody>
                     </table>
                 </main>
@@ -319,12 +321,12 @@ require_once('dbcon.php');
                         <tbody>
 
                             <?php
-                     $sql = $conn->prepare("SELECT * FROM branch WHERE coordinatorid = ?");
-                     $sql->bindParam(1,$coordinatorid);
-                     $sql->execute();
-                     if ($sql->rowCount() > 0){
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC)){
-                    ?>
+                            $sql = $conn->prepare("SELECT * FROM branch WHERE coordinatorid = ?");
+                            $sql->bindParam(1, $coordinatorid);
+                            $sql->execute();
+                            if ($sql->rowCount() > 0) {
+                                while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
                             <tr>
                                 <td data-title="Branch ID"><?php echo $row['branchid']; ?> </td>
                                 <td data-title="Branch Name">
@@ -338,22 +340,23 @@ require_once('dbcon.php');
                                 <td class="select">
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                         <button type="button" class="btn btn-danger">Edit</button>
-                                        <button type="button" class="btn btn-warning" id="deleteBranch" data-id="<?php echo $row['branchid'];?>">
+                                        <button type="button" class="btn btn-warning" id="deleteBranch"
+                                            data-id="<?php echo $row['branchid']; ?>">
                                             Delete
                                         </button>
-                                        
+
                                     </div>
                                 </td>
 
                             </tr>
                             <?php
-                        }
-                     }else{
-                    echo '<tr>
+                                }
+                            } else {
+                                echo '<tr>
                 <td data-title="Branch Id">No Branch Found  </td>
                  </tr>';
                             }
- ?>
+                            ?>
 
                         </tbody>
                     </table>
@@ -378,9 +381,10 @@ require_once('dbcon.php');
             font-size: 20px;
             width: 100%;
             margin: 5px;
-            background-color: black;
-            color: white;
-            padding: 10px;
+            background-color: white;
+            color: black;
+            font-weight: bold;
+
         }
 
         select:hover {
@@ -448,7 +452,18 @@ require_once('dbcon.php');
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+
+                                    <td colspan="6">
+                                        <div id="pagination" style="text-align:center;">
+                                            <a class="btn btn-secondary" id="1" href="">1</a>
+                                            <a class="btn btn-secondary" id="2" href="">2</a>
+
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
+
                         </table>
                     </main>
                 </div>
@@ -461,25 +476,25 @@ require_once('dbcon.php');
             <section>
                 <div>
                     <small class="form-text text-muted">Select the Branch First</small>
-                     <select class="selectBranchstudent">
-                     <option selected value="0">Select a Branch</option>
+                    <select class="selectBranchstudent">
+                        <option selected value="0">Select a Branch</option>
                         <?php
-                             $sql = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
-                             $sql->bindParam(1,$coordinatorid);
-                             $sql->execute();
-                             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-                             foreach($result as $row){
+                        $sql = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
+                        $sql->bindParam(1, $coordinatorid);
+                        $sql->execute();
+                        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result as $row) {
                         ?>
 
                         <option value="<?php echo $row['branchid']; ?>"><?php echo $row['branchname']; ?></option>
                         <?php
-                             }
+                        }
                         ?>
                     </select>
                     <small class="form-text text-muted">Select the Batch to Show Student's Enrolled</small>
                     <select class="addStudentData_batch_Select">
-                    <option selected value="0">Select a Batch</option>
-                    
+                        <option selected value="0">Select a Batch</option>
+
                     </select>
 
                     <main>
@@ -487,7 +502,7 @@ require_once('dbcon.php');
                             <thead>
                                 <tr>
                                     <th>S.No</th>
-                                    <th>Student ID</th>
+                                    <th>Student Email</th>
                                     <th>Student Name</th>
                                     <th>Student Enrollment</th>
                                     <th>Student Dob</th>
@@ -500,7 +515,7 @@ require_once('dbcon.php');
                                 </tr>
                             </tfoot>
                             <tbody id="addStudentData">
-                                
+
                             </tbody>
                         </table>
                     </main>
@@ -662,28 +677,32 @@ require_once('dbcon.php');
                         <div class="col-md-10">
                             <div class="form-group">
                                 <lable>Enter Batch Year</lable>
-                                <input type="number" class="form-control" id="batch-year" placeholder="eg: 2018" required/>
+                                <input type="number" class="form-control" id="batch-year" placeholder="eg: 2018"
+                                    required />
                             </div>
                             <small class="form-text text-muted"> Enter a Valid Year </small>
 
                             <div class="form-group mt-5">
-                                <select class="form-select" aria-label="Default select example" id="branch_info" required>
+                                <select class="form-select" aria-label="Default select example" id="branch_info"
+                                    required>
                                     <option selected value="0">Select a Branch</option>
                                     <!-- For loop for the Branch Details-->
                                     <?php
-                                       $sql_1 = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
-                                       $sql_1->bindParam(1,$coordinatorid);
-                                       $sql_1->execute();
-                                       if( $sql_1->rowCount() > 0){
-                                          while ( $row_1 = $sql_1->fetch(PDO::FETCH_ASSOC)){
+                                    $sql_1 = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
+                                    $sql_1->bindParam(1, $coordinatorid);
+                                    $sql_1->execute();
+                                    if ($sql_1->rowCount() > 0) {
+                                        while ($row_1 = $sql_1->fetch(PDO::FETCH_ASSOC)) {
 
-                                          
-                                       
+
+
                                     ?>
-                                    <option value="<?php echo $row_1['branchid']; ?>"><?php echo $row_1['branchname']; ?></option>
+                                    <option value="<?php echo $row_1['branchid']; ?>">
+                                        <?php echo $row_1['branchname']; ?></option>
 
                                     <?php
-                                          }}
+                                        }
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -714,12 +733,12 @@ require_once('dbcon.php');
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-       
+
                 <div class="modal-body">
                     <div class="row py-5 m-3 forms" id="form">
                         <div class="col-md-10">
                             <div class="form-group">
-                            
+
                                 <lable>Enter Branch name</lable>
                                 <input type="text" class="form-control" id="branch-name" placeholder="eg: MTech" />
                                 <input type="hidden" id="coordinator_hidden" value="<?php echo $coordinatorid; ?>" />
@@ -1004,84 +1023,12 @@ require_once('dbcon.php');
         </div>
     </div>
     <!-- Add Subject  informationModal End-->
-    <!-- Add Student Information Modal -->
-    <div class="modal fade" id="student-to-batch-add" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        Add Student
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row py-5 m-3 forms" id="form">
-                        <div class="col-md-10">
-                            <div class="form-group mt-2">
-                            <select class="selectBranchstudent">
-                     <option selected value="0">Select a Branch</option>
-                        <?php
-                             $sql = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
-                             $sql->bindParam(1,$coordinatorid);
-                             $sql->execute();
-                             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-                             foreach($result as $row){
-                        ?>
+    <!-- Add Student  Modal -->
+    <?php
+    require_once("modal/addstudentmodal.php");
+    ?>
 
-                        <option value="<?php echo $row['branchid']; ?>"><?php echo $row['branchname']; ?></option>
-                        <?php
-                             }
-                        ?>
-                    </select>
-                            </div>
-                            <div class="form-group mt-2">
-                            <select class="addStudentData_batch_Select">
-                    <option selected value="0">Select a Batch</option>
-                    
-                    </select>
-                            </div>
-                            <div class="form-group mt-2">
-                                <lable>Enter Email of Student</lable>
-                                <input type="email" class="form-control" id="enter-student-email"
-                                    placeholder="eg: example@gmail.com">
-                            </div>
-                            <small class="form-text text-muted mt-1">
-                                Enter a valid Email
-                            </small>
-                            <div class="form-group mt-2">
-                                <lable>Enter Student Date of Birth</lable>
-                                <input type="text" class="form-control" id="enter-subject-code"
-                                    placeholder="eg: 01-04-2000">
-                            </div>
-                            <small class="form-text text-muted mt-1">
-                                Enter a valid Dob
-                            </small>
-
-
-
-
-                            <div class="form-group pt-3">
-                                <button class="btn btn-primary">Add Student</button>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Add Student  informationModal End-->
+    <!-- Add Student  Modal End-->
     <!-- Add teacher Information Modal -->
     <div class="modal fade" id="teacher-to-batch-add" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -1152,7 +1099,7 @@ require_once('dbcon.php');
     <!-- Add Student  informationModal End-->
 </body>
 <script src="dash.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <script>
 $(document).ready(function() {
     var myArray = new Array();
@@ -1170,7 +1117,7 @@ $(document).ready(function() {
             getId = "addbatchsection";
         } else if (getId == "addstudent") {
             getId = "addstudentsection";
-            loadDataStudent();
+            //  loadDataStudent();
         } else if (getId == "addteacher") {
             getId = "addteachersection";
         } else if (getId == "activesemster") {
@@ -1198,61 +1145,88 @@ $(document).ready(function() {
         $("#maindashboardsection").css("display", "grid");
     });
 
-      $(".selectBranchstudent").change(function(){
-           var getBranchid = $(this).val();
-           alert(getBranchid);
-           $(".addStudentData_batch_Select").prop('selectedIndex',0);
-           if (getBranchid == 0){
-                   
-           }else{
-            
+    $(".selectBranchstudent").change(function() {
+        var getBranchid = $(this).val();
+        // alert(getBranchid);
+        $(".addStudentData_batch_Select").prop('selectedIndex', 0);
+        $(".addStudentData_batch_Select").html(' <option selected value="0">Select a Batch</option>');
+        if (getBranchid == 0) {
+
+        } else {
+
             $.ajax({
-                      url:"loadData/loadStudentData_batch.php",
-                      type:"POST",
-                      data:{get_Branchid:getBranchid, connection:true},
-                      success: function (data) {
-                               $(".addStudentData_batch_Select").append(data);  
-                
-                               
-                      }
-                   });
-           }
-               });
+                url: "loadData/loadStudentData_batch.php",
+                type: "POST",
+                data: {
+                    get_Branchid: getBranchid,
+                    connection: true
+                },
+                success: function(data) {
+                    $(".addStudentData_batch_Select").append(data);
 
-         $(".addStudentData_batch_Select").change(function(){
-            var getBatchid = $(this).val();
-            var getBranchid = $(".selectBranchstudent").val();
-            alert(getBatchid);
-            
-            if(getBatchid == 0){
 
-            }else{
+                }
+            });
+        }
+    });
 
-            }
-        
-             
+    $(".addStudentData_batch_Select").change(function() {
+        var getBatchid = $(this).val();
+        var getBranchid = $(".selectBranchstudent").val();
+        //alert(getBatchid);
+        //alert(getBranchid);
 
-         }) ;     
+        if (getBatchid == 0) {
+
+        } else {
+            loadDataStudent(getBatchid, 1);
+        }
+
+
+
+    });
 
 
 
 });
+$(document).on('click', "#pagination a", function(e) {
+    e.preventDefault();
+    var page_id = $(this).attr("id");
+    var batchid = $(".addStudentData_batch_Select").val();
+    //alert(page_id);
+    loadDataStudent(batchid, page_id)
 
-function loadDataStudent(){
+
+});
+
+function loadDataStudent(get_batchid, pageno) {
+
+    var getBatchid = get_batchid;
+    var page_no = pageno;
+
+    // var getBranchid = get_branchid;
+    alert(getBatchid);
+    // alert(getBranchid);
+
     $.ajax({
-     url:"loadData/loadDataStudent.php",
-     success: function (data) {
-         $("#addStudentData").html(data);
+        url: "loadData/loadDataStudent.php",
+        type: "POST",
+        data: {
+            get_Batchid: getBatchid,
+            get_pageno: page_no,
+            connection: true
+        },
+        success: function(data) {
+            $("#addStudentData").html(data);
 
-     }
+        }
 
 
     });
 }
-$(window).on('load', function () {
-$("#cover").fadeOut(5000);
+$(window).on('load', function() {
+    $("#cover").fadeOut(5000);
 });
-
 </script>
 <script src="javascript/send.js"></script>
 <script src="javascript/dashboard.js"></script>
