@@ -413,10 +413,13 @@ require_once('dbcon.php');
                                 <tr>
                                     <th>S.No</th>
                                     <th>Teacher ID</th>
-                                    <th>Teacher Name</th>
-                                    <th>Teacher Code</th>
-                                    <th>Teacher Dob</th>
+                                    <th>Username</th>
+                                    <th>Emp ID</th>
+                                    <th>Phone Number</th>
+                                    <th>Position</th>
+                                    <th>Password</th>
                                     <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tfoot>
@@ -424,44 +427,8 @@ require_once('dbcon.php');
                                     <th colspan="3"></th>
                                 </tr>
                             </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td data-title="S.No">1</td>
-                                    <td data-title="Teacher Id">1552</td>
-                                    <td data-title="Teacher Id">Er. Hesam Akhter</td>
-                                    <td data-title="Teacher Enrollment">EMP708</td>
-                                    <td data-title="Teacher Dob">01-04-1970</td>
-                                    <td class="select">
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <button type="button" class="btn btn-danger">
-                                                Edit
-                                            </button>
-                                            <button type="button" class="btn btn-warning">
-                                                Remove
-                                            </button>
-                                            <button type="button" class="btn btn-success clickbutton"
-                                                data-bs-toggle="modal" data-bs-target="#teacher-information">
-                                                More Information
-                                            </button>
-                                        </div>
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#subject-assigned-to-teacher">
-                                                Subject assigned
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
+                            <tbody id="addTeachertable">
 
-                                    <td colspan="6">
-                                        <div id="pagination" style="text-align:center;">
-                                            <a class="btn btn-secondary" id="1" href="">1</a>
-                                            <a class="btn btn-secondary" id="2" href="">2</a>
-
-                                        </div>
-                                    </td>
-                                </tr>
                             </tbody>
 
                         </table>
@@ -1029,210 +996,20 @@ require_once('dbcon.php');
     ?>
 
     <!-- Add Student  Modal End-->
-    <!-- Add teacher Information Modal -->
-    <div class="modal fade" id="teacher-to-batch-add" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        Add teacher
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row py-5 m-3 forms" id="form">
-                        <div class="col-md-10">
-
-                            <div class="form-group mt-2">
-                                <lable>Enter Username of Teacher</lable>
-                                <input type="email" class="form-control" id="enter-teacher-username"
-                                    placeholder="eg: waseembakshi121">
-                            </div>
-                            <small class="form-text text-muted mt-1">
-                                Enter a valid username
-                            </small>
-                            <div class="form-group mt-2">
-                                <lable>Enter Employee ID of Teacher</lable>
-                                <input type="text" class="form-control" id="enter-emp-id" placeholder="eg: Emp-121">
-                            </div>
-                            <small class="form-text text-muted mt-1">
-                                Enter a valid Employee ID
-                            </small>
-                            <div class="form-group mt-2">
-                                <lable>Enter Position of the Teacher</lable>
-                                <input type="text" class="form-control" id="enter-emp-id"
-                                    placeholder="eg: Assistant Professor / Contracual Employee">
-                            </div>
-                            <div class="form-group mt-2">
-                                <lable>Enter Phone Number of the Teacher</lable>
-                                <input type="text" class="form-control" id="enter-phonenumber"
-                                    placeholder="eg: 9622922604">
-                            </div>
-
-                            <small class="form-text text-muted mt-1">
-                                Enter a valid Phone Number
-                            </small>
-
-
-
-                            <div class="form-group pt-3">
-                                <button class="btn btn-primary">Add Teacher</button>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php
+    include_once('modal/addteachermodal.php');
+    ?>
     <!-- Add Student  informationModal End-->
 </body>
 <script src="dash.js"></script>
-
-<script>
-$(document).ready(function() {
-    var myArray = new Array();
-    myArray[0] = "addstudentsection";
-    myArray[1] = "addsettingsection";
-    myArray[2] = "addbatchsection";
-    myArray[3] = "addteachersection";
-    myArray[4] = "addactivesemestersection";
-    myArray[5] = "addsubjectsection";
-    $(".menu_button").click(function() {
-        $("#maindashboardsection").css("display", "none");
-        var getId = this.id;
-        alert(getId);
-        if (getId == "addbatch") {
-            getId = "addbatchsection";
-        } else if (getId == "addstudent") {
-            getId = "addstudentsection";
-            //  loadDataStudent();
-        } else if (getId == "addteacher") {
-            getId = "addteachersection";
-        } else if (getId == "activesemster") {
-            getId = "addactivesemestersection";
-        } else if (getId == "addsetting") {
-            getId = "addsettingsection";
-        } else if (getId == "addsubject") {
-            getId = "addsubjectsection";
-        }
-
-        for (var i = 0; i < myArray.length; i++) {
-            if (myArray[i] == getId) {
-                continue;
-            } else {
-                $("#" + myArray[i]).css("display", "none");
-            }
-        }
-        $("#" + getId).css("display", "block");
-    });
-    $(".maindashbutton").click(function() {
-        alert("main");
-        for (var i = 0; i < myArray.length; i++) {
-            $("#" + myArray[i]).css("display", "none");
-        }
-        $("#maindashboardsection").css("display", "grid");
-    });
-
-    $(".selectBranchstudent").change(function() {
-        var getBranchid = $(this).val();
-        // alert(getBranchid);
-        $(".addStudentData_batch_Select").prop('selectedIndex', 0);
-        $(".addStudentData_batch_Select").html(' <option selected value="0">Select a Batch</option>');
-        if (getBranchid == 0) {
-
-        } else {
-
-            $.ajax({
-                url: "loadData/loadStudentData_batch.php",
-                type: "POST",
-                data: {
-                    get_Branchid: getBranchid,
-                    connection: true
-                },
-                success: function(data) {
-                    $(".addStudentData_batch_Select").append(data);
-
-
-                }
-            });
-        }
-    });
-
-    $(".addStudentData_batch_Select").change(function() {
-        var getBatchid = $(this).val();
-        var getBranchid = $(".selectBranchstudent").val();
-        //alert(getBatchid);
-        //alert(getBranchid);
-
-        if (getBatchid == 0) {
-
-        } else {
-            loadDataStudent(getBatchid, 1);
-        }
-
-
-
-    });
-
-
-
-});
-$(document).on('click', "#pagination a", function(e) {
-    e.preventDefault();
-    var page_id = $(this).attr("id");
-    var batchid = $(".addStudentData_batch_Select").val();
-    //alert(page_id);
-    loadDataStudent(batchid, page_id)
-
-
-});
-
-function loadDataStudent(get_batchid, pageno) {
-
-    var getBatchid = get_batchid;
-    var page_no = pageno;
-
-    // var getBranchid = get_branchid;
-    alert(getBatchid);
-    // alert(getBranchid);
-
-    $.ajax({
-        url: "loadData/loadDataStudent.php",
-        type: "POST",
-        data: {
-            get_Batchid: getBatchid,
-            get_pageno: page_no,
-            connection: true
-        },
-        success: function(data) {
-            $("#addStudentData").html(data);
-
-        }
-
-
-    });
-}
-$(window).on('load', function() {
-    $("#cover").fadeOut(5000);
-});
-</script>
+<script src="dashboard.js"></script>
 <script src="javascript/send.js"></script>
-<script src="javascript/dashboard.js"></script>
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
 </script>
 
 </html>
+<?php
+$conn = null;
+?>

@@ -23,7 +23,7 @@ class loadStudentData extends db_connection
         }
         foreach ($result as $row) {
             //  $this->output .= "<option value='{$row["batchid"]}'> {$row["batchyear"]}</option>";
-            $this->output .= "<tr>
+            $this->output .= "<tr id='{$row["studentid"]}'>
               <td data-title='S.No'>{$Sno}</td>
               <td data-title='Student Email'>{$row["studentemail"]}</td>
               <td data-title='Student Id'>{$row["studentname"]}</td>
@@ -31,10 +31,8 @@ class loadStudentData extends db_connection
               <td data-title='Student Dob'>{$row["studentdob"]}</td>
               <td class='select'>
                   <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                      <button type='button' class='btn btn-danger'>
-                          Edit
-                      </button>
-                      <button type='button' class='btn btn-warning'>
+                     
+                      <button type='button' class='btn btn-warning' data-id='{$row["studentid"]}' id='removestudent' >
                           Remove
                       </button>
                       <button type='button' class='btn btn-success clickbutton' data-bs-toggle='modal'

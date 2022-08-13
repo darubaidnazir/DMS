@@ -50,4 +50,5 @@ if (isset($_POST['connection']) && isset($_POST["get_Batchid"])) {
     $run = new sendStudent($_POST["get_Email"], $_POST['get_Batchid']);
     $run->closeConnection();
 } else {
+    header("Location:../../../coordinatorlogin_signup.html");
 }

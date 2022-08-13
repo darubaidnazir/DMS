@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 12, 2022 at 01:18 PM
+-- Generation Time: Aug 13, 2022 at 09:25 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -122,25 +122,33 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`studentid`, `studentname`, `studentregno`, `studentrollno`, `studentemail`, `studentdob`, `studentpassword`, `studentstatus`, `creationtime`, `batchid`) VALUES
 (501000, 'Some', 'd', NULL, 's', NULL, '', 'inactive', '2022-08-12 05:20:40', 0),
-(501001, NULL, NULL, NULL, 'gtt@gmail.com', NULL, '56975', 'inactive', '2022-08-12 06:46:36', 301010),
-(501002, NULL, NULL, NULL, 'dar@gmail.com', NULL, '84067', 'inactive', '2022-08-12 06:51:46', 301010),
-(501003, NULL, NULL, NULL, 'dasr@gmail.com', NULL, '61348', 'inactive', '2022-08-12 06:52:19', 301010),
-(501004, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '37375', 'inactive', '2022-08-12 09:32:14', 301016),
-(501005, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '77510', 'inactive', '2022-08-12 09:32:25', 301016),
-(501006, NULL, NULL, NULL, 'gttee@gmail.com', NULL, '22240', 'inactive', '2022-08-12 10:42:54', 301010),
-(501007, NULL, NULL, NULL, 'gtteeee@gmail.com', NULL, '86725', 'inactive', '2022-08-12 10:42:58', 301010),
-(501008, NULL, NULL, NULL, 'gtteeeeee@gmail.com', NULL, '10837', 'inactive', '2022-08-12 10:43:03', 301010),
-(501009, NULL, NULL, NULL, 'gtteeeeeeeee@gmail.com', NULL, '56862', 'inactive', '2022-08-12 10:43:06', 301010),
-(501010, NULL, NULL, NULL, 'gtteeeeeeeeeee@gmail.com', NULL, '81120', 'inactive', '2022-08-12 10:43:10', 301010),
-(501011, NULL, NULL, NULL, 'gtteeeeeeeeeeeeee@gmail.com', NULL, '82673', 'inactive', '2022-08-12 10:43:14', 301010),
-(501012, NULL, NULL, NULL, 'gfftt@gmail.com', NULL, '95383', 'inactive', '2022-08-12 11:09:38', 301010),
-(501013, NULL, NULL, NULL, 'gfftffft@gmail.com', NULL, '45062', 'inactive', '2022-08-12 11:09:43', 301010),
-(501014, NULL, NULL, NULL, 'gfffffftffft@gmail.com', NULL, '80358', 'inactive', '2022-08-12 11:09:47', 301010),
-(501015, NULL, NULL, NULL, 'fff@gmail.com', NULL, '10747', 'inactive', '2022-08-12 11:09:52', 301010),
-(501016, NULL, NULL, NULL, 'ffffff@gmail.com', NULL, '37993', 'inactive', '2022-08-12 11:09:57', 301010),
-(501017, NULL, NULL, NULL, 'fffffffff@gmail.com', NULL, '85308', 'inactive', '2022-08-12 11:10:02', 301010),
-(501018, NULL, NULL, NULL, 'fffffffffffff@gmail.com', NULL, '32981', 'inactive', '2022-08-12 11:10:07', 301010),
-(501019, NULL, NULL, NULL, 'fffffffffffffffff@gmail.com', NULL, '21120', 'inactive', '2022-08-12 11:10:12', 301010);
+(501028, NULL, NULL, NULL, 'gwwwwwwtt@gmail.com', NULL, '96019', 'inactive', '2022-08-12 17:28:58', 301010);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teacher`
+--
+
+CREATE TABLE `teacher` (
+  `teacherid` int(11) NOT NULL,
+  `teacherusername` varchar(100) NOT NULL,
+  `teacherempid` varchar(100) NOT NULL,
+  `teacherphonenumber` varchar(100) NOT NULL,
+  `teacherposition` int(100) NOT NULL,
+  `teacherpassword` varchar(100) NOT NULL,
+  `creationtime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `coordinatorid` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `teacher`
+--
+
+INSERT INTO `teacher` (`teacherid`, `teacherusername`, `teacherempid`, `teacherphonenumber`, `teacherposition`, `teacherpassword`, `creationtime`, `coordinatorid`) VALUES
+(701000, 'd', '', '', 0, '', '2022-08-13 05:36:24', 0),
+(701008, 'Waseem Bakshi', 'EMP121', '7887559662', 1, '100000', '2022-08-13 07:20:57', 101013),
+(701009, 'jjj_jjj', 'nn', '1234567895', 1, '100000', '2022-08-13 07:23:31', 101013);
 
 --
 -- Indexes for dumped tables
@@ -171,6 +179,12 @@ ALTER TABLE `student`
   ADD PRIMARY KEY (`studentid`);
 
 --
+-- Indexes for table `teacher`
+--
+ALTER TABLE `teacher`
+  ADD PRIMARY KEY (`teacherid`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -196,7 +210,13 @@ ALTER TABLE `coordinator`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501020;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501029;
+
+--
+-- AUTO_INCREMENT for table `teacher`
+--
+ALTER TABLE `teacher`
+  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701010;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
