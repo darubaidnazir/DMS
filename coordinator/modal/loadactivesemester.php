@@ -40,9 +40,10 @@
 
                     <td class="select">
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-success clickbutton" data-bs-toggle="modal"
+                            <button id="assignsubjectbox" data-id="<?php echo $row['semesterid']; ?>" type="button"
+                                class="btn btn-success clickbutton" data-bs-toggle="modal"
                                 data-bs-target="#active-information-box">
-                                More Information
+                                Subject assign
                             </button>
                         </div>
                     </td>
@@ -96,7 +97,7 @@
                     <td class="select">
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn btn-success clickbutton" data-bs-toggle="modal"
-                                data-bs-target="#active-information-box">
+                                data-bs-target="#active-informatison-box">
                                 More Information
                             </button>
                         </div>
@@ -110,3 +111,28 @@
         </table>
     </main>
 </div>
+<script>
+$(document).on("click", "#assignsubjectbox", function() {
+    var semesterid = $(this).data("id");
+    var coordinate = $("#coordinator_hidden").val().trim();
+    $.ajax({
+        url: "../../../DMS/coordinator/loadData/loadsemestersubject.php",
+        type: "POST",
+        data: {
+            get_Semesterid: semesterid,
+            get_Coordinatorid: coordinate,
+            connection: true
+        },
+        success: function(data) {
+
+            $(".modal-body-active").html(data);
+        }
+
+
+    });
+
+
+
+
+});
+</script>

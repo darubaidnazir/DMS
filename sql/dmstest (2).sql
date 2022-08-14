@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2022 at 07:17 AM
+-- Generation Time: Aug 14, 2022 at 06:49 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -20,6 +20,40 @@ SET time_zone = "+00:00";
 --
 -- Database: `dmstest`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assignedsubject`
+--
+
+CREATE TABLE `assignedsubject` (
+  `subjectid` int(100) NOT NULL,
+  `semesterid` int(100) NOT NULL,
+  `teacherid` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assignedsubject`
+--
+
+INSERT INTO `assignedsubject` (`subjectid`, `semesterid`, `teacherid`) VALUES
+(901012, 901021, 0),
+(901013, 901021, 0),
+(901014, 901021, 0),
+(901012, 901026, 0),
+(901014, 901027, 0),
+(901015, 901026, 0),
+(901015, 901021, 0),
+(901016, 901021, 0),
+(901017, 901021, 0),
+(901018, 901021, 0),
+(901019, 901021, 0),
+(901020, 901028, 701014),
+(901021, 901028, 701014),
+(901021, 901029, 701014),
+(901021, 901030, 701014),
+(901020, 901030, 701015);
 
 -- --------------------------------------------------------
 
@@ -41,11 +75,8 @@ CREATE TABLE `batch` (
 --
 
 INSERT INTO `batch` (`batchid`, `batchyear`, `currentsemester`, `creationdate`, `branchid`, `batchstatus`) VALUES
-(301025, 2022, 4, '2022-08-14 04:48:37', 201027, '0'),
-(301026, 2019, 4, '2022-08-14 05:15:33', 201027, '0'),
-(301027, 2020, 1, '2022-08-14 05:15:49', 201027, '1'),
-(301028, 2020, 2, '2022-08-14 04:57:42', 201028, '1'),
-(301029, 2023, 1, '2022-08-14 05:16:57', 201028, '1');
+(301034, 2020, 2, '2022-08-14 16:25:05', 201034, '1'),
+(301035, 2020, 1, '2022-08-14 16:24:16', 201035, '1');
 
 -- --------------------------------------------------------
 
@@ -66,8 +97,8 @@ CREATE TABLE `branch` (
 --
 
 INSERT INTO `branch` (`branchid`, `branchname`, `totalsemester`, `creationdate`, `coordinatorid`) VALUES
-(201027, 'Mtech', '4', '2022-08-14 04:40:24.000000', 101013),
-(201028, 'Btech', '3', '2022-08-14 04:50:48.000000', 101013);
+(201034, 'Mtech', '4', '2022-08-14 16:16:46.000000', 101013),
+(201035, 'BTech', '8', '2022-08-14 16:16:59.000000', 101013);
 
 -- --------------------------------------------------------
 
@@ -112,18 +143,9 @@ CREATE TABLE `semester` (
 --
 
 INSERT INTO `semester` (`semesterid`, `semesterno`, `batchid`, `opendate`, `closedate`, `semesterstatus`) VALUES
-(901016, 1, 301025, '2022-08-14 04:43:07', '2022-08-14 04:43:52', '0'),
-(901017, 2, 301025, '2022-08-14 04:43:52', '2022-08-14 04:47:55', '0'),
-(901018, 3, 301025, '2022-08-14 04:47:55', '2022-08-14 04:48:18', '0'),
-(901019, 4, 301025, '2022-08-14 04:48:18', '2022-08-14 04:48:36', '0'),
-(901020, 1, 301028, '2022-08-14 04:51:29', '2022-08-14 04:57:42', '0'),
-(901021, 2, 301028, '2022-08-14 04:57:42', NULL, '1'),
-(901022, 1, 301026, '2022-08-14 04:58:05', '2022-08-14 05:13:29', '0'),
-(901023, 2, 301026, '2022-08-14 05:13:29', '2022-08-14 05:14:56', '0'),
-(901024, 3, 301026, '2022-08-14 05:14:56', '2022-08-14 05:15:09', '0'),
-(901025, 4, 301026, '2022-08-14 05:15:09', '2022-08-14 05:15:33', '0'),
-(901026, 1, 301027, '2022-08-14 05:15:49', NULL, '1'),
-(901027, 1, 301029, '2022-08-14 05:16:57', NULL, '1');
+(901028, 1, 301034, '2022-08-14 16:23:05', '2022-08-14 16:25:05', '0'),
+(901029, 1, 301035, '2022-08-14 16:24:16', NULL, '1'),
+(901030, 2, 301034, '2022-08-14 16:25:05', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -144,6 +166,19 @@ CREATE TABLE `student` (
   `batchid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`studentid`, `studentname`, `studentregno`, `studentrollno`, `studentemail`, `studentdob`, `studentpassword`, `studentstatus`, `creationtime`, `batchid`) VALUES
+(501048, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '20085', 'inactive', '2022-08-14 16:19:28', 301034),
+(501049, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '93382', 'inactive', '2022-08-14 16:19:36', 301034),
+(501050, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '63053', 'inactive', '2022-08-14 16:19:46', 301034),
+(501051, NULL, NULL, NULL, 'nadia@gmail.com', NULL, '83817', 'inactive', '2022-08-14 16:19:55', 301034),
+(501052, NULL, NULL, NULL, 'huda@gmail.com', NULL, '79364', 'inactive', '2022-08-14 16:20:07', 301035),
+(501053, NULL, NULL, NULL, 'ifrah@gmail.com', NULL, '56116', 'inactive', '2022-08-14 16:20:22', 301035),
+(501054, NULL, NULL, NULL, 'junaid@gmail.com', NULL, '89568', 'inactive', '2022-08-14 16:20:33', 301035);
+
 -- --------------------------------------------------------
 
 --
@@ -157,6 +192,16 @@ CREATE TABLE `subject` (
   `coordinatorid` varchar(100) NOT NULL,
   `creationtime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`subjectid`, `subjectname`, `subjectcode`, `coordinatorid`, `creationtime`) VALUES
+(901020, 'Database', 'CSE 1231', '101013', '2022-08-14 16:21:42'),
+(901021, 'Micoprocesser', 'CSE 1718', '101013', '2022-08-14 16:21:55'),
+(901022, 'JAVA', 'CSE 1719', '101013', '2022-08-14 16:22:13'),
+(901023, 'MATH', 'MATH7855', '101013', '2022-08-14 16:22:34');
 
 -- --------------------------------------------------------
 
@@ -174,6 +219,15 @@ CREATE TABLE `teacher` (
   `creationtime` timestamp NOT NULL DEFAULT current_timestamp(),
   `coordinatorid` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `teacher`
+--
+
+INSERT INTO `teacher` (`teacherid`, `teacherusername`, `teacherempid`, `teacherphonenumber`, `teacherposition`, `teacherpassword`, `creationtime`, `coordinatorid`) VALUES
+(701014, 'Waseem_Bakshi', 'CSE 502', '7894561233', 1, '100000', '2022-08-14 16:17:58', 101013),
+(701015, 'Hesam_akhter', 'CSE 503', '7894561244', 1, '100000', '2022-08-14 16:18:21', 101013),
+(701016, 'Umer_aadil', 'CSE 504', '7894545244', 2, '100000', '2022-08-14 16:18:48', 101013);
 
 --
 -- Indexes for dumped tables
@@ -229,13 +283,13 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `batchid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301030;
+  MODIFY `batchid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301036;
 
 --
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branchid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201029;
+  MODIFY `branchid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201036;
 
 --
 -- AUTO_INCREMENT for table `coordinator`
@@ -247,25 +301,25 @@ ALTER TABLE `coordinator`
 -- AUTO_INCREMENT for table `semester`
 --
 ALTER TABLE `semester`
-  MODIFY `semesterid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901028;
+  MODIFY `semesterid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901031;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501048;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501055;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subjectid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901012;
+  MODIFY `subjectid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901024;
 
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701011;
+  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701017;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

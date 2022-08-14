@@ -22,7 +22,8 @@ $(document).ready(function () {
                } else if (data == 3) {
                   swal("Good job ", "Branch added Sucessfully! wait we are reloading branch table", "success");
                   $("#sendBranch").html("Created");
-                  setTimeout(() => { location.reload(); }, 5000);
+
+
 
                } else {
                   swal("ohoho!", "Something went wrong! try again later", "error");
@@ -67,7 +68,7 @@ $(document).ready(function () {
                   } else if (data == 3) {
                      swal("Good job ", "Batch added Sucessfully! wait we are reloading batch table", "success");
                      $("#sendBranch").html("Created");
-                     setTimeout(() => { location.reload(); }, 5000);
+
 
                   } else {
                      swal("ohoho!", "Something went wrong! try again later", "error");

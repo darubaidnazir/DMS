@@ -121,7 +121,7 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#pages"></use>
                         </svg>
-                        <span id="addbatch" class="menu_button">Add Batch</span>
+                        <span id="addbatch" class="menu_button">Batch</span>
                     </a>
                 </li>
                 <li>
@@ -129,7 +129,7 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#users"></use>
                         </svg>
-                        <span id="addstudent" class="menu_button">Add Student</span>
+                        <span id="addstudent" class="menu_button"> Student</span>
                     </a>
                 </li>
 
@@ -138,7 +138,7 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#users"></use>
                         </svg>
-                        <span id="addteacher" class="menu_button">Add Teacher</span>
+                        <span id="addteacher" class="menu_button">Teacher</span>
                     </a>
                 </li>
                 <li>
@@ -154,7 +154,7 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#pages"></use>
                         </svg>
-                        <span id="addsubject" class="menu_button">Add Subject</span>
+                        <span id="addsubject" class="menu_button">Subject</span>
                     </a>
                 </li>
 
@@ -216,8 +216,8 @@ require_once('dbcon.php');
         </section>
         <section class="grid" id="addbatchsection">
             <button class="maindashbutton menu-button">Main Dashboard</button>
-            <button id="addbranchview" class="btn btn-dark">View Branch</button>
-            <button id="addbatchview" class="btn btn-dark">View Batch</button>
+            <button id="addbranchview" class="btn btn-dark"> Add Branch</button>
+            <button id="addbatchview" class="btn btn-dark"> Add Batch</button>
             <style></style>
             <div id="viewbatch">
                 <h2>
@@ -230,7 +230,7 @@ require_once('dbcon.php');
                 </h2>
 
                 <main>
-                    <table>
+                    <table id="viewbatchtable">
                         <thead>
                             <tr>
                                 <th>Batch Year</th>
@@ -868,11 +868,16 @@ require_once('dbcon.php');
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        Active Semester Information
+                        Subject Assign Semester Information
                     </h5>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"></div>
+                <div class="modal-body-active">
+
+
+
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -990,6 +995,45 @@ $(document).ready(function() {
         sendactivesemester(batchid);
 
 
+    });
+
+    $(document).on("click", "#assignsubjecthere", function(event) {
+        var semesterid = $(this).data("id");
+        var subejctid = $("#assignedselect").val();
+        var teacherid = $("#assignedselectteacher").val();
+        if (subejctid == 0 || teacherid == 0) {
+
+            $("#messagesubjects").html("*Select a Subject and Teacher");
+        } else {
+            $.ajax({
+                url: "../coordinator/modal/sendmodaldata/sendassignedsubject.php",
+                type: "POST",
+                data: {
+                    get_Semesterid: semesterid,
+                    get_Subjectid: subejctid,
+                    get_Teacherid: teacherid,
+                    connection: true
+                },
+                success: function(data) {
+                    if (data == 2) {
+                        swal("ohoho!",
+                            "Subject already Assigned to this semester? try with different Subject ",
+                            "error");
+                    } else if (data == 3) {
+                        swal("Good job ",
+                            "Subjectt Assigned Sucessfully!*Refresh page to see changes ",
+                            "success");
+                        $("#messagesubjects").html("*Refresh page to see change");
+
+                    } else {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
+
+                    }
+                }
+
+            });
+
+        }
     });
 
 

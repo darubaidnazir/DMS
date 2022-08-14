@@ -221,6 +221,7 @@ $(document).on("click", "#removeteacher", function () {
 
 });*/
 
+// assign subject button 
 
 
 $("#addsubjectcode").on("click", function (event) {
