@@ -41,7 +41,7 @@ $(document).ready(function () {
               swal("ohoho!", "Email or password is incorrect!", "error");
 
             } else if (data == 3) {
-              location.replace('dashboard.php');
+              location.replace('dashboard');
 
             } else {
               swal("ohoho!", "Something went wrong! try again later", "error");

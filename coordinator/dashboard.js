@@ -37,7 +37,7 @@ $(document).ready(function () {
         $("#" + getId).css("display", "block");
     });
     $(".maindashbutton").click(function () {
-        alert("main");
+
         for (var i = 0; i < myArray.length; i++) {
             $("#" + myArray[i]).css("display", "none");
         }
@@ -192,6 +192,72 @@ $(document).on("click", "#removeteacher", function () {
 
 
     });
+
+});
+//remve subject
+/*
+  $(document).on("click", "#removesubject", function () {
+
+  var subejctid = $(this).data("id");
+
+  $.ajax({
+      url: "delete/deletesubject.php",
+      type: "POST",
+      data: { get_Subjectid: subejctid, connection: true },
+      success: function (data) {
+          if (data == 3) {
+              swal("Good job!", "Teacher Removed! ", "success");
+              $("#" + teacherid).load(location.href + " #" + teacherid);
+          } else {
+              swal("ohoho!", "Something went wrong ! we could not delete the teacher. try again", "error");
+          }
+
+      }
+
+
+
+
+  });
+
+});*/
+
+
+
+$("#addsubjectcode").on("click", function (event) {
+    event.preventDefault();
+    var subjectname = $("#enter-subject-name").val().trim();
+    var subjectcode = $("#enter-subject-code").val().trim();
+    var coordinate = $("#coordinator_hidden").val().trim();
+    if (subjectcode == "" || subjectname == "") {
+        $("#messagesubject").html("* All Fields required");
+    } else
+        if (!/^[a-zA-Z-0-9\s_]+$/.test(subjectcode) || !/^[a-zA-Z\s_-]+$/.test(subjectname)) {
+            $("#messagesubject").html("* Enter a Valid Format eg: Database or CSE 1721 ");
+        } else {
+            $.ajax({
+
+                url: "../coordinator/javascript/sendinfo/sendsubject.php",
+                type: "POST",
+                data: { get_Subjectname: subjectname, get_Subjectcode: subjectcode, get_Coordinator: coordinate, connection: true },
+                success: function (data) {
+                    if (data == 2) {
+                        swal("ohoho!", "Subject already exits? try with different Subject Code", "error");
+                    } else if (data == 3) {
+                        swal("Good job ", "Subeject added Sucessfully!*Refresh page to see changes ", "success");
+                        $("#messagesubject").html("*Refresh page to see change");
+
+                    } else {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
+
+                    }
+                }
+
+
+
+
+            });
+
+        }
 
 });
 

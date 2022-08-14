@@ -196,9 +196,9 @@ require_once('dbcon.php');
         <section class="search-and-user">
 
             <div class="admin-profile">
-                <span class="greeting">Hello <?php
-                                                echo $_SESSION['userid'];
-                                                echo $_SESSION['username'];  ?></span>
+                <span class="greeting">Hello Sir, <?php
+
+                                                    echo $_SESSION['username'];  ?></span>
                 <div class="notifications">
 
                 </div>
@@ -263,10 +263,34 @@ require_once('dbcon.php');
 
                                 <td data-title="Current Semester"><?php echo $row['currentsemester']; ?></td>
                                 <td data-title="Total Student's"><?php echo $row['batchyear']; ?></td>
-                                <td data-title="Status" style="color: Green">in-active</td>
-                                <td class="select">
-                                    <a class="btn btn-primary" href="#"> Open Semester</a>
-                                </td>
+                                <td data-title="Status" style="color: Green"><?php
+                                                                                        if ($row['currentsemester'] >= $row['totalsemester'] && $row["batchstatus"] == 0) {
+                                                                                            echo "Closed";
+                                                                                        } else if ($row["batchstatus"] == 0) {
+
+                                                                                            echo "in-active";
+                                                                                        } else {
+                                                                                            echo "Active";
+                                                                                        }
+
+                                                                                        ?></td>
+                                <?php
+                                        if ($row['currentsemester'] == 0) {
+                                            echo "<td class='select'>
+                                            <a class='btn btn-primary' href='#' id='opensemester' data-id='{$row["batchid"]}'> Open Semester</a>
+                                        </td>";
+                                        } else if ($row['currentsemester'] > $row['totalsemester'] || $row["batchstatus"] == 0) {
+                                            echo "<td class='select'>
+                                            <a class='btn btn-danger'   href='#'> Closed</a>
+                                        </td>";
+                                        } else {
+                                            echo "<td class='select'>
+                                            <a class='btn btn-danger'  id='closesemester' data-id='{$row["batchid"]}' href='#'> Close Semester</a>
+                                        </td>";
+                                        }
+                                        ?>
+
+
                                 <td class="select">
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                         <button type="button" class="btn btn-danger">Edit</button>
@@ -466,6 +490,7 @@ require_once('dbcon.php');
 
                     <main>
                         <table>
+
                             <thead>
                                 <tr>
                                     <th>S.No</th>
@@ -473,9 +498,13 @@ require_once('dbcon.php');
                                     <th>Student Name</th>
                                     <th>Student Enrollment</th>
                                     <th>Student Dob</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
+
                             <tfoot>
                                 <tr>
                                     <th colspan="3"></th>
@@ -489,82 +518,28 @@ require_once('dbcon.php');
                 </div>
             </section>
         </section>
-        <section class="grid" id="addactivesemestersection">
+        <section class=" grid" id="addactivesemestersection">
             <button class="maindashbutton">Main Dashboard</button>
-            <div>
-                <h2>Active Semester</h2>
+            <?php
+            require_once("../coordinator/modal/loadactivesemester.php");
 
-                <main>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Batch Year</th>
-                                <th>Branch Name</th>
-                                <th>Current Semester</th>
-                                <th>Total Student's</th>
-                                <th>Starting Date</th>
-                                <th>Closing Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th colspan="3"></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td data-title="Batch Year">2018</td>
-                                <td data-title="Branch Name">BTech</td>
-                                <td data-title="Current Semester">1</td>
-                                <td data-title="Total Student's">60</td>
-                                <td data-title="Starting Date">01-05-2022</td>
-                                <td data-title="Closing Date">01-10-2022</td>
+            ?>
 
-                                <td class="select">
-                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <button type="button" class="btn btn-success clickbutton" data-bs-toggle="modal"
-                                            data-bs-target="#active-information-box">
-                                            More Information
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </main>
-            </div>
+
+
         </section>
         <section class="grid" id="addsubjectsection">
             <button class="maindashbutton menu-button">Main Dashboard</button>
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#button-subject-information">Add
-                Subject to a Semester</button>
+                Subject </button>
             <section>
-                <div>
-                    <small class="form-text text-muted">Select the Branch First</small>
-                    <select>
-                        <option value="0">Select Branch:</option>
-                        <option value="1">MTech</option>
-                        <option value="2">BTech</option>
-                    </select>
-                    <small class="form-text text-muted">Select the Batch</small>
-                    <select>
-                        <option value="0">Select Batch:</option>
-                        <option value="1">2018</option>
-                        <option value="2">2019</option>
-                    </select>
-                    <small class="form-text text-muted">Select the Semester No to View Subjet's</small>
-                    <select>
-                        <option value="0">Select Semester No:</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
+                <div style="  max-height: 700px;
+  overflow-y: scroll;">
 
                     <main>
                         <table>
                             <thead>
-                                <tr><span style="color:green;"> Selected Semester: Mtech / 2018 / 1-Semester </span>
-                                </tr>
+
                             </thead>
                             <thead>
                                 <tr>
@@ -583,17 +558,27 @@ require_once('dbcon.php');
                             </tfoot>
                             <tbody>
                                 <tr>
-                                    <td data-title="S.No">1</td>
-                                    <td data-title="Subejct Id">1010010</td>
-                                    <td data-title="Subject Name">DataBase</td>
-                                    <td data-title="Subject Code">CSE-1717</td>
+                                    <?php
+                                    $Sno = 1;
+                                    $sql = $conn->prepare("SELECT * FROM `subject` WHERE `coordinatorid` = ?");
+                                    $sql->bindParam(1, $coordinatorid);
+                                    $sql->execute();
+                                    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+                                    foreach ($result as $row) {
+
+                                    ?>
+                                    <td data-title="S.No"><?php echo $Sno; ?></td>
+                                    <td data-title="Subejct Id"><?php echo $row["subjectid"]; ?></td>
+                                    <td data-title="Subject Name"><?php echo $row["subjectname"]; ?></td>
+                                    <td data-title="Subject Code"><?php echo $row["subjectcode"]; ?></td>
 
                                     <td class="select">
                                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                             <button type="button" class="btn btn-danger">
                                                 Edit
                                             </button>
-                                            <button type="button" class="btn btn-warning">
+                                            <button type="button" class="btn btn-warning" id="removesubject"
+                                                data-id="<?php echo $row["subjectid"]; ?>">
                                                 Remove
                                             </button>
                                             <button type="button" class="btn btn-success clickbutton"
@@ -612,6 +597,10 @@ require_once('dbcon.php');
                                     </td>
                                     </td>
                                 </tr>
+                                <?php
+                                        $Sno++;
+                                    }
+                            ?>
                             </tbody>
                         </table>
                     </main>
@@ -922,7 +911,7 @@ require_once('dbcon.php');
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        Add Subejct's to Semester
+                        Add Subejct's
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -930,27 +919,7 @@ require_once('dbcon.php');
 
                     <div class="row py-5 m-3 forms" id="form">
                         <div class="col-md-10">
-                            <div class="form-group mt-2">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Select a Branch</option>
-                                    <option value="1">Mtech</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-2">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Select a Batch</option>
-                                    <option value="1">2018</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-2">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Select a Semester</option>
-                                    <option value="1">1</option>
-                                </select>
-                            </div>
-
-
-
+                            <span style="color:red;" id="messagesubject"></span>
                             <div class="form-group mt-2">
                                 <lable>Enter Subject Name</lable>
                                 <input type="text" class="form-control" id="enter-subject-name"
@@ -972,7 +941,7 @@ require_once('dbcon.php');
 
 
                             <div class="form-group pt-3">
-                                <button class="btn btn-primary">Add Subject</button>
+                                <button class="btn btn-primary" id="addsubjectcode">Add Subject</button>
                             </div>
 
                         </div>
@@ -1007,6 +976,63 @@ require_once('dbcon.php');
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+</script>
+<script>
+$(document).ready(function() {
+
+    $(document).on("click", "#opensemester", function(event) {
+        var batchid = $(this).data("id");
+        sendactivesemester(batchid);
+
+    });
+    $(document).on("click", "#closesemester", function(event) {
+        var batchid = $(this).data("id");
+        sendactivesemester(batchid);
+
+
+    });
+
+
+    function sendactivesemester(batchid) {
+        $.ajax({
+            url: "modal/sendmodaldata/opensemester.php",
+            type: "POST",
+            data: {
+                get_Batchid: batchid,
+                connection: true
+            },
+            success: function(data) {
+                if (data == 3) {
+                    swal("Good Job!", "First Semester of the Batch has been Opened ", "success");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 5000);
+
+                } else if (data == 5) {
+                    swal("Good job ",
+                        "Batch has been Closed...!",
+                        "success");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 5000);
+                } else if (data == 4) {
+                    swal("Good job ",
+                        "Previous semester has been Closed and New Semester has be Opend!",
+                        "success");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 5000);
+                } else {
+                    swal("ohoho!", "Something went wrong! try again later", "error");
+                    $("#sendBranch").html("Add Branch");
+                }
+            }
+
+
+
+        });
+    }
+});
 </script>
 
 </html>

@@ -7,7 +7,7 @@ class loadStudentData extends db_connection
     function __construct($getBatchid, $getpageno)
     {
         parent::__construct();
-        $limitpage = 5;
+        $limitpage = 15;
         $page = $getpageno;
         $offset = ($page - 1) * $limitpage;
 
@@ -22,13 +22,15 @@ class loadStudentData extends db_connection
             $Sno = 5 * $page - 5 + 1;
         }
         foreach ($result as $row) {
-            //  $this->output .= "<option value='{$row["batchid"]}'> {$row["batchyear"]}</option>";
             $this->output .= "<tr id='{$row["studentid"]}'>
               <td data-title='S.No'>{$Sno}</td>
               <td data-title='Student Email'>{$row["studentemail"]}</td>
               <td data-title='Student Id'>{$row["studentname"]}</td>
               <td data-title='Student Enrollment'>{$row["studentrollno"]}</td>
               <td data-title='Student Dob'>{$row["studentdob"]}</td>
+              <td data-title='Student Status'>{$row["studentstatus"]}</td>
+              <td data-title='Student Status'>{$row["studentstatus"]}</td>
+              <td data-title='Student Status'>{$row["studentstatus"]}</td>
               <td class='select'>
                   <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
                      
@@ -72,7 +74,7 @@ class loadStudentData extends db_connection
         echo $this->output;
     }
 }
-if (!isset($_POST['connection']) && !isset($_POST['get_Batchid'])) {
+if (!isset($_POST['connection']) || !isset($_POST['get_Batchid'])) {
     header("location:home.php");
 } else {
     $run =  new loadStudentData($_POST["get_Batchid"], $_POST['get_pageno']);

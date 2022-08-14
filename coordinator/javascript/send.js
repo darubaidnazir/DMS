@@ -134,7 +134,7 @@ $(document).ready(function () {
          success: function (data) {
 
             if (data == 1) {
-               swal("ohoho!", "Batch has some active semester added. Can't delete the batch.", "error");
+               swal("ohoho!", "Batch has some active semester added or student added. Can't delete the batch.", "error");
 
             } else if (data == 3) {
                swal("Good job ", "Branch deleted Sucessfully! wait we are reloading Branch table", "success");

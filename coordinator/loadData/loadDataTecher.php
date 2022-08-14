@@ -88,7 +88,7 @@ class loadTeacherData extends db_connection
         echo $this->output;
     }
 }
-if (!isset($_POST['connection']) && !isset($_POST['get_Coordinator'])) {
+if (!isset($_POST['connection']) || !isset($_POST['get_Coordinator'])) {
     header("location:home.php");
 } else {
     $run =  new loadTeacherData($_POST["get_Coordinator"], $_POST['get_pageno']);
