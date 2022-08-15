@@ -22,9 +22,13 @@ class loadTeacherData extends db_connection
             $Sno = 5 * $page - 5 + 1;
         }
         foreach ($result as $row) {
+            $button = "Remove";
             $position = "Assistant Professor";
             if ($row["teacherposition"] == 2) {
                 $position = "Contractual";
+            }
+            if ($row["teacherstatus"] == "disabled") {
+                $button = "disabled";
             }
             $this->output .= "<tr id='{$row["teacherid"]}'>
             <td data-title='S.No'>{$Sno}</td>
@@ -39,11 +43,20 @@ class loadTeacherData extends db_connection
                 <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
                     <button type='button' class='btn btn-danger'>
                         Edit
-                    </button>
-                    <button type='button' id='removeteacher'class='btn btn-warning' data-id='{$row["teacherid"]}'>
-                        Remove
-                    </button>
-                    <button type='button' class='btn btn-success clickbutton'
+                    </button>";
+            if ($button == "disabled") {
+
+                $this->output .= "<button type='button' disabled class='btn btn-warning' data-id='{$row["teacherid"]}'>
+            {$button}
+        </button>";
+            } else {
+
+                $this->output .= "<button type='button' id='removeteacher'class='btn btn-warning' data-id='{$row["teacherid"]}'>
+            {$button}
+               </button>";
+            }
+
+            $this->output .= "<button type='button' class='btn btn-success clickbutton'
                         data-bs-toggle='modal' data-bs-target='#teacher-information'>
                         More Information
                     </button>

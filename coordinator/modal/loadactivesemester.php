@@ -29,25 +29,23 @@
                 foreach ($resultall as $row) {
                     if ($row["semesterstatus"] == 1) {
                 ?>
-                <tr>
-                    <td data-title="Batch Year"><?php echo $row['batchyear']; ?>
-                    </td>
-                    <td data-title="Branch Name"><?php echo $row['branchname']; ?></td>
-                    <td data-title="Current Semester"><?php echo $row['currentsemester']; ?></td>
-                    <td data-title="Total Student's"><?php echo $row['semesterid']; ?></td>
-                    <td data-title="Starting Date"><?php echo $row['opendate']; ?></td>
-                    <td data-title="Closing Date"><?php echo $row['closedate']; ?></td>
+                        <tr>
+                            <td data-title="Batch Year"><?php echo $row['batchyear']; ?>
+                            </td>
+                            <td data-title="Branch Name"><?php echo $row['branchname']; ?></td>
+                            <td data-title="Current Semester"><?php echo $row['currentsemester']; ?></td>
+                            <td data-title="Total Student's"><?php echo $row['semesterid']; ?></td>
+                            <td data-title="Starting Date"><?php echo $row['opendate']; ?></td>
+                            <td data-title="Closing Date"><?php echo $row['closedate']; ?></td>
 
-                    <td class="select">
-                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button id="assignsubjectbox" data-id="<?php echo $row['semesterid']; ?>" type="button"
-                                class="btn btn-success clickbutton" data-bs-toggle="modal"
-                                data-bs-target="#active-information-box">
-                                Subject assign
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                            <td class="select">
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <button id="assignsubjectbox" data-id="<?php echo $row['semesterid']; ?>" type="button" class="btn btn-success clickbutton" data-bs-toggle="modal" data-bs-target="#active-information-box">
+                                        Subject assign
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                 <?php
                     }
                 }
@@ -85,24 +83,23 @@
                 foreach ($resultall as $row) {
                     if ($row["semesterstatus"] == 0) {
                 ?>
-                <tr>
-                    <td data-title="Batch Year"><?php echo $row['batchyear']; ?>
-                    </td>
-                    <td data-title="Branch Name"><?php echo $row['branchname']; ?></td>
-                    <td data-title="Current Semester"><?php echo $row['semesterno']; ?></td>
-                    <td data-title="Total Student's"><?php echo $row['semesterid']; ?></td>
-                    <td data-title="Starting Date"><?php echo $row['opendate']; ?></td>
-                    <td data-title="Closing Date"><?php echo $row['closedate']; ?></td>
+                        <tr>
+                            <td data-title="Batch Year"><?php echo $row['batchyear']; ?>
+                            </td>
+                            <td data-title="Branch Name"><?php echo $row['branchname']; ?></td>
+                            <td data-title="Current Semester"><?php echo $row['semesterno']; ?></td>
+                            <td data-title="Total Student's"><?php echo $row['semesterid']; ?></td>
+                            <td data-title="Starting Date"><?php echo $row['opendate']; ?></td>
+                            <td data-title="Closing Date"><?php echo $row['closedate']; ?></td>
 
-                    <td class="select">
-                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-success clickbutton" data-bs-toggle="modal"
-                                data-bs-target="#active-informatison-box">
-                                More Information
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                            <td class="select">
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <button type="button" class="btn btn-success clickbutton" data-bs-toggle="modal" data-bs-target="#active-informatison-box">
+                                        More Information
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                 <?php
                     }
                 }
@@ -112,27 +109,28 @@
     </main>
 </div>
 <script>
-$(document).on("click", "#assignsubjectbox", function() {
-    var semesterid = $(this).data("id");
-    var coordinate = $("#coordinator_hidden").val().trim();
-    $.ajax({
-        url: "../../../DMS/coordinator/loadData/loadsemestersubject.php",
-        type: "POST",
-        data: {
-            get_Semesterid: semesterid,
-            get_Coordinatorid: coordinate,
-            connection: true
-        },
-        success: function(data) {
-
-            $(".modal-body-active").html(data);
-        }
-
+    $(document).on("click", "#assignsubjectbox", function() {
+        var semesterid = $(this).data("id");
+        var coordinate = $("#coordinator_hidden").val().trim();
+        assignsubjectbox(semesterid, coordinate);
 
     });
 
+    function assignsubjectbox(semesterid, coordinator) {
+        $.ajax({
+            url: "../../../DMS/coordinator/loadData/loadsemestersubject.php",
+            type: "POST",
+            data: {
+                get_Semesterid: semesterid,
+                get_Coordinatorid: coordinator,
+                connection: true
+            },
+            success: function(data) {
+
+                $(".modal-body-active").html(data);
+            }
 
 
-
-});
+        });
+    }
 </script>

@@ -1,5 +1,6 @@
 
 $(document).ready(function () {
+
     var myArray = new Array();
     myArray[0] = "addstudentsection";
     myArray[1] = "addsettingsection";
@@ -79,6 +80,8 @@ $(document).ready(function () {
 
         } else {
             loadDataStudent(getBatchid, 1);
+
+
         }
 
 
@@ -124,6 +127,8 @@ function loadDataStudent(get_batchid, pageno) {
         },
         success: function (data) {
             $("#addStudentData").html(data);
+
+
 
         }
 
@@ -181,6 +186,10 @@ $(document).on("click", "#removeteacher", function () {
         success: function (data) {
             if (data == 3) {
                 swal("Good job!", "Teacher Removed! ", "success");
+                $("#" + teacherid).load(location.href + " #" + teacherid);
+            }
+            else if (data == 2) {
+                swal("ohoho!", "Teacher has some subject assigned we can't delete this teacher! we have disabled the teacher ", "error");
                 $("#" + teacherid).load(location.href + " #" + teacherid);
             } else {
                 swal("ohoho!", "Something went wrong ! we could not delete the teacher. try again", "error");

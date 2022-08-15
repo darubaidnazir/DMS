@@ -255,14 +255,19 @@ require_once('dbcon.php');
                             $sql->execute();
                             if ($sql->rowCount() > 0) {
                                 while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                                    $sqll = $conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
+                                    $sqll->bindParam(1, $row['batchid']);
+                                    $sqll->execute();
+                                    $totalstudent = $sqll->rowCount();
                             ?>
+
 
                             <tr>
                                 <td data-title="Batch Year"><?php echo $row['batchyear']; ?></td>
                                 <td data-title="Branch"><?php echo $row['branchname']; ?></td>
 
                                 <td data-title="Current Semester"><?php echo $row['currentsemester']; ?></td>
-                                <td data-title="Total Student's"><?php echo $row['batchyear']; ?></td>
+                                <td data-title="Total Student's"><?php echo $totalstudent ?></td>
                                 <td data-title="Status" style="color: Green"><?php
                                                                                         if ($row['currentsemester'] >= $row['totalsemester'] && $row["batchstatus"] == 0) {
                                                                                             echo "Closed";
@@ -462,12 +467,13 @@ require_once('dbcon.php');
         </section>
         <section class="grid" id="addstudentsection">
             <button class="maindashbutton menu-button">Main Dashboard</button>
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#student-to-batch-add">Add
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#student-to-batch-add"
+                id="addstudentbutton">Add
                 Student</button>
             <section>
                 <div>
                     <small class="form-text text-muted">Select the Branch First</small>
-                    <select class="selectBranchstudent">
+                    <select class="selectBranchstudent form-select" aria-label="Default select example">
                         <option selected value="0">Select a Branch</option>
                         <?php
                         $sql = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
@@ -483,7 +489,7 @@ require_once('dbcon.php');
                         ?>
                     </select>
                     <small class="form-text text-muted">Select the Batch to Show Student's Enrolled</small>
-                    <select class="addStudentData_batch_Select">
+                    <select class="addStudentData_batch_Select form-select" aria-label="Default select example">
                         <option selected value="0">Select a Batch</option>
 
                     </select>
@@ -498,8 +504,7 @@ require_once('dbcon.php');
                                     <th>Student Name</th>
                                     <th>Student Enrollment</th>
                                     <th>Student Dob</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -548,7 +553,7 @@ require_once('dbcon.php');
                                     <th>Subject Name</th>
                                     <th>Subject Code</th>
                                     <th>Action</th>
-                                    <th>Assign Subject</th>
+
                                 </tr>
                             </thead>
                             <tfoot>
@@ -586,15 +591,7 @@ require_once('dbcon.php');
                                                 More Information
                                             </button>
                                         </div>
-                                    <td class="select">
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
-                                            <button type="button" class="btn btn-success clickbutton"
-                                                data-bs-toggle="modal" data-bs-target="#assign-teacher">
-                                                Assign Teacher
-                                            </button>
-                                        </div>
-                                    </td>
                                     </td>
                                 </tr>
                                 <?php
@@ -796,17 +793,62 @@ require_once('dbcon.php');
     </div>
     <!-- Student  informationModal End-->
     <!-- Teacher Information Modal -->
-    <div class="modal fade" id="teacher-information" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="teacher-to-batch-add" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        Teacher Information
+                        ADD Teacher
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"></div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="row py-5 m-3 forms" id="formteacher">
+                            <div class="col-md-10">
+                                <span class="message_teacher" style="color:red;"></span>
+                                <div class="form-group mt-2">
+                                    <lable>Enter Username of Teacher</lable>
+                                    <input type="text" class="form-control" id="enter-teacher-username"
+                                        placeholder="eg: waseembakshi121" required>
+                                </div>
+                                <small class="form-text text-muted mt-1">
+                                    Enter a valid username
+                                </small>
+                                <div class="form-group mt-2">
+                                    <lable>Enter Employee ID of Teacher</lable>
+                                    <input type="text" class="form-control" id="enter-emp-id" placeholder="eg: Emp-121"
+                                        required>
+                                </div>
+                                <small class="form-text text-muted mt-1">
+                                    Enter a valid Employee ID
+                                </small>
+                                <div class="form-group mt-2">
+                                    <lable>Enter Position of the Teacher</lable>
+                                    <select name="teacher-position" id="teacher-position" class="form-select"
+                                        aria-label="Default select example">
+                                        <option value="0">Select a Position</option>
+                                        <option value="1">Assistant Professor</option>
+                                        <option value="2">Contractual</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <lable>Enter Phone Number of the Teacher</lable>
+                                    <input type="number" class="form-control" id="enter-phonenumber"
+                                        placeholder="eg: 9622922604" required>
+                                </div>
+                                <small class="form-text text-muted mt-1">
+                                    Enter a valid Phone Number
+                                </small>
+                                <div class="form-group pt-3">
+                                    <button class="btn btn-primary" id="addteacherdata">Add Teacher</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -842,7 +884,7 @@ require_once('dbcon.php');
     <!-- Subject assigned to teacherInformation Modal -->
     <div class="modal fade" id="subject-assigned-to-teacher" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
@@ -866,7 +908,7 @@ require_once('dbcon.php');
     <!-- Active Semester Information Modal -->
     <div class="modal fade" id="active-information-box" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
@@ -1022,6 +1064,7 @@ $(document).ready(function() {
         var semesterid = $(this).data("id");
         var subejctid = $("#assignedselect").val();
         var teacherid = $("#assignedselectteacher").val();
+        var coordinate = $("#coordinator_hidden").val().trim();
         if (subejctid == 0 || teacherid == 0) {
 
             $("#messagesubjects").html("*Select a Subject and Teacher");
@@ -1044,7 +1087,8 @@ $(document).ready(function() {
                         swal("Good job ",
                             "Subjectt Assigned Sucessfully!*Refresh page to see changes ",
                             "success");
-                        $("#messagesubjects").html("*Refresh page to see change");
+                        assignsubjectbox(semesterid, coordinate);
+                        //   $("#messagesubjects").html("*Refresh page to see change");
 
                     } else {
                         swal("ohoho!", "Something went wrong! try again later", "error");

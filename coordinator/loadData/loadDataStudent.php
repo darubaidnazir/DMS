@@ -29,8 +29,7 @@ class loadStudentData extends db_connection
               <td data-title='Student Enrollment'>{$row["studentrollno"]}</td>
               <td data-title='Student Dob'>{$row["studentdob"]}</td>
               <td data-title='Student Status'>{$row["studentstatus"]}</td>
-              <td data-title='Student Status'>{$row["studentstatus"]}</td>
-              <td data-title='Student Status'>{$row["studentstatus"]}</td>
+             
               <td class='select'>
                   <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
                      
@@ -56,7 +55,7 @@ class loadStudentData extends db_connection
 
         $this->output .= ' <tr>
                                    
-        <td colspan="6">
+        <td colspan="7">
             <div id="pagination" style="text-align:center;">';
         for ($i = 1; $i <= $totalpage; $i++) {
             if ($i == $getpageno) {
