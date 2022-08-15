@@ -49,7 +49,7 @@ class loadTeacherData extends db_connection
                     </button>
                 </div>
                 <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                    <button type='button' class='btn btn-warning' data-bs-toggle='modal'
+                    <button type='button' class='btn btn-warning' id='subjectassignedtoteacher' data-bs-toggle='modal' data-id='{$row["teacherid"]}'
                         data-bs-target='#subject-assigned-to-teacher'>
                         Subject assigned
                     </button>

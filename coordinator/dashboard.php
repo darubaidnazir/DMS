@@ -850,7 +850,9 @@ require_once('dbcon.php');
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"></div>
+                <div class="modal-body" id="modal-body-assign-teacher"></div>
+
+
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -894,11 +896,14 @@ require_once('dbcon.php');
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        Assign Subject to Teacher
+                        Assigned Subject to Teacher
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"></div>
+                <div class="modal-body-assign-teacher">
+                    <h1>hi</h1>
+
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -996,7 +1001,23 @@ $(document).ready(function() {
 
 
     });
+    $(document).on("click", "#subjectassignedtoteacher", function(event) {
+        var teacherid = $(this).data("id");
+        $.ajax({
+            url: "../coordinator/loadData/loadteacherassignedsubject.php",
+            type: "POST",
+            data: {
+                get_Teacherid: teacherid,
+                connection: true
+            },
+            success: function(data) {
 
+                $("#modal-body-assign-teacher").html(data);
+            }
+
+
+        });
+    });
     $(document).on("click", "#assignsubjecthere", function(event) {
         var semesterid = $(this).data("id");
         var subejctid = $("#assignedselect").val();
