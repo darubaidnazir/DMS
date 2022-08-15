@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2022 at 06:57 PM
+-- Generation Time: Aug 15, 2022 at 08:10 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -38,7 +38,16 @@ CREATE TABLE `assignedsubject` (
 --
 
 INSERT INTO `assignedsubject` (`subjectid`, `semesterid`, `teacherid`) VALUES
-(901025, 901032, 701025);
+(901025, 901032, 701025),
+(901028, 901039, 701030),
+(901031, 901039, 701034),
+(901040, 901039, 701036),
+(901038, 901035, 701032),
+(901031, 901035, 701034),
+(901035, 901036, 701033),
+(901029, 901036, 701035),
+(901028, 901037, 701033),
+(901032, 901040, 701031);
 
 -- --------------------------------------------------------
 
@@ -64,7 +73,7 @@ INSERT INTO `batch` (`batchid`, `batchyear`, `currentsemester`, `creationdate`, 
 (301038, 2019, 1, '2022-08-15 15:23:23', 201037, '1'),
 (301041, 2024, 0, '2022-08-15 16:02:43', 201038, '0'),
 (301042, 2018, 1, '2022-08-15 16:52:32', 201043, '1'),
-(301043, 2019, 1, '2022-08-15 16:52:34', 201043, '1'),
+(301043, 2019, 2, '2022-08-15 18:06:57', 201043, '1'),
 (301044, 2020, 1, '2022-08-15 16:52:36', 201043, '1'),
 (301045, 2021, 1, '2022-08-15 16:52:44', 201043, '1'),
 (301046, 2021, 1, '2022-08-15 16:52:45', 201042, '1');
@@ -143,10 +152,11 @@ INSERT INTO `semester` (`semesterid`, `semesterno`, `batchid`, `opendate`, `clos
 (901033, 2, 301037, '2022-08-15 12:24:57', NULL, '1'),
 (901034, 1, 301038, '2022-08-15 15:23:23', NULL, '1'),
 (901035, 1, 301042, '2022-08-15 16:52:31', NULL, '1'),
-(901036, 1, 301043, '2022-08-15 16:52:34', NULL, '1'),
+(901036, 1, 301043, '2022-08-15 16:52:34', '2022-08-15 18:06:57', '0'),
 (901037, 1, 301044, '2022-08-15 16:52:36', NULL, '1'),
 (901038, 1, 301045, '2022-08-15 16:52:44', NULL, '1'),
-(901039, 1, 301046, '2022-08-15 16:52:45', NULL, '1');
+(901039, 1, 301046, '2022-08-15 16:52:45', NULL, '1'),
+(901040, 2, 301043, '2022-08-15 18:06:57', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -175,7 +185,20 @@ INSERT INTO `student` (`studentid`, `studentname`, `studentregno`, `studentrolln
 (501065, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '80157', 'inactive', '2022-08-15 16:55:49', 301046),
 (501066, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '40124', 'inactive', '2022-08-15 16:55:54', 301046),
 (501067, NULL, NULL, NULL, 'ubaid@gmail.com', NULL, '93907', 'inactive', '2022-08-15 16:56:00', 301046),
-(501068, NULL, NULL, NULL, 'junaid@gmail.com', NULL, '38303', 'inactive', '2022-08-15 16:56:50', 301042);
+(501068, NULL, NULL, NULL, 'junaid@gmail.com', NULL, '38303', 'inactive', '2022-08-15 16:56:50', 301042),
+(501069, NULL, NULL, NULL, 'aamir@gmail.com', NULL, '13419', 'inactive', '2022-08-15 18:00:50', 301043),
+(501070, NULL, NULL, NULL, 'huda@uok.edu', NULL, '73212', 'inactive', '2022-08-15 18:01:03', 301043),
+(501071, NULL, NULL, NULL, 'mansha@uok.edu', NULL, '86823', 'inactive', '2022-08-15 18:01:17', 301043),
+(501072, NULL, NULL, NULL, 'farhan@uok.edu', NULL, '82119', 'inactive', '2022-08-15 18:01:30', 301043),
+(501073, NULL, NULL, NULL, 'rehan@uok.edu', NULL, '99220', 'inactive', '2022-08-15 18:01:50', 301044),
+(501074, NULL, NULL, NULL, 'anum@uok.edu', NULL, '58308', 'inactive', '2022-08-15 18:02:01', 301044),
+(501075, NULL, NULL, NULL, 'imaz@uok.edu', NULL, '52998', 'inactive', '2022-08-15 18:02:08', 301044),
+(501076, NULL, NULL, NULL, 'yusra@uok.edu', NULL, '87714', 'inactive', '2022-08-15 18:02:17', 301044),
+(501077, NULL, NULL, NULL, 'aqib@uok.edu', NULL, '73333', 'inactive', '2022-08-15 18:02:24', 301044),
+(501078, NULL, NULL, NULL, 'irfan@uok.edu', NULL, '90218', 'inactive', '2022-08-15 18:02:40', 301045),
+(501079, NULL, NULL, NULL, 'yasir@uok.edu', NULL, '79856', 'inactive', '2022-08-15 18:02:50', 301045),
+(501080, NULL, NULL, NULL, 'junaid@uok.edu', NULL, '41677', 'inactive', '2022-08-15 18:02:56', 301045),
+(501081, NULL, NULL, NULL, 'umeer@uok.edu', NULL, '43921', 'inactive', '2022-08-15 18:03:07', 301045);
 
 -- --------------------------------------------------------
 
@@ -318,13 +341,13 @@ ALTER TABLE `coordinator`
 -- AUTO_INCREMENT for table `semester`
 --
 ALTER TABLE `semester`
-  MODIFY `semesterid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901040;
+  MODIFY `semesterid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901041;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501069;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501082;
 
 --
 -- AUTO_INCREMENT for table `subject`
