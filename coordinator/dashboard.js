@@ -1,6 +1,10 @@
 
 $(document).ready(function () {
 
+
+
+
+
     var myArray = new Array();
     myArray[0] = "addstudentsection";
     myArray[1] = "addsettingsection";
@@ -14,6 +18,9 @@ $(document).ready(function () {
         //  alert(getId);
         if (getId == "addbatch") {
             getId = "addbatchsection";
+            bodyofbatch();
+            bodyofbranch();
+
         } else if (getId == "addstudent") {
             getId = "addstudentsection";
             //  loadDataStudent();
@@ -26,6 +33,8 @@ $(document).ready(function () {
             getId = "addsettingsection";
         } else if (getId == "addsubject") {
             getId = "addsubjectsection";
+            bodyofsubject();
+
         }
 
         for (var i = 0; i < myArray.length; i++) {
@@ -69,6 +78,7 @@ $(document).ready(function () {
             });
         }
     });
+
 
     $(".addStudentData_batch_Select").change(function () {
         var getBatchid = $(this).val();
@@ -163,6 +173,9 @@ $(document).on("click", "#removestudent", function () {
             if (data == 3) {
                 swal("Good job!", "Student Removed! ", "success");
                 $("#" + studentid).load(location.href + " #" + studentid);
+            } else if (data == 2) {
+                swal("ohoho!", "Student Can't be removed! Student already registered with a active semester ", "error");
+                $("#" + studentid).load(location.href + " #" + studentid);
             } else {
                 swal("ohoho!", "Something went wrong ! we could not delete the student. try again", "error");
             }
@@ -253,8 +266,8 @@ $("#addsubjectcode").on("click", function (event) {
                     if (data == 2) {
                         swal("ohoho!", "Subject already exits? try with different Subject Code", "error");
                     } else if (data == 3) {
-                        swal("Good job ", "Subeject added Sucessfully!*Refresh page to see changes ", "success");
-                        $("#messagesubject").html("*Refresh page to see change");
+                        swal("Good job ", "Subeject added Sucessfully!", "success");
+                        bodyofsubject();
 
                     } else {
                         swal("ohoho!", "Something went wrong! try again later", "error");
@@ -270,6 +283,63 @@ $("#addsubjectcode").on("click", function (event) {
         }
 
 });
+
+function bodyofsubject() {
+    var coordinate = $("#coordinator_hidden").val().trim();
+
+    $.ajax({
+        url: "../coordinator/loadData/loadSubject.php",
+        type: "POST",
+        data: { get_Coordinatorid: coordinate, connection: true },
+        success: function (data) {
+
+            $("#bodysubject").html(data);
+
+        }
+
+
+    });
+
+
+
+}
+
+function bodyofbranch() {
+    var coordinate = $("#coordinator_hidden").val().trim();
+
+    $.ajax({
+        url: "../coordinator/loadData/loadBranch.php",
+        type: "POST",
+        data: { get_Coordinatorid: coordinate, connection: true },
+        success: function (data) {
+
+            $("#bodybranch").html(data);
+
+        }
+
+
+    });
+
+}
+function bodyofbatch() {
+    var coordinate = $("#coordinator_hidden").val().trim();
+
+    $.ajax({
+        url: "../coordinator/loadData/loadBatch.php",
+        type: "POST",
+        data: { get_Coordinatorid: coordinate, connection: true },
+        success: function (data) {
+            $("#bodybatch").html(data);
+
+        }
+
+
+    });
+
+
+
+}
+
 
 $(window).on('load', function () {
     $("#cover").fadeOut(5000);

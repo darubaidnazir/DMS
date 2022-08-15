@@ -63,11 +63,18 @@ require_once('dbcon.php');
 }
 
 .maindashbutton {
-    padding: 10px;
-    color: red;
+    padding: 5px;
     margin-bottom: 3px;
     font-weight: bolder;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.menu_button {
+    padding: 5px;
+
+    margin-bottom: 3px;
+    font-weight: bolder;
+
 }
 
 .loading span {
@@ -95,10 +102,34 @@ require_once('dbcon.php');
     color: #fff;
     font-family: tahoma;
 }
+
+.greeting {
+
+    background-color: #565656;
+    font: bold 30px 'Futura';
+    color: transparent black;
+    text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.8);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+}
+
+.tag-wrap {
+    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+}
+
+.tag {
+    background: #FB8C00;
+    color: white;
+    padding: 1rem 2rem 1rem 2rem;
+    font: bold 20px system-ui;
+    clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+}
 </style>
 
 <body>
-    <div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!While we are Fetching
+    <div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!<br>While we are
+        Fetching<br>
         Data From the Server...</div>
     <?php
     require_once("svg.php");
@@ -119,6 +150,14 @@ require_once('dbcon.php');
                 <li>
                     <a href="#0">
                         <svg>
+                            <use xlink:href="#home"></use>
+                        </svg>
+                        <span class="maindashbutton"> Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#0">
+                        <svg>
                             <use xlink:href="#pages"></use>
                         </svg>
                         <span id="addbatch" class="menu_button">Batch</span>
@@ -127,7 +166,7 @@ require_once('dbcon.php');
                 <li>
                     <a href="#0">
                         <svg>
-                            <use xlink:href="#users"></use>
+                            <use xlink:href="#student"></use>
                         </svg>
                         <span id="addstudent" class="menu_button"> Student</span>
                     </a>
@@ -136,7 +175,7 @@ require_once('dbcon.php');
                 <li>
                     <a href="#0">
                         <svg>
-                            <use xlink:href="#users"></use>
+                            <use xlink:href="#teacher"></use>
                         </svg>
                         <span id="addteacher" class="menu_button">Teacher</span>
                     </a>
@@ -144,7 +183,7 @@ require_once('dbcon.php');
                 <li>
                     <a href="#0">
                         <svg>
-                            <use xlink:href="#pages"></use>
+                            <use xlink:href="#activebook"></use>
                         </svg>
                         <span id="activesemster" class="menu_button">Active Semster</span>
                     </a>
@@ -152,7 +191,7 @@ require_once('dbcon.php');
                 <li>
                     <a href="#0">
                         <svg>
-                            <use xlink:href="#pages"></use>
+                            <use xlink:href="#subject"></use>
                         </svg>
                         <span id="addsubject" class="menu_button">Subject</span>
                     </a>
@@ -165,7 +204,7 @@ require_once('dbcon.php');
                 <li>
                     <a href="#0">
                         <svg>
-                            <use xlink:href="#settings"></use>
+                            <use xlink:href="#setting"></use>
                         </svg>
                         <span id="addsetting" class="menu_button">Settings</span>
                     </a>
@@ -173,7 +212,7 @@ require_once('dbcon.php');
                 <li>
                     <a href="logout.php">
                         <svg>
-                            <use xlink:href="#settings"></use>
+                            <use xlink:href="#logout"></use>
                         </svg>
                         <span id="addsetting">Logout</span>
                     </a>
@@ -196,9 +235,14 @@ require_once('dbcon.php');
         <section class="search-and-user">
 
             <div class="admin-profile">
-                <span class="greeting">Hello Sir, <?php
+                <span class="greeting">Hello,
 
-                                                    echo $_SESSION['username'];  ?></span>
+                </span>
+                <span class="tag-wrap">
+                    <span class="tag">
+                        <?php echo $_SESSION['username']; ?>
+                    </span>
+                </span>
                 <div class="notifications">
 
                 </div>
@@ -215,15 +259,15 @@ require_once('dbcon.php');
             <article>8</article>
         </section>
         <section class="grid" id="addbatchsection">
-            <button class="maindashbutton menu-button">Main Dashboard</button>
-            <button id="addbranchview" class="btn btn-dark"> Add Branch</button>
-            <button id="addbatchview" class="btn btn-dark"> Add Batch</button>
+
+
             <style></style>
             <div id="viewbatch">
                 <h2>
-                    Batch
+                    <button id="addbranchview" class="btn btn-outline-dark"> View Branch</button>
 
-                    <button type="button" class="btn btn-light" data-bs-toggle="modal"
+
+                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
                         data-bs-target="#batch-year-modal">
                         Add Batch
                     </button>
@@ -248,84 +292,16 @@ require_once('dbcon.php');
                                 <th colspan="3"></th>
                             </tr>
                         </tfoot>
-                        <tbody>
-                            <?php
-                            $sql = $conn->prepare("SELECT * FROM `batch` INNER JOIN `branch` ON batch.branchid = branch.branchid WHERE branch.coordinatorid = ? ");
-                            $sql->bindParam(1, $coordinatorid);
-                            $sql->execute();
-                            if ($sql->rowCount() > 0) {
-                                while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
-                                    $sqll = $conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
-                                    $sqll->bindParam(1, $row['batchid']);
-                                    $sqll->execute();
-                                    $totalstudent = $sqll->rowCount();
-                            ?>
+                        <tbody id="bodybatch">
 
-
-                            <tr>
-                                <td data-title="Batch Year"><?php echo $row['batchyear']; ?></td>
-                                <td data-title="Branch"><?php echo $row['branchname']; ?></td>
-
-                                <td data-title="Current Semester"><?php echo $row['currentsemester']; ?></td>
-                                <td data-title="Total Student's"><?php echo $totalstudent ?></td>
-                                <td data-title="Status" style="color: Green"><?php
-                                                                                        if ($row['currentsemester'] >= $row['totalsemester'] && $row["batchstatus"] == 0) {
-                                                                                            echo "Closed";
-                                                                                        } else if ($row["batchstatus"] == 0) {
-
-                                                                                            echo "in-active";
-                                                                                        } else {
-                                                                                            echo "Active";
-                                                                                        }
-
-                                                                                        ?></td>
-                                <?php
-                                        if ($row['currentsemester'] == 0) {
-                                            echo "<td class='select'>
-                                            <a class='btn btn-primary' href='#' id='opensemester' data-id='{$row["batchid"]}'> Open Semester</a>
-                                        </td>";
-                                        } else if ($row['currentsemester'] > $row['totalsemester'] || $row["batchstatus"] == 0) {
-                                            echo "<td class='select'>
-                                            <a class='btn btn-danger'   href='#'> Closed</a>
-                                        </td>";
-                                        } else {
-                                            echo "<td class='select'>
-                                            <a class='btn btn-danger'  id='closesemester' data-id='{$row["batchid"]}' href='#'> Close Semester</a>
-                                        </td>";
-                                        }
-                                        ?>
-
-
-                                <td class="select">
-                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <button type="button" class="btn btn-danger">Edit</button>
-                                        <button type="button" class="btn btn-warning" id="deleteBatch"
-                                            data-id="<?php echo $row['batchid']; ?>">
-                                            Remove
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <?php
-                                }
-                            } else {
-                                echo '<tr>
-                        <td data-title="Branch Id">No Batch Found   </td>
-            </tr>';
-                            }
-
-
-                            ?>
                         </tbody>
                     </table>
                 </main>
             </div>
             <div id="viewbranch">
                 <h2>
-                    Branch
-                    <button type="button" class="btn btn-light" data-bs-toggle="modal"
+                    <button id="addbatchview" class="btn btn-outline-dark"> View Batch</button>
+                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
                         data-bs-target="#add-branch-modal">
                         Add Branch
                     </button>
@@ -347,45 +323,9 @@ require_once('dbcon.php');
                                 <th colspan="3"></th>
                             </tr>
                         </tfoot>
-                        <tbody>
+                        <tbody id="bodybranch">
 
-                            <?php
-                            $sql = $conn->prepare("SELECT * FROM branch WHERE coordinatorid = ?");
-                            $sql->bindParam(1, $coordinatorid);
-                            $sql->execute();
-                            if ($sql->rowCount() > 0) {
-                                while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
-                            ?>
-                            <tr>
-                                <td data-title="Branch ID"><?php echo $row['branchid']; ?> </td>
-                                <td data-title="Branch Name">
-                                    <?php echo $row['branchname']; ?>
-                                </td>
-                                <td data-title="Hod"><?php echo $_SESSION['username']; ?></td>
-                                <td data-title="Total Semester">
-                                    <?php echo $row['totalsemester']; ?>
 
-                                </td>
-                                <td class="select">
-                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <button type="button" class="btn btn-danger">Edit</button>
-                                        <button type="button" class="btn btn-warning" id="deleteBranch"
-                                            data-id="<?php echo $row['branchid']; ?>">
-                                            Delete
-                                        </button>
-
-                                    </div>
-                                </td>
-
-                            </tr>
-                            <?php
-                                }
-                            } else {
-                                echo '<tr>
-                <td data-title="Branch Id">No Branch Found  </td>
-                 </tr>';
-                            }
-                            ?>
 
                         </tbody>
                     </table>
@@ -431,11 +371,13 @@ require_once('dbcon.php');
         }
         </style>
         <section class="grid" id="addteachersection">
-            <button class="maindashbutton menu-button">Main Dashboard</button>
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#teacher-to-batch-add">Add
-                teacher</button>
+
+
             <section>
-                <div>
+                <div class="text-center">
+                    <button class="btn btn-warning m-2" data-bs-toggle="modal"
+                        data-bs-target="#teacher-to-batch-add">Add
+                        teacher</button>
                     <main>
                         <table>
                             <thead>
@@ -466,13 +408,14 @@ require_once('dbcon.php');
             </section>
         </section>
         <section class="grid" id="addstudentsection">
-            <button class="maindashbutton menu-button">Main Dashboard</button>
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#student-to-batch-add"
-                id="addstudentbutton">Add
-                Student</button>
             <section>
-                <div>
-                    <small class="form-text text-muted">Select the Branch First</small>
+                <div class="text-center">
+
+                    <button class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#student-to-batch-add"
+                        id="addstudentbutton">Add
+                        Student</button>
+
+                    <br><small class="form-text text-muted">Select the Branch First</small>
                     <select class="selectBranchstudent form-select" aria-label="Default select example">
                         <option selected value="0">Select a Branch</option>
                         <?php
@@ -534,13 +477,14 @@ require_once('dbcon.php');
 
         </section>
         <section class="grid" id="addsubjectsection">
-            <button class="maindashbutton menu-button">Main Dashboard</button>
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#button-subject-information">Add
-                Subject </button>
-            <section>
-                <div style="  max-height: 700px;
-  overflow-y: scroll;">
 
+
+            <div style="  max-height: 700px;
+  overflow-y: scroll;" class="text-center">
+                <button class="btn btn-warning m-2" data-bs-toggle="modal"
+                    data-bs-target="#button-subject-information">Add
+                    Subject </button>
+                <section>
                     <main>
                         <table>
                             <thead>
@@ -561,56 +505,21 @@ require_once('dbcon.php');
                                     <th colspan="3"></th>
                                 </tr>
                             </tfoot>
-                            <tbody>
-                                <tr>
-                                    <?php
-                                    $Sno = 1;
-                                    $sql = $conn->prepare("SELECT * FROM `subject` WHERE `coordinatorid` = ?");
-                                    $sql->bindParam(1, $coordinatorid);
-                                    $sql->execute();
-                                    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-                                    foreach ($result as $row) {
+                            <tbody id="bodysubject">
 
-                                    ?>
-                                    <td data-title="S.No"><?php echo $Sno; ?></td>
-                                    <td data-title="Subejct Id"><?php echo $row["subjectid"]; ?></td>
-                                    <td data-title="Subject Name"><?php echo $row["subjectname"]; ?></td>
-                                    <td data-title="Subject Code"><?php echo $row["subjectcode"]; ?></td>
-
-                                    <td class="select">
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <button type="button" class="btn btn-danger">
-                                                Edit
-                                            </button>
-                                            <button type="button" class="btn btn-warning" id="removesubject"
-                                                data-id="<?php echo $row["subjectid"]; ?>">
-                                                Remove
-                                            </button>
-                                            <button type="button" class="btn btn-success clickbutton"
-                                                data-bs-toggle="modal" data-bs-target="#subject-information">
-                                                More Information
-                                            </button>
-                                        </div>
-
-                                    </td>
-                                </tr>
-                                <?php
-                                        $Sno++;
-                                    }
-                            ?>
                             </tbody>
                         </table>
                     </main>
-                </div>
-            </section>
+            </div>
         </section>
-        <section class="grid" id="addsettingsection">
-            <button class="maindashbutton menu-button">Main Dashboard</button>
-            Add SettingSection
-        </section>
-        <footer class="page-footer">
-            <span>Department Management System North Campus</span>
-        </footer>
+    </section>
+    <section class="grid" id="addsettingsection">
+
+        Add SettingSection
+    </section>
+    <footer class="page-footer">
+        <span>Department Management System North Campus</span>
+    </footer>
     </section>
 
     <!-- Button trigger modal -->
@@ -805,6 +714,7 @@ require_once('dbcon.php');
                 </div>
                 <div class="modal-body">
                     <div class="modal-body">
+
                         <div class="row py-5 m-3 forms" id="formteacher">
                             <div class="col-md-10">
                                 <span class="message_teacher" style="color:red;"></span>
@@ -846,6 +756,7 @@ require_once('dbcon.php');
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
@@ -1022,9 +933,11 @@ require_once('dbcon.php');
     ?>
     <!-- Add Student  informationModal End-->
 </body>
+
 <script src="dash.js"></script>
 <script src="dashboard.js"></script>
 <script src="javascript/send.js"></script>
+
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">

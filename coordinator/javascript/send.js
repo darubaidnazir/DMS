@@ -20,8 +20,10 @@ $(document).ready(function () {
                   swal("ohoho!", "Branch name already exits? try with different name", "error");
                   $("#sendBranch").html("Add Branch");
                } else if (data == 3) {
-                  swal("Good job ", "Branch added Sucessfully! wait we are reloading branch table", "success");
+                  swal("Good job ", "Branch added Sucessfully!", "success");
+                  bodyofbranch();
                   $("#sendBranch").html("Created");
+
 
 
 
@@ -68,6 +70,7 @@ $(document).ready(function () {
                   } else if (data == 3) {
                      swal("Good job ", "Batch added Sucessfully! wait we are reloading batch table", "success");
                      $("#sendBranch").html("Created");
+                     bodyofbatch();
 
 
                   } else {
@@ -103,8 +106,8 @@ $(document).ready(function () {
                swal("ohoho!", "Branch has some batch's added. Can't delete the branch.", "error");
 
             } else if (data == 3) {
-               swal("Good job ", "Branch deleted Sucessfully! wait we are reloading Branch table", "success");
-               setTimeout(() => { location.reload(); }, 5000);
+               swal("Good job ", "Branch deleted Sucessfully! ", "success");
+               bodyofbranch();
 
             } else {
                swal("ohoho!", "Something went wrong! try again later", "error");
@@ -138,8 +141,8 @@ $(document).ready(function () {
                swal("ohoho!", "Batch has some active semester added or student added. Can't delete the batch.", "error");
 
             } else if (data == 3) {
-               swal("Good job ", "Branch deleted Sucessfully! wait we are reloading Branch table", "success");
-               setTimeout(() => { location.reload(); }, 5000);
+               swal("Good job ", "Branch deleted Sucessfully! ", "success");
+               bodyofbatch();
 
             } else {
                swal("ohoho!", "Something went wrong! try again later", "error");

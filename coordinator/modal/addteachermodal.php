@@ -1,5 +1,6 @@
 <script>
 $(document).ready(function() {
+
     $("#addteacherdata").on("click", function(event) {
         event.preventDefault();
         var username = $("#enter-teacher-username").val().trim();
@@ -41,6 +42,7 @@ $(document).ready(function() {
                     } else if (data == 3) {
                         swal("Good job ", "Teacher Added!", "success");
                         $("#addteacherdata").html("Added");
+
                         loadDataTeacher(1);
                     } else {
                         swal("ohoho!", "Something went wrong! try again later", "error");
