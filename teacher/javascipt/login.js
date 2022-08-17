@@ -20,10 +20,21 @@ $(document).ready(function () {
                     beforeSend: function () {
                       $('#login').html("logiining");
                     },
-                    data: {email_:email,pass_word:password},
+                    data: {email_:email,pass_word:password,connection:conn},
                     success: function (data){
-                      alert(data);
-                      $('#login').html("logged in Sucessfully");
+                      if (data == 0) {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
+          
+                      } else if (data == 1) {
+                        swal("ohoho!", "Email or password is incorrect!", "error");
+          
+                      } else if (data == 3) {
+                        location.replace('dashboard');
+          
+                      } else {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
+          
+                      }
                     }
                     
       

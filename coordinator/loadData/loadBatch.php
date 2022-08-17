@@ -4,7 +4,8 @@ class loadBatch extends db_connection
 {
 
     function  __construct($getcoordinatorid)
-    {
+    { 
+        
         parent::__construct();
         $output = "";
         $message = "";
