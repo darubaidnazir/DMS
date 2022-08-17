@@ -7,6 +7,20 @@ class sendassign extends db_connection
 
     {
         parent::__construct();
+
+        $check =  $this->conn->prepare("SELECT * FROM `teacher` WHERE `teacherid` = ?");
+        $check->bindParam(1, $getteacherid);
+        $check->execute();
+        $countteacher = $check->rowCount();
+        $check =  $this->conn->prepare("SELECT * FROM `subject` WHERE `subjectid` = ?");
+        $check->bindParam(1, $getsubjectid);
+        $check->execute();
+        $countsubject = $check->rowCount();
+        $check =  $this->conn->prepare("SELECT * FROM `semester` WHERE `semesterid` = ?");
+        $check->bindParam(1, $getsemesterid);
+        $check->execute();
+        $countsemester = $check->rowCount();
+        if($countteacher > 0 && $countsemester >0 && $countsubject > 0){
         $sql = $this->conn->prepare("SELECT * FROM `assignedsubject` WHERE semesterid = ? && subjectid = ?");
         $sql->bindParam(1, $getsemesterid);
         $sql->bindParam(2, $getsubjectid);
@@ -28,7 +42,11 @@ class sendassign extends db_connection
                 //something wongs
             }
         }
+    } else{
+        echo 0;
     }
+}
+   
 }
 
 

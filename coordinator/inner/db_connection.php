@@ -29,6 +29,6 @@ class db_connection{
 }
 
 if(!isset($_POST['connection'])){
-header("location:home.php");
+  header("Location:../../../coordinatorlogin_signup.html");
 }
 ?>

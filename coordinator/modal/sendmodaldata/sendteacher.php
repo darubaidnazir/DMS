@@ -6,17 +6,22 @@ class sendteacher extends db_connection
     private $getempid;
     private $getphonenumber;
     private $getposition;
-    private $getcoordinator;
-    function __construct($getusername, $getempid, $getphonenumber, $getposition, $getcoordinator)
+    private $getCoordinatorid;
+    function __construct($getusername, $getempid, $getphonenumber, $getposition, $getCoordinatorid)
     {
         parent::__construct();
+        require_once("../../../coordinator/checkDataExists/coordinator.php");
         $this->getusername = $getusername;
         $this->getempid = $getempid;
         $this->getphonenumber = $getphonenumber;
         $this->getposition = $getposition;
-        $this->getcoordinator = $getcoordinator;
+        $this->getCoordinatorid = $getCoordinatorid;
         if ($this->checkValid()) {
+            if($countCoordinatorid > 0 ){
             $this->sendData();
+            }else{
+                echo 0;
+            }
         } else {
             // echo "no valid infom
             echo 1;

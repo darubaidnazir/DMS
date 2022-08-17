@@ -5,6 +5,13 @@ class deleteteacher extends db_connection
     function __construct($getteacherid)
     {
         parent::__construct();
+
+
+        $check =  $this->conn->prepare("SELECT * FROM `teacher` WHERE `teacherid` = ?");
+        $check->bindParam(1, $getteacherid);
+        $check->execute();
+        $count = $check->rowCount();
+        if ($count > 0){
         $sqlpre = $this->conn->prepare("SELECT * FROM `assignedsubject` WHERE `teacherid` = ?");
         $sqlpre->bindParam(1, $getteacherid);
         $sqlpre->execute();
@@ -26,6 +33,10 @@ class deleteteacher extends db_connection
             $sql1->bindParam(2, $getteacherid);
             $sql1->execute();
             echo 2;
+        }
+    }
+        else{
+            echo 0;
         }
     }
 }

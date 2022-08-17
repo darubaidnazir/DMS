@@ -51,7 +51,7 @@ class loadTeacherData extends db_connection
         </button>";
             } else {
 
-                $this->output .= "<button type='button' id='removeteacher'class='btn btn-warning' data-id='{$row["teacherid"]}'>
+                $this->output .= "<button style='background-color:white;' type='button' id='removeteacher'class='btn btn-warning' data-id='{$row["teacherid"]}'>
             {$button}
                </button>";
             }

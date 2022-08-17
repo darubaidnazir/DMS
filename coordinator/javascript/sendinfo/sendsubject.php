@@ -3,9 +3,11 @@ include_once("../../inner/db_connection.php");
 class sendsubject extends db_connection
 {
 
-    function __construct($getsubjectname, $getsubjectcode, $getCoordinator)
+    function __construct($getsubjectname, $getsubjectcode, $getCoordinatorid)
     {
         parent::__construct();
+        require_once("../../../coordinator/checkDataExists/coordinator.php");
+        if($countCoordinator > 0){
         if ($getsubjectcode == ""  ||  $getsubjectname == "") {
             //not valid 
             echo 1;
@@ -21,7 +23,7 @@ class sendsubject extends db_connection
                 $sql = $this->conn->prepare("INSERT INTO `subject` ( `subjectname`, `subjectcode`, `coordinatorid`, `creationtime`) VALUES (?,?,?, current_timestamp())");
                 $sql->bindParam(1, $getsubjectname);
                 $sql->bindParam(2, $getsubjectcode);
-                $sql->bindParam(3, $getCoordinator);
+                $sql->bindParam(3, $getCoordinatorid);
                 if ($sql->execute()) {
                     echo 3;
                     //send
@@ -32,6 +34,9 @@ class sendsubject extends db_connection
             }
         }
     }
+}else{
+    echo 0;
+}
 }
 
 

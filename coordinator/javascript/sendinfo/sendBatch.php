@@ -3,17 +3,23 @@
   class sendBatch extends db_connection{
          private $get_Year;
          private $get_Branch;
-         private $get_Coordinator;
+         private $get_Coordinatorid;
 
-    function __construct($getYear,$getBranch,$getCoordinator){
+    function __construct($getYear,$getBranch,$getCoordinatorid){
         parent::__construct(); 
+
         $this->get_Branch = trim(htmlspecialchars($getBranch));
         $this->get_Year = trim(htmlspecialchars($getYear));
-        $this->get_Coordinator = trim(htmlspecialchars($getCoordinator));
-
+        $this->get_Coordinatorid = trim(htmlspecialchars($getCoordinatorid));
+           require_once("../../../coordinator/checkDataExists/branch.php");
+           require_once("../../../coordinator/checkDataExists/coordinator.php");
         if ($this->checkValid()){
             //data is valid 
+            if ($countCoordinator > 0 && $countBranch > 0){
             $this->sendData();
+            }else{
+                echo 0;
+            }
         }else{
             //data is not valid to send into database
             echo 1;
@@ -55,6 +61,7 @@
         
 
         }
+   
 
     }
 
