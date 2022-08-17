@@ -74,6 +74,7 @@ $(document).ready(function () {
                     $(".addStudentData_batch_Select").append(data);
 
 
+
                 }
             });
         }
@@ -339,7 +340,6 @@ function bodyofbatch() {
 
 
 }
-
 
 $(window).on('load', function () {
     $("#cover").fadeOut(5000);

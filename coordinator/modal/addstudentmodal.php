@@ -10,6 +10,43 @@
             <div class="modal-body">
                 <div class="row py-5 m-3 forms" id="form">
                     <div class="col-md-10">
+                        <div class="form-group mt-2 text-center">
+                            <form action="../../../DMS/coordinator/modal/sendmodaldata/upload.php" method="post"
+                                enctype="multipart/form-data" id="myformupload">
+                                <p class="fw-bold">Import Email address using Excel File</p>
+                                <small style="color:red;font-weight:bold;">*Select a batch first</small>
+                                <?php
+                                $sql = $conn->prepare("SELECT * FROM `batch` INNER JOIN `branch` ON batch.branchid = branch.branchid WHERE branch.coordinatorid = ? ");
+                                $sql->bindParam(1, $coordinatorid);
+                                $sql->execute();
+                                $results = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+                                ?>
+                                <select class="form-select" name="batchid" id="formimport"
+                                    aria-label="Default select example">
+                                    <?php
+                                    $string = "";
+                                    foreach ($results as $rows) {
+                                        $string .= $rows['branchname'];
+                                        $string .= "-";
+                                        $string .= $rows['batchyear'];
+
+                                    ?>
+                                    <option value="<?php echo $rows['batchid']; ?>"><?php echo $string; ?></option>
+                                    <?php
+                                        $string = '';
+                                    }
+                                    ?>
+                                </select>
+                                <input type="file" class="form-control m-2" name="file" id="file" required value=""
+                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+
+                                <button class="btn btn-primary" style="margin-top:5px;" type="submit" id="import"
+                                    name="import">Upload Excel</button>
+                            </form>
+
+                        </div>
+                        <h1 class="text-center m-3">OR</h1>
                         <div class="form-group mt-2">
 
                             <div class="form-group mt-2">
@@ -92,7 +129,6 @@
             }
 
         });
-
 
 
     });
