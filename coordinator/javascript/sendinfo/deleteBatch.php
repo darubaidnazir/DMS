@@ -4,13 +4,19 @@ class deleteBatch extends db_connection
 {
 
   private $getBatchid;
-  private $getCoordinator;
+  private $getCoordinatorid;
 
-  function __construct($getBatchid, $getCoordinator)
+  function __construct($getBatchid, $getCoordinatorid)
   {
     parent::__construct();
+
+    require_once("../../../coordinator/checkDataExists/batch.php");
+    require_once("../../../coordinator/checkDataExists/coordinator.php");
+  
+    if ($countBatch > 0 && $countCoordinator > 0){
+
     $this->getBatchid = $getBatchid;
-    $this->getCoordintor = $getCoordinator;
+    $this->getCoordinatorid = $getCoordinatorid;
 
     $sql = $this->conn->prepare("SELECT * FROM `batch` WHERE `batchid` = ?");
     $sql->bindParam(1, $getBatchid);
@@ -36,6 +42,9 @@ class deleteBatch extends db_connection
       echo 1;
     }
   }
+}else{
+  echo 0;
+}
 }
 
 if (isset($_POST["get_Coordinator"]) && isset($_POST['connection']) && isset($_POST['get_Batchid'])) {

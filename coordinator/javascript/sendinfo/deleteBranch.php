@@ -3,12 +3,18 @@
   class deleteBranch extends db_connection{
               
                private $getBranchid;
-               private $getCoordinator;
+               private $getCoordinatorid;
                
-    function __construct($getBranchid,$getCoordinator){
+    function __construct($getBranchid,$getCoordinatorid){
         parent::__construct(); 
+           require_once("../../../coordinator/checkDataExists/branch.php");
+           require_once("../../../coordinator/checkDataExists/coordinator.php");
+
+        if ($countBranch > 0 && $countCoordinator > 0){
+    
+      
         $this->getBranchid = $getBranchid;
-        $this->getCoordintor = $getCoordinator;
+        $this->getCoordintorid = $getCoordinatorid;
         
         $sql = $this->conn->prepare("SELECT * FROM `batch` WHERE `branchid` = ?");
         $sql->bindParam(1,$getBranchid);
@@ -21,7 +27,7 @@
         }else{
             $sql = $this->conn->prepare("DELETE FROM `branch` WHERE `branchid` = ? && `coordinatorid` = ?");
         $sql->bindParam(1,$getBranchid);
-        $sql->bindParam(2,$getCoordinator);
+        $sql->bindParam(2,$getCoordinatorid);
         if($sql->execute()){
             //deleted 
             echo 3;
@@ -35,6 +41,9 @@
          
 
 
+    }else{
+      echo 0;
+    }
   }
   
 if(isset($_POST["get_Coordinator"]) && isset($_POST['connection']) && isset($_POST['get_Branchid'])){

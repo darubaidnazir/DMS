@@ -3,17 +3,22 @@
   class sendBranch extends db_connection{
          private $get_Branch;
          private $get_Semester;
-         private $get_Coordinator;
+         private $get_Coordinatorid;
 
-    function __construct($getBranch,$getSemester,$getCoordinator){
+    function __construct($getBranch,$getSemester,$getCoordinatorid){
         parent::__construct(); 
         $this->get_Branch = trim(htmlspecialchars($getBranch));
         $this->get_Semester = trim(htmlspecialchars($getSemester));
-        $this->get_Coordinator = trim(htmlspecialchars($getCoordinator));
-
+        $this->get_Coordinatorid = trim(htmlspecialchars($getCoordinatorid));
+    
+        require_once("../../../coordinator/checkDataExists/coordinator.php");
         if ($this->checkValid()){
             //data is valid 
+            if ($countCoordinator > 0){
             $this->sendData();
+            }else{
+                echo 0;
+            }
         }else{
             //data is not valid to send into database
             echo 1;
@@ -32,7 +37,7 @@
     }
     private function sendData(){
         $sql = $this->conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ? &&  `branchname` = ? ");
-        $sql->bindParam(1,$this->get_Coordinator);
+        $sql->bindParam(1,$this->get_Coordinatorid);
         $sql->bindParam(2,$this->get_Branch);
         $sql->execute();
         if ( $sql->rowCount() > 0 ){
@@ -42,7 +47,7 @@
             $sql = $this->conn->prepare("INSERT INTO `branch`(`branchname`, `totalsemester`, `coordinatorid`, `creationdate`) VALUES (?,?,?,current_timestamp())");
             $sql->bindParam(1,$this->get_Branch);
             $sql->bindParam(2,$this->get_Semester);
-            $sql->bindParam(3,$this->get_Coordinator);
+            $sql->bindParam(3,$this->get_Coordinatorid);
             if( $sql->execute()){
                 //data send
                 echo 3;

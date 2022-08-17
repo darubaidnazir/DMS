@@ -3,12 +3,13 @@ require_once("../../inner/db_connection.php");
 class sendStudent extends db_connection
 {
     private $email;
-    private $batchid;
-    function __construct($email, $batchid)
+    private $getBatchid;
+    function __construct($email, $getBatchid)
     {
         parent::__construct();
         $this->email = $email;
-        $this->batchid = $batchid;
+        $this->getBatchid = $getBatchid;
+        require_once("../../../coordinator/checkDataExists/batch.php");
         if ($this->checkValid()) {
             $sql = $this->conn->prepare("SELECT * FROM `student` WHERE `studentemail` = ?");
             $sql->bindParam(1, $email);
@@ -17,11 +18,12 @@ class sendStudent extends db_connection
                 // student email already exits 
                 echo 2;
             } else {
+                if ($countBatch > 0){
                 $password = rand(10000, 100000);
                 $sql = $this->conn->prepare("INSERT INTO `student`(`studentemail`,`studentpassword`, `batchid`,`creationtime`) VALUES (?,?,?,current_timestamp())");
                 $sql->bindParam(1, $this->email);
                 $sql->bindParam(2, $password);
-                $sql->bindParam(3, $this->batchid);
+                $sql->bindParam(3, $this->getBatchid);
                 if ($sql->execute()) {
                     // data send 
                     echo 3;
@@ -29,6 +31,9 @@ class sendStudent extends db_connection
                     //data not send
                     echo 1;
                 }
+            }else{
+                echo 0;
+            }
             }
         } else {
             // data is invalid

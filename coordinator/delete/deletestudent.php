@@ -5,6 +5,12 @@ class deletestudent extends db_connection
     function __construct($getstudentid)
     {
         parent::__construct();
+        $check =  $this->conn->prepare("SELECT * FROM `student` WHERE `studentid` = ?");
+        $check->bindParam(1, $getstudentid);
+        $check->execute();
+        $count = $check->rowCount();
+        
+        if ($count > 0){
         $sqlpre = $this->conn->prepare("SELECT * FROM student INNER JOIN batch on student.batchid = batch.batchid WHERE student.studentid = ?");
         $sqlpre->bindParam(1, $getstudentid);
         $sqlpre->execute();
@@ -22,7 +28,10 @@ class deletestudent extends db_connection
                 //not deleted
             }
         }
+    }else{
+        echo 1;
     }
+}
 }
 
 
