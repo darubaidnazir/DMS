@@ -16,116 +16,12 @@ require_once('dbcon.php');
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
     <link rel="stylesheet" href="table.css" />
     <link rel="stylesheet" href="dash.css" />
+    <link rel="stylesheet" href="mainboard.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <title>Coordinator Dashboard</title>
 </head>
-<style>
-#addbatchview {
-    display: none;
-}
 
-#viewbatch {
-    display: block;
-}
-
-#viewbranch {
-    display: none;
-}
-
-#addbatchsection {
-    display: none;
-}
-
-#addstudentsection {
-    display: none;
-}
-
-#addsettingsection {
-    display: none;
-}
-
-#addteachersection {
-    display: none;
-}
-
-#addactivesemestersection {
-    display: none;
-}
-
-#addsubjectsection {
-    display: none;
-}
-
-.forms {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-}
-
-.maindashbutton {
-    padding: 5px;
-    margin-bottom: 3px;
-    font-weight: bolder;
-
-}
-
-.menu_button {
-    padding: 5px;
-
-    margin-bottom: 3px;
-    font-weight: bolder;
-
-}
-
-.loading span {
-    display: inline-block;
-    vertical-align: middle;
-    width: .6em;
-    height: .6em;
-    margin: .19em;
-    background: #007DB6;
-    border-radius: .6em;
-    animation: loading 1s infinite alternate;
-}
-
-#cover {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background: #141526;
-    z-index: 9999;
-    font-size: 65px;
-    text-align: center;
-    padding-top: 200px;
-    color: #fff;
-    font-family: tahoma;
-}
-
-.greeting {
-
-    background-color: #565656;
-    font: bold 30px 'Futura';
-    color: transparent black;
-    text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.8);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-}
-
-.tag-wrap {
-    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
-}
-
-.tag {
-    background: #FB8C00;
-    color: white;
-    padding: 1rem 2rem 1rem 2rem;
-    font: bold 20px system-ui;
-    clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
-}
-</style>
 
 <body>
     <div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!<br>While we are

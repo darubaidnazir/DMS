@@ -17,9 +17,9 @@ class sendteacher extends db_connection
         $this->getposition = $getposition;
         $this->getCoordinatorid = $getCoordinatorid;
         if ($this->checkValid()) {
-            if($countCoordinatorid > 0 ){
-            $this->sendData();
-            }else{
+            if ($countCoordinator > 0) {
+                $this->sendData();
+            } else {
                 echo 0;
             }
         } else {
@@ -40,14 +40,16 @@ class sendteacher extends db_connection
             // username is present 
             echo 2;
         } else {
-            $password =  rand(100000, 100000);
+            $this->password = $this->getusername;
+            $this->password .= "@123";
+            $password = password_hash($this->password, PASSWORD_DEFAULT);
             $sql = $this->conn->prepare("INSERT INTO `teacher` (`teacherusername`, `teacherempid`, `teacherphonenumber`, `teacherposition`, `teacherpassword`, `coordinatorid`,`creationtime`) VALUES (?,?,?,?,?,?,current_timestamp())");
             $sql->bindParam(1, $this->getusername);
             $sql->bindParam(2, $this->getempid);
             $sql->bindParam(3, $this->getphonenumber);
             $sql->bindParam(4, $this->getposition);
             $sql->bindParam(5, $password);
-            $sql->bindParam(6, $this->getcoordinator);
+            $sql->bindParam(6, $this->getCoordinatorid);
 
 
             if ($sql->execute()) {

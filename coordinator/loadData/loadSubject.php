@@ -37,6 +37,7 @@ class loadSubject extends db_connection
                                 </tr>";
             $Sno++;
         }
+
         echo $output;
     }
 }

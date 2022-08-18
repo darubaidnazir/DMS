@@ -20,6 +20,7 @@ if (isset($_POST['import']) && isset($_POST['batchid'])) {
         $fileExtension = explode('.', $fileName);
         $fileExtension = strtolower(end($fileExtension));
         $newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
+
         if ($fileExtension != "xlsx") {
             echo '<div class="alert alert-error" role="alert">
             File Extension is wrong try with .xlsx file extension only!!! Click on<a href="http://localhost/DMS/coordinator/dashboard">Dashboard</a> 

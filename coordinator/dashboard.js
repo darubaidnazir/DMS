@@ -1,10 +1,5 @@
 
 $(document).ready(function () {
-
-
-
-
-
     var myArray = new Array();
     myArray[0] = "addstudentsection";
     myArray[1] = "addsettingsection";

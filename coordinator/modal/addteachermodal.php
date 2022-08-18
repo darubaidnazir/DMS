@@ -34,6 +34,7 @@ $(document).ready(function() {
                     get_Coordinator: coordinate
                 },
                 success: function(data) {
+
                     if (data == 2) {
                         swal("ohoho!",
                             "teacher username already exits! try different username",

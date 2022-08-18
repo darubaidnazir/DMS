@@ -39,10 +39,10 @@
         }
     }
          
-
-
-    }else{
+    else{
       echo 0;
+    }
+
     }
   }
   
@@ -52,5 +52,3 @@ if(isset($_POST["get_Coordinator"]) && isset($_POST['connection']) && isset($_PO
 }else{
   header("Location:../../../coordinatorlogin_signup.html");
 }
-
-?>

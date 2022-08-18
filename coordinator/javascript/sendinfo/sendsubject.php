@@ -7,36 +7,36 @@ class sendsubject extends db_connection
     {
         parent::__construct();
         require_once("../../../coordinator/checkDataExists/coordinator.php");
-        if($countCoordinator > 0){
-        if ($getsubjectcode == ""  ||  $getsubjectname == "") {
-            //not valid 
-            echo 1;
-        } else {
-            $sql1 = $this->conn->prepare("SELECT * FROM `subject` WHERE `subjectcode` = ?");
-            $sql1->bindParam(1, $getsubjectcode);
-            $sql1->execute();
-            $count = $sql1->rowCount();
-            if ($count > 0) {
-                echo 2;
-                //subejct code present
+        if ($countCoordinator > 0) {
+            if ($getsubjectcode == ""  ||  $getsubjectname == "") {
+                //not valid 
+                echo 1;
             } else {
-                $sql = $this->conn->prepare("INSERT INTO `subject` ( `subjectname`, `subjectcode`, `coordinatorid`, `creationtime`) VALUES (?,?,?, current_timestamp())");
-                $sql->bindParam(1, $getsubjectname);
-                $sql->bindParam(2, $getsubjectcode);
-                $sql->bindParam(3, $getCoordinatorid);
-                if ($sql->execute()) {
-                    echo 3;
-                    //send
+                $sql1 = $this->conn->prepare("SELECT * FROM `subject` WHERE `subjectcode` = ?");
+                $sql1->bindParam(1, $getsubjectcode);
+                $sql1->execute();
+                $count = $sql1->rowCount();
+                if ($count > 0) {
+                    echo 2;
+                    //subejct code present
                 } else {
-                    //not send
-                    echo 1;
+                    $sql = $this->conn->prepare("INSERT INTO `subject` ( `subjectname`, `subjectcode`, `coordinatorid`, `creationtime`) VALUES (?,?,?, current_timestamp())");
+                    $sql->bindParam(1, $getsubjectname);
+                    $sql->bindParam(2, $getsubjectcode);
+                    $sql->bindParam(3, $getCoordinatorid);
+                    if ($sql->execute()) {
+                        echo 3;
+                        //send
+                    } else {
+                        //not send
+                        echo 1;
+                    }
                 }
             }
+        } else {
+            echo 0;
         }
     }
-}else{
-    echo 0;
-}
 }
 
 
