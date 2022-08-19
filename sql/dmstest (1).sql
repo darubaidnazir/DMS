@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2022 at 08:10 PM
+-- Generation Time: Aug 19, 2022 at 03:39 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -47,7 +47,11 @@ INSERT INTO `assignedsubject` (`subjectid`, `semesterid`, `teacherid`) VALUES
 (901035, 901036, 701033),
 (901029, 901036, 701035),
 (901028, 901037, 701033),
-(901032, 901040, 701031);
+(901032, 901040, 701031),
+(901024, 901033, 701037),
+(901025, 901034, 701037),
+(901026, 901034, 701037),
+(901027, 901034, 701037);
 
 -- --------------------------------------------------------
 
@@ -70,7 +74,7 @@ CREATE TABLE `batch` (
 
 INSERT INTO `batch` (`batchid`, `batchyear`, `currentsemester`, `creationdate`, `branchid`, `batchstatus`) VALUES
 (301037, 2018, 2, '2022-08-15 12:24:57', 201037, '1'),
-(301038, 2019, 1, '2022-08-15 15:23:23', 201037, '1'),
+(301038, 2019, 2, '2022-08-19 05:56:25', 201037, '1'),
 (301041, 2024, 0, '2022-08-15 16:02:43', 201038, '0'),
 (301042, 2018, 1, '2022-08-15 16:52:32', 201043, '1'),
 (301043, 2019, 2, '2022-08-15 18:06:57', 201043, '1'),
@@ -131,6 +135,34 @@ INSERT INTO `coordinator` (`coordinatiorid`, `fullname`, `email`, `phonenumber`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lectureplan`
+--
+
+CREATE TABLE `lectureplan` (
+  `semesterid` int(100) NOT NULL,
+  `subjectid` int(100) NOT NULL,
+  `lecturedate` date NOT NULL,
+  `lecturehour` int(100) NOT NULL,
+  `lecturetopic` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lectureplan`
+--
+
+INSERT INTO `lectureplan` (`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`) VALUES
+(701037, 901024, '2022-08-19', 1, 'Mobile'),
+(701037, 901024, '2022-08-19', 1, 'mdmmmd'),
+(701037, 901024, '2022-08-19', 1, 'mdmmmd'),
+(701037, 901024, '2022-08-12', 1, 'jjjj'),
+(701037, 901024, '2022-08-12', 1, 'jjjj'),
+(701037, 901024, '2022-08-12', 1, 'jjjj'),
+(701037, 901024, '2022-08-12', 1, 'jjjj'),
+(701037, 901024, '2022-08-12', 1, 'jjjj');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `semester`
 --
 
@@ -150,13 +182,14 @@ CREATE TABLE `semester` (
 INSERT INTO `semester` (`semesterid`, `semesterno`, `batchid`, `opendate`, `closedate`, `semesterstatus`) VALUES
 (901032, 1, 301037, '2022-08-15 12:22:02', '2022-08-15 12:24:57', '0'),
 (901033, 2, 301037, '2022-08-15 12:24:57', NULL, '1'),
-(901034, 1, 301038, '2022-08-15 15:23:23', NULL, '1'),
+(901034, 1, 301038, '2022-08-15 15:23:23', '2022-08-19 05:56:25', '0'),
 (901035, 1, 301042, '2022-08-15 16:52:31', NULL, '1'),
 (901036, 1, 301043, '2022-08-15 16:52:34', '2022-08-15 18:06:57', '0'),
 (901037, 1, 301044, '2022-08-15 16:52:36', NULL, '1'),
 (901038, 1, 301045, '2022-08-15 16:52:44', NULL, '1'),
 (901039, 1, 301046, '2022-08-15 16:52:45', NULL, '1'),
-(901040, 2, 301043, '2022-08-15 18:06:57', NULL, '1');
+(901040, 2, 301043, '2022-08-15 18:06:57', NULL, '1'),
+(901041, 2, 301038, '2022-08-19 05:56:25', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -198,7 +231,100 @@ INSERT INTO `student` (`studentid`, `studentname`, `studentregno`, `studentrolln
 (501078, NULL, NULL, NULL, 'irfan@uok.edu', NULL, '90218', 'inactive', '2022-08-15 18:02:40', 301045),
 (501079, NULL, NULL, NULL, 'yasir@uok.edu', NULL, '79856', 'inactive', '2022-08-15 18:02:50', 301045),
 (501080, NULL, NULL, NULL, 'junaid@uok.edu', NULL, '41677', 'inactive', '2022-08-15 18:02:56', 301045),
-(501081, NULL, NULL, NULL, 'umeer@uok.edu', NULL, '43921', 'inactive', '2022-08-15 18:03:07', 301045);
+(501081, NULL, NULL, NULL, 'umeer@uok.edu', NULL, '43921', 'inactive', '2022-08-15 18:03:07', 301045),
+(501082, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:18', 0),
+(501083, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:19', 0),
+(501084, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:19', 0),
+(501085, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:19', 0),
+(501086, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:57', 0),
+(501087, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:57', 0),
+(501088, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:58', 0),
+(501089, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:58', 0),
+(501090, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
+(501091, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
+(501092, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
+(501093, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
+(501094, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
+(501095, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
+(501096, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
+(501097, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
+(501098, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
+(501099, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
+(501100, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
+(501101, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
+(501102, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
+(501103, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
+(501104, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
+(501105, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
+(501106, NULL, NULL, NULL, 'exam@gmail.com', NULL, '', 'inactive', '2022-08-17 15:26:40', 301038),
+(501107, NULL, NULL, NULL, 'mama@gmail.com', NULL, '', 'inactive', '2022-08-17 15:28:08', 301037),
+(501108, NULL, NULL, NULL, 'zaaminahmad@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
+(501109, NULL, NULL, NULL, 'saqlain@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
+(501110, NULL, NULL, NULL, 'zad@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
+(501111, NULL, NULL, NULL, 'uboiiiiiiii@yahoo.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
+(501112, NULL, NULL, NULL, 'kahloghsf@gff.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
+(501113, NULL, NULL, NULL, 'suhail@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `studentabsent`
+--
+
+CREATE TABLE `studentabsent` (
+  `studentid` int(100) NOT NULL,
+  `subjectid` int(100) NOT NULL,
+  `semesterid` int(100) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `studentabsent`
+--
+
+INSERT INTO `studentabsent` (`studentid`, `subjectid`, `semesterid`, `date`) VALUES
+(501102, 901024, 701037, '2022-08-12'),
+(501103, 901024, 701037, '2022-08-12'),
+(501104, 901024, 701037, '2022-08-12'),
+(501105, 901024, 701037, '2022-08-12'),
+(501107, 901024, 701037, '2022-08-12'),
+(501108, 901024, 701037, '2022-08-12'),
+(501109, 901024, 701037, '2022-08-12'),
+(501111, 901024, 701037, '2022-08-12'),
+(501112, 901024, 701037, '2022-08-12'),
+(501113, 901024, 701037, '2022-08-12'),
+(501102, 901024, 701037, '2022-08-12'),
+(501103, 901024, 701037, '2022-08-12'),
+(501104, 901024, 701037, '2022-08-12'),
+(501105, 901024, 701037, '2022-08-12'),
+(501107, 901024, 701037, '2022-08-12'),
+(501108, 901024, 701037, '2022-08-12'),
+(501109, 901024, 701037, '2022-08-12'),
+(501111, 901024, 701037, '2022-08-12'),
+(501112, 901024, 701037, '2022-08-12'),
+(501113, 901024, 701037, '2022-08-12'),
+(501102, 901024, 701037, '2022-08-12'),
+(501103, 901024, 701037, '2022-08-12'),
+(501104, 901024, 701037, '2022-08-12'),
+(501105, 901024, 701037, '2022-08-12'),
+(501107, 901024, 701037, '2022-08-12'),
+(501108, 901024, 701037, '2022-08-12'),
+(501109, 901024, 701037, '2022-08-12'),
+(501111, 901024, 701037, '2022-08-12'),
+(501112, 901024, 701037, '2022-08-12'),
+(501113, 901024, 701037, '2022-08-12'),
+(501107, 901024, 701037, '2022-08-12'),
+(501110, 901024, 701037, '2022-08-12'),
+(501102, 901024, 701037, '2022-08-12'),
+(501103, 901024, 701037, '2022-08-12'),
+(501104, 901024, 701037, '2022-08-12'),
+(501105, 901024, 701037, '2022-08-12'),
+(501107, 901024, 701037, '2022-08-12'),
+(501108, 901024, 701037, '2022-08-12'),
+(501109, 901024, 701037, '2022-08-12'),
+(501111, 901024, 701037, '2022-08-12'),
+(501112, 901024, 701037, '2022-08-12'),
+(501113, 901024, 701037, '2022-08-12');
 
 -- --------------------------------------------------------
 
@@ -235,7 +361,8 @@ INSERT INTO `subject` (`subjectid`, `subjectname`, `subjectcode`, `coordinatorid
 (901037, 'Computer Network Lab', 'CSE-3568L', '101019', '2022-08-15 16:47:45'),
 (901038, 'Computer Network  and Security', 'CSE-8596', '101019', '2022-08-15 16:48:07'),
 (901039, 'Al', 'CSE-8896', '101019', '2022-08-15 16:48:16'),
-(901040, 'Machine Learning', 'CSE-8866', '101019', '2022-08-15 16:48:34');
+(901040, 'Machine Learning', 'CSE-8866', '101019', '2022-08-15 16:48:34'),
+(901041, 'Urdu', 'CSE-5452', '101019', '2022-08-18 16:00:03');
 
 -- --------------------------------------------------------
 
@@ -267,7 +394,8 @@ INSERT INTO `teacher` (`teacherid`, `teacherusername`, `teacherempid`, `teacherp
 (701033, 'harisqazi', 'CSE-0004', '9696857896', 1, '100000', '2022-08-15 16:40:52', 101019, 'active'),
 (701034, 'Khalid_hussain', 'CSE-0005', '7007845621', 1, '100000', '2022-08-15 16:41:54', 101019, 'active'),
 (701035, 'SumairaMehraj', 'CSE-C-0006', '7004785161', 2, '100000', '2022-08-15 16:42:41', 101019, 'active'),
-(701036, 'YousufMir', 'CSE-C-0007', '7004785161', 2, '100000', '2022-08-15 16:43:06', 101019, 'active');
+(701036, 'YousufMir', 'CSE-C-0007', '7004785161', 2, '100000', '2022-08-15 16:43:06', 101019, 'active'),
+(701037, 'darubi', 'emp121', '1234567895', 1, '$2y$10$4PXVlVxVpKQ7wDeJgIYFi.m0/m0KOK4RwoOkXPCCJLEYPGn25Urxu', '2022-08-18 12:29:55', 101013, 'active');
 
 --
 -- Indexes for dumped tables
@@ -341,25 +469,25 @@ ALTER TABLE `coordinator`
 -- AUTO_INCREMENT for table `semester`
 --
 ALTER TABLE `semester`
-  MODIFY `semesterid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901041;
+  MODIFY `semesterid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901042;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501082;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501114;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subjectid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901041;
+  MODIFY `subjectid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901042;
 
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701037;
+  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701038;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
