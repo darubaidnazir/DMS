@@ -36,6 +36,7 @@ class sendattendance extends db_connection
                     $checkstudent->bindParam(1, $getid[$i]);
                     $checkstudent->execute();
                     if ($checkstudent->rowCount() == 1) {
+
                         $sql = $this->conn->prepare("INSERT INTO `studentabsent`(`studentid`, `subjectid`, `semesterid`, `markdate`) VALUES (?,?,?,?)");
                         $sql->bindParam(2, $getsubjectid);
                         $sql->bindParam(3, $getsemesterid);

@@ -240,7 +240,7 @@ $(document).ready(function() {
                 connection: true
             },
             success: function(data) {
-
+                alert(data);
                 if (data == 3) {
                     swal("Good job!", "Attendance Recored Sucessfully! ", "success");
                     $("#sendattendance").html("Submited");

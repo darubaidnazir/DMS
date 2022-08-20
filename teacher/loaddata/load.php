@@ -33,7 +33,7 @@ class loadteachersubject extends db_connection
         <td style='color:green;' class='table-primary'>{$rows["subjectcode"]}</td>
         <td style='color:green;' class='table-primary'>{$rows["batchyear"]}</td>
         <td style='color:green;' class='table-primary'>{$rows["semesterno"]}</td>
-        <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance.php?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
+        <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
         
     </tr>";
                     $Sno++;

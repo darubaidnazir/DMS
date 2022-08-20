@@ -22,11 +22,9 @@ require_once("../coordinator/dbcon.php");
     <title>Teacher Dashboard</title>
 </head>
 <style>
-#addbatchview {
+#addstudentrecordsection {
     display: none;
 }
-
-
 
 .tag-wrap {
     filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
@@ -80,7 +78,15 @@ require_once("../coordinator/dbcon.php");
                         <svg>
                             <use xlink:href="#pages"></use>
                         </svg>
-                        <span id="addbatch" class="menu_button">Lecture Plan</span>
+                        <span id="addbatch" class="menu_button">Lecture Details</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#0">
+                        <svg>
+                            <use xlink:href="#setting"></use>
+                        </svg>
+                        <span id="addstudentrecord" class="menu_button">Student Record</span>
                     </a>
                 </li>
 
@@ -102,7 +108,7 @@ require_once("../coordinator/dbcon.php");
                         <svg>
                             <use xlink:href="#logout"></use>
                         </svg>
-                        <span id="addsetting">Logout</span>
+                        <span id="addsettingjj">Logout</span>
                     </a>
                 </li>
 
@@ -128,7 +134,7 @@ require_once("../coordinator/dbcon.php");
                 </span>
                 <span class="tag-wrap">
                     <span class="tag">
-                        <?php echo $_SESSION['teacherusername']; ?>
+                        <?php echo $_SESSION['teacherusername'];    ?><br>
                         <form>
                             <input type="hidden" id="teacher_hidden" value="<?php echo $teacherid; ?>" />
                         </form>
@@ -200,6 +206,69 @@ require_once("../coordinator/dbcon.php");
                 </main>
             </div>
         </section>
+        <section class="grid" id="addstudentrecordsection">
+            <div class="text-center maintable">
+                <p>
+                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to View Student
+                        Attendnace
+                        Record.</lable>
+
+                    <select class="form-control" aria-label="Default select example" id='subjectlecture1'>
+                        <option selected value="0">Select a Subject</option>
+                        <?php
+                        $sql1 = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE assignedsubject.teacherid = ? && semester.semesterstatus = 1");
+                        $sql1->bindParam(1, $teacherid);
+                        $sql1->execute();
+                        $resulttable = $sql1->fetchAll(PDO::FETCH_ASSOC);
+                        $string = "";
+                        foreach ($resulttable as $row) {
+                            $string .=  $row['subjectname'];
+                            $string .= "-";
+                            $string .=  $row['subjectcode'];
+
+                        ?>
+                        <option data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid']; ?>">
+                            <?php echo $string; ?></option>
+
+                        <?php
+                            $string = "";
+                        }
+                        ?>
+                        < </select>
+                            <small id="mm1" style="color:red;"></small>
+                </p>
+
+                <main>
+                    <button id="exportstudents" class="btn btn-info" style="display:none;">Export</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Student Roll No</th>
+                                <th>Student Name</th>
+                                <th>Total Class</th>
+                                <th>Present </th>
+                                <th>Absent</th>
+                                <th>Percentage</th>
+
+
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="addstudenttable">
+
+                        </tbody>
+
+                    </table>
+                </main>
+            </div>
+        </section>
+
+
         <section class="grid" id="addsettingsection">
             setting
         </section>
@@ -233,9 +302,8 @@ require_once("../coordinator/dbcon.php");
 </body>
 
 </html>
-
+<script src="../teacher/javascipt/dashboard.js"> </script>
 <script src="../coordinator/dash.js"></script>
-<script src="javascipt/dashboard.js"></script>
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
@@ -258,6 +326,25 @@ $("#subjectlecture").on("change", function() {
 
 
 });
+$("#subjectlecture1").on("change", function() {
+    var value = $(this).val();
+    var semesterid = $(this).find(':selected').data('city');
+
+    if (value == 0) {
+
+        $("#mm1").html("* Select a Subject");
+
+    } else {
+
+        $("#mm1").html("");
+        viewstudenttable(value, semesterid);
+        $("#exportstudents").css("display", "block");
+
+    }
+
+
+});
+
 
 function viewlecturetable(value, semesterid) {
     $.ajax({
@@ -274,6 +361,25 @@ function viewlecturetable(value, semesterid) {
 
 
 
+    });
+
+}
+
+function viewstudenttable(value, semesterid) {
+    $.ajax({
+        url: "loaddata/loadstudent.php",
+        type: "POST",
+        data: {
+            getsubjectid: value,
+            connection: true,
+            getsemesterid: semesterid
+        },
+        success: function(data) {
+            $("#addstudenttable").html(data);
+
+
+
+        }
     });
 
 }

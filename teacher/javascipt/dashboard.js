@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     myArray[0] = "addsettingsection";
     myArray[1] = "addbatchsection";
+    myArray[2] = "addstudentrecordsection";
 
     $(".menu_button").click(function () {
         $("#maindashboardsection").css("display", "none");
@@ -16,6 +17,11 @@ $(document).ready(function () {
         } else if (getId == "addsetting") {
             getId = "addsettingsection";
         }
+        else if (getId == "addstudentrecord") {
+            getId = "addstudentrecordsection";
+        }
+
+
         for (var i = 0; i < myArray.length; i++) {
             if (myArray[i] == getId) {
                 continue;

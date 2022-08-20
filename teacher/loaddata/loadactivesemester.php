@@ -1,6 +1,6 @@
 <style>
 .maintable {
-    max-height: 500px;
+    max-height: 700px;
     overflow-y: scroll;
     padding: 10px;
     margin: 5px;
