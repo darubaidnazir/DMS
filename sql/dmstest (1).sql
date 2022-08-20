@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2022 at 03:39 PM
+-- Generation Time: Aug 20, 2022 at 06:41 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -51,7 +51,11 @@ INSERT INTO `assignedsubject` (`subjectid`, `semesterid`, `teacherid`) VALUES
 (901024, 901033, 701037),
 (901025, 901034, 701037),
 (901026, 901034, 701037),
-(901027, 901034, 701037);
+(901027, 901034, 701037),
+(901026, 901041, 701037),
+(901030, 901040, 701038),
+(901028, 901040, 701038),
+(901035, 901039, 701038);
 
 -- --------------------------------------------------------
 
@@ -80,7 +84,8 @@ INSERT INTO `batch` (`batchid`, `batchyear`, `currentsemester`, `creationdate`, 
 (301043, 2019, 2, '2022-08-15 18:06:57', 201043, '1'),
 (301044, 2020, 1, '2022-08-15 16:52:36', 201043, '1'),
 (301045, 2021, 1, '2022-08-15 16:52:44', 201043, '1'),
-(301046, 2021, 1, '2022-08-15 16:52:45', 201042, '1');
+(301046, 2021, 1, '2022-08-15 16:52:45', 201042, '1'),
+(301047, 2018, 0, '2022-08-19 15:04:39', 201040, '0');
 
 -- --------------------------------------------------------
 
@@ -151,14 +156,9 @@ CREATE TABLE `lectureplan` (
 --
 
 INSERT INTO `lectureplan` (`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`) VALUES
-(701037, 901024, '2022-08-19', 1, 'Mobile'),
-(701037, 901024, '2022-08-19', 1, 'mdmmmd'),
-(701037, 901024, '2022-08-19', 1, 'mdmmmd'),
-(701037, 901024, '2022-08-12', 1, 'jjjj'),
-(701037, 901024, '2022-08-12', 1, 'jjjj'),
-(701037, 901024, '2022-08-12', 1, 'jjjj'),
-(701037, 901024, '2022-08-12', 1, 'jjjj'),
-(701037, 901024, '2022-08-12', 1, 'jjjj');
+(901040, 901028, '2022-08-20', 3, 'jfnjd'),
+(901040, 901028, '2022-08-21', 1, 'osmjjd'),
+(901040, 901028, '2022-08-22', 1, 'osmjjdjjsjs');
 
 -- --------------------------------------------------------
 
@@ -215,55 +215,84 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`studentid`, `studentname`, `studentregno`, `studentrollno`, `studentemail`, `studentdob`, `studentpassword`, `studentstatus`, `creationtime`, `batchid`) VALUES
-(501065, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '80157', 'inactive', '2022-08-15 16:55:49', 301046),
-(501066, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '40124', 'inactive', '2022-08-15 16:55:54', 301046),
-(501067, NULL, NULL, NULL, 'ubaid@gmail.com', NULL, '93907', 'inactive', '2022-08-15 16:56:00', 301046),
-(501068, NULL, NULL, NULL, 'junaid@gmail.com', NULL, '38303', 'inactive', '2022-08-15 16:56:50', 301042),
-(501069, NULL, NULL, NULL, 'aamir@gmail.com', NULL, '13419', 'inactive', '2022-08-15 18:00:50', 301043),
-(501070, NULL, NULL, NULL, 'huda@uok.edu', NULL, '73212', 'inactive', '2022-08-15 18:01:03', 301043),
-(501071, NULL, NULL, NULL, 'mansha@uok.edu', NULL, '86823', 'inactive', '2022-08-15 18:01:17', 301043),
-(501072, NULL, NULL, NULL, 'farhan@uok.edu', NULL, '82119', 'inactive', '2022-08-15 18:01:30', 301043),
-(501073, NULL, NULL, NULL, 'rehan@uok.edu', NULL, '99220', 'inactive', '2022-08-15 18:01:50', 301044),
-(501074, NULL, NULL, NULL, 'anum@uok.edu', NULL, '58308', 'inactive', '2022-08-15 18:02:01', 301044),
-(501075, NULL, NULL, NULL, 'imaz@uok.edu', NULL, '52998', 'inactive', '2022-08-15 18:02:08', 301044),
-(501076, NULL, NULL, NULL, 'yusra@uok.edu', NULL, '87714', 'inactive', '2022-08-15 18:02:17', 301044),
-(501077, NULL, NULL, NULL, 'aqib@uok.edu', NULL, '73333', 'inactive', '2022-08-15 18:02:24', 301044),
-(501078, NULL, NULL, NULL, 'irfan@uok.edu', NULL, '90218', 'inactive', '2022-08-15 18:02:40', 301045),
-(501079, NULL, NULL, NULL, 'yasir@uok.edu', NULL, '79856', 'inactive', '2022-08-15 18:02:50', 301045),
-(501080, NULL, NULL, NULL, 'junaid@uok.edu', NULL, '41677', 'inactive', '2022-08-15 18:02:56', 301045),
-(501081, NULL, NULL, NULL, 'umeer@uok.edu', NULL, '43921', 'inactive', '2022-08-15 18:03:07', 301045),
-(501082, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:18', 0),
-(501083, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:19', 0),
-(501084, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:19', 0),
-(501085, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:26:19', 0),
-(501086, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:57', 0),
-(501087, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:57', 0),
-(501088, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:58', 0),
-(501089, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:37:58', 0),
-(501090, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
-(501091, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
-(501092, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
-(501093, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:41:24', 0),
-(501094, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
-(501095, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
-(501096, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
-(501097, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:43:31', 0),
-(501098, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
-(501099, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
-(501100, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
-(501101, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 12:48:38', 0),
-(501102, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
-(501103, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
-(501104, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
-(501105, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-17 13:43:18', 301037),
-(501106, NULL, NULL, NULL, 'exam@gmail.com', NULL, '', 'inactive', '2022-08-17 15:26:40', 301038),
-(501107, NULL, NULL, NULL, 'mama@gmail.com', NULL, '', 'inactive', '2022-08-17 15:28:08', 301037),
-(501108, NULL, NULL, NULL, 'zaaminahmad@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
-(501109, NULL, NULL, NULL, 'saqlain@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
-(501110, NULL, NULL, NULL, 'zad@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
-(501111, NULL, NULL, NULL, 'uboiiiiiiii@yahoo.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
-(501112, NULL, NULL, NULL, 'kahloghsf@gff.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037),
-(501113, NULL, NULL, NULL, 'suhail@gmail.com', NULL, '', 'inactive', '2022-08-17 15:29:15', 301037);
+(501259, NULL, NULL, NULL, 'darubaidnazir@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501260, NULL, NULL, NULL, 'zamin@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501261, NULL, NULL, NULL, 'areeba@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501262, NULL, NULL, NULL, 'mesh@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501263, NULL, NULL, NULL, 'exam@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501264, NULL, NULL, NULL, 'masma@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501265, NULL, NULL, NULL, 'mamsa@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501266, NULL, NULL, NULL, 'mamaa@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501267, NULL, NULL, NULL, 'massma@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501268, NULL, NULL, NULL, 'mamaaaa@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501269, NULL, NULL, NULL, 'mamaee@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501270, NULL, NULL, NULL, 'mafffma@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501271, NULL, NULL, NULL, 'mfffama@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501272, NULL, NULL, NULL, 'mwwama@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501273, NULL, NULL, NULL, 'a122@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501274, NULL, NULL, NULL, 'shanie61@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501275, NULL, NULL, NULL, 'keshaun40@green.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501276, NULL, NULL, NULL, 'jkris@batz.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501277, NULL, NULL, NULL, 'bokuneva@kreiger.org', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501278, NULL, NULL, NULL, 'semard@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501279, NULL, NULL, NULL, 'rhills@krajcik.info', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501280, NULL, NULL, NULL, 'yfadel@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501281, NULL, NULL, NULL, 'trevion.little@stokes.net', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501282, NULL, NULL, NULL, 'hershel.lebsack@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501283, NULL, NULL, NULL, 'durward40@hegmann.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501284, NULL, NULL, NULL, 'smayert@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501285, NULL, NULL, NULL, 'amari.torp@kuvalis.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501286, NULL, NULL, NULL, 'xswift@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501287, NULL, NULL, NULL, 'carter.ines@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501288, NULL, NULL, NULL, 'walton.rodriguez@heathcote.net', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501289, NULL, NULL, NULL, 'trey.rowe@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501290, NULL, NULL, NULL, 'harmony02@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501291, NULL, NULL, NULL, 'peter18@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501292, NULL, NULL, NULL, 'pansy.corkery@weissnat.org', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501293, NULL, NULL, NULL, 'npowlowski@torp.biz', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501294, NULL, NULL, NULL, 'stefan31@smitham.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501295, NULL, NULL, NULL, 'beaulah.roberts@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501296, NULL, NULL, NULL, 'shania.leannon@hodkiewicz.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501297, NULL, NULL, NULL, 'sporer.zack@feest.org', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501298, NULL, NULL, NULL, 'drussel@gleichner.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501299, NULL, NULL, NULL, 'bergnaum.genoveva@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:25', 301046),
+(501300, NULL, NULL, NULL, 'mary14@stracke.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501301, NULL, NULL, NULL, 'esmeralda.reichel@wilkinson.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501302, NULL, NULL, NULL, 'hyatt.lois@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501303, NULL, NULL, NULL, 'rodriguez.adrienne@spencer.net', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501304, NULL, NULL, NULL, 'kurtis.bartell@streich.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501305, NULL, NULL, NULL, 'brown.viva@vandervort.biz', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501306, NULL, NULL, NULL, 'morissette.harmony@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501307, NULL, NULL, NULL, 'palma.reynolds@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501308, NULL, NULL, NULL, 'oren21@wuckert.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501309, NULL, NULL, NULL, 'fhowell@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501310, NULL, NULL, NULL, 'willow74@rogahn.info', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501311, NULL, NULL, NULL, 'weimann.giovani@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501312, NULL, NULL, NULL, 'ondricka.silas@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501313, NULL, NULL, NULL, 'lenny.stanton@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501314, NULL, NULL, NULL, 'tracy.goyette@carroll.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501315, NULL, NULL, NULL, 'kblanda@schoen.biz', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501316, NULL, NULL, NULL, 'abbott.joana@kuvalis.info', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501317, NULL, NULL, NULL, 'dillan.ullrich@gmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501318, NULL, NULL, NULL, 'von.bennie@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501319, NULL, NULL, NULL, 'flossie29@zboncak.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501320, NULL, NULL, NULL, 'courtney.nitzsche@williamson.org', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501321, NULL, NULL, NULL, 'noemie.vandervort@yahoo.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501322, NULL, NULL, NULL, 'benjamin.padberg@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501323, NULL, NULL, NULL, 'nienow.charlene@huel.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501324, NULL, NULL, NULL, 'annalise32@fahey.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501325, NULL, NULL, NULL, 'bayer.albin@kris.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501326, NULL, NULL, NULL, 'jlueilwitz@swaniawski.biz', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501327, NULL, NULL, NULL, 'kiehn.victoria@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501328, NULL, NULL, NULL, 'cassin.velva@torphy.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501329, NULL, NULL, NULL, 'ophelia.cruickshank@towne.info', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501330, NULL, NULL, NULL, 'ellis59@mills.net', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501331, NULL, NULL, NULL, 'davis.ima@mohr.org', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501332, NULL, NULL, NULL, 'larkin.rigoberto@hotmail.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501333, NULL, NULL, NULL, 'mclaughlin.howell@senger.com', NULL, '', 'inactive', '2022-08-20 09:13:26', 301046),
+(501334, NULL, NULL, NULL, 'some@gmail.com', NULL, '55074', 'inactive', '2022-08-20 11:27:27', 301043),
+(501335, NULL, NULL, NULL, 'some1@gmail.com', NULL, '59687', 'inactive', '2022-08-20 11:27:31', 301043),
+(501336, NULL, NULL, NULL, 'some3@gmail.com', NULL, '67483', 'inactive', '2022-08-20 11:27:36', 301043);
 
 -- --------------------------------------------------------
 
@@ -275,56 +304,19 @@ CREATE TABLE `studentabsent` (
   `studentid` int(100) NOT NULL,
   `subjectid` int(100) NOT NULL,
   `semesterid` int(100) NOT NULL,
-  `date` date NOT NULL
+  `markdate` varchar(100) NOT NULL,
+  `lecturehour` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `studentabsent`
 --
 
-INSERT INTO `studentabsent` (`studentid`, `subjectid`, `semesterid`, `date`) VALUES
-(501102, 901024, 701037, '2022-08-12'),
-(501103, 901024, 701037, '2022-08-12'),
-(501104, 901024, 701037, '2022-08-12'),
-(501105, 901024, 701037, '2022-08-12'),
-(501107, 901024, 701037, '2022-08-12'),
-(501108, 901024, 701037, '2022-08-12'),
-(501109, 901024, 701037, '2022-08-12'),
-(501111, 901024, 701037, '2022-08-12'),
-(501112, 901024, 701037, '2022-08-12'),
-(501113, 901024, 701037, '2022-08-12'),
-(501102, 901024, 701037, '2022-08-12'),
-(501103, 901024, 701037, '2022-08-12'),
-(501104, 901024, 701037, '2022-08-12'),
-(501105, 901024, 701037, '2022-08-12'),
-(501107, 901024, 701037, '2022-08-12'),
-(501108, 901024, 701037, '2022-08-12'),
-(501109, 901024, 701037, '2022-08-12'),
-(501111, 901024, 701037, '2022-08-12'),
-(501112, 901024, 701037, '2022-08-12'),
-(501113, 901024, 701037, '2022-08-12'),
-(501102, 901024, 701037, '2022-08-12'),
-(501103, 901024, 701037, '2022-08-12'),
-(501104, 901024, 701037, '2022-08-12'),
-(501105, 901024, 701037, '2022-08-12'),
-(501107, 901024, 701037, '2022-08-12'),
-(501108, 901024, 701037, '2022-08-12'),
-(501109, 901024, 701037, '2022-08-12'),
-(501111, 901024, 701037, '2022-08-12'),
-(501112, 901024, 701037, '2022-08-12'),
-(501113, 901024, 701037, '2022-08-12'),
-(501107, 901024, 701037, '2022-08-12'),
-(501110, 901024, 701037, '2022-08-12'),
-(501102, 901024, 701037, '2022-08-12'),
-(501103, 901024, 701037, '2022-08-12'),
-(501104, 901024, 701037, '2022-08-12'),
-(501105, 901024, 701037, '2022-08-12'),
-(501107, 901024, 701037, '2022-08-12'),
-(501108, 901024, 701037, '2022-08-12'),
-(501109, 901024, 701037, '2022-08-12'),
-(501111, 901024, 701037, '2022-08-12'),
-(501112, 901024, 701037, '2022-08-12'),
-(501113, 901024, 701037, '2022-08-12');
+INSERT INTO `studentabsent` (`studentid`, `subjectid`, `semesterid`, `markdate`, `lecturehour`) VALUES
+(501335, 901028, 901040, '2022-08-20', 3),
+(501334, 901028, 901040, '2022-08-21', 1),
+(501334, 901028, 901040, '2022-08-22', 1),
+(501336, 901028, 901040, '2022-08-22', 1);
 
 -- --------------------------------------------------------
 
@@ -395,7 +387,8 @@ INSERT INTO `teacher` (`teacherid`, `teacherusername`, `teacherempid`, `teacherp
 (701034, 'Khalid_hussain', 'CSE-0005', '7007845621', 1, '100000', '2022-08-15 16:41:54', 101019, 'active'),
 (701035, 'SumairaMehraj', 'CSE-C-0006', '7004785161', 2, '100000', '2022-08-15 16:42:41', 101019, 'active'),
 (701036, 'YousufMir', 'CSE-C-0007', '7004785161', 2, '100000', '2022-08-15 16:43:06', 101019, 'active'),
-(701037, 'darubi', 'emp121', '1234567895', 1, '$2y$10$4PXVlVxVpKQ7wDeJgIYFi.m0/m0KOK4RwoOkXPCCJLEYPGn25Urxu', '2022-08-18 12:29:55', 101013, 'active');
+(701037, 'darubi', 'emp121', '1234567895', 1, '$2y$10$4PXVlVxVpKQ7wDeJgIYFi.m0/m0KOK4RwoOkXPCCJLEYPGn25Urxu', '2022-08-18 12:29:55', 101013, 'active'),
+(701038, 'Hesam_akhter', 'EMP -2015', '1245789865', 1, '$2y$10$tPUC/nrQQo8zBupn/IfKpOL.P04pX0l9uE9gFimPofjwS5kKK1fNW', '2022-08-20 09:09:04', 101019, 'active');
 
 --
 -- Indexes for dumped tables
@@ -451,7 +444,7 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `batchid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301047;
+  MODIFY `batchid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301048;
 
 --
 -- AUTO_INCREMENT for table `branch`
@@ -475,7 +468,7 @@ ALTER TABLE `semester`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501114;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501337;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -487,7 +480,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701038;
+  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=701039;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

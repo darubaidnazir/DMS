@@ -44,7 +44,13 @@ class loadstudent extends db_connection
             $findabsent->bindParam(2, $getsubjectid);
             $findabsent->bindParam(3, $getsemeterid);
             $findabsent->execute();
-            $absentcount = $findabsent->rowCount();
+            $fetchasbsentcount = $findabsent->fetchAll(PDO::FETCH_ASSOC);
+            $absentcount = 0;
+            foreach ($fetchasbsentcount  as $somecount) {
+                $absentcount = $absentcount + $somecount['lecturehour'];
+            }
+
+
 
 
 
