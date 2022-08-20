@@ -15,7 +15,8 @@ $getsubjectid =  $_GET['subjectid'];
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <title>Attendance</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Student Attendance</title>
     <style>
     .mainboxdiv {
         text-align: center;
@@ -41,7 +42,11 @@ $getsubjectid =  $_GET['subjectid'];
 
     }
 
-    input[type="checkbox"] {}
+    .attendancebutton.toggled {
+        background-color: red;
+    }
+
+
 
     .modalattendance {
 
@@ -58,7 +63,7 @@ $getsubjectid =  $_GET['subjectid'];
         <span style="color:red;" id="message"></span>
         <label>Enter Today's Lecture Topic</label>
         <input type="text" class="form-control" id="lectureplan" placeholder="Introduction to Computer's " required>
-        <input type="hidden" id="semester_hidden" value="<?php echo $getteacherid; ?>">
+        <input type="hidden" id="semester_hidden" value="<?php echo $getsemesterid; ?>">
         <input type="hidden" id="subject_hidden" value="<?php echo $getsubjectid; ?>">
         <label>Select Total Hours</label>
         <select id="lectureno" class="form-select" aria-label="Default select example">
@@ -124,7 +129,7 @@ if ($checkcountsemester > 0 && $checkcountteacher > 0 && $checkcountsubject > 0)
 ?>
 
 <label class="attendancebutton"> <?php echo $name; ?>
-    <input type="checkbox" value="<?php echo $row['studentid']; ?>">
+    <input type="checkbox" id='checkbox1' value="<?php echo $row['studentid']; ?>">
 
 </label>
 
@@ -159,8 +164,8 @@ $(document).ready(function() {
     });
 
     $("#sendattendance").on("click", function(event) {
-        var id = [];
-        var ids = [];
+        var id = [null];
+        var ids = [null];
         var lectureplan = $("#lectureplan").val().trim();
         var lecturedate = $("#lecturedate").val();
         var lectureno = $("#lectureno").val();
@@ -181,9 +186,6 @@ $(document).ready(function() {
 
             });
 
-
-
-
             if (defaultplan == "PRESENT") {
                 markattendance(semesterid, lecturedate, defaultplan, lectureplan, id, subjectid,
                     lectureno);
@@ -201,14 +203,32 @@ $(document).ready(function() {
 
     });
 
-    $(document).on("click", ".attendancebutton", function() {
-        $(this).css("color", 'red');
+    $(document).on("click", "#checkbox1", function() {
+        if ($(this).is(':checked')) {
+            $(this).parent().css("background-color", 'red');
+        } else {
+            var value = $("#defaultattendance").val();
+            if (value == "ABSENT") {
+                $(this).parent().css("background-color", 'white');
+            } else {
+                $(this).parent().css("background-color", 'grey');
+            }
+
+        }
+
+
     });
+
+
+
 
     function markattendance(semesterid, lecturedate, defaultplan, lectureplan, id, subjectid, lectureno) {
         $.ajax({
             url: "senddata/sendattendance.php",
             type: "POST",
+            beforeSend: function() {
+                $("#sendattendance").html("wait...");
+            },
             data: {
                 getid: id,
                 getsemesterid: semesterid,
@@ -220,7 +240,32 @@ $(document).ready(function() {
                 connection: true
             },
             success: function(data) {
-                alert(data);
+
+                if (data == 3) {
+                    swal("Good job!", "Attendance Recored Sucessfully! ", "success");
+                    $("#sendattendance").html("Submited");
+                    document.getElementById("lectureplan").value = "";
+                    $("#sendattendance").prop("disabled", true);
+
+
+                } else if (data == 2) {
+                    swal("ohoho!",
+                        "Something went wrong ! try again ",
+                        "error");
+                    $("#sendattendance").html("Submit");
+
+                } else if (data == 4) {
+                    swal("ohoho!",
+                        "Attendance with this date already exits ! try with different date ",
+                        "error");
+                    $("#sendattendance").html("Submit");
+
+                } else {
+                    swal("ohoho!",
+                        "Something went wrong. try again",
+                        "error");
+                    $("#sendattendance").html("Submit");
+                }
             }
 
 

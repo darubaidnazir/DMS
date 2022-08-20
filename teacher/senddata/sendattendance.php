@@ -9,26 +9,48 @@ class sendattendance extends db_connection
     {
         parent::__construct();
 
-        $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`) VALUES (?,?,?,?,?)");
-        $sql->bindParam(1, $getsemesterid);
-        $sql->bindParam(2, $getsubjectid);
-        $sql->bindParam(3, $getlecturedate);
-        $sql->bindParam(4, $getlectureno);
-        $sql->bindParam(5, $getlectureplan);
-        if ($sql->execute()) {
-            $count = count($getid);
-            for ($i = 0; $i < $count; $i++) {
-                $sql = $this->conn->prepare("INSERT INTO `studentabsent`(`studentid`, `subjectid`, `semesterid`, `date`) VALUES (?,?,?,?)");
-                $sql->bindParam(2, $getsubjectid);
-                $sql->bindParam(3, $getsemesterid);
-                $sql->bindParam(4, $getlecturedate);
-                $sql->bindParam(1, $getid[$i]);
-                $sql->execute();
-            }
-            echo 3;
+
+        $check = $this->conn->prepare("SELECT * FROM `lectureplan` WHERE `semesterid` = ? && `subjectid` = ? && `lecturedate` = ?");
+        $check->bindParam(1, $getsemesterid);
+        $check->bindParam(2, $getsubjectid);
+        $check->bindParam(3, $getlecturedate);
+        $check->execute();
+        $countdate = $check->rowCount();
+        if ($countdate > 0) {
+
+            echo 4;
         } else {
 
-            echo 0;
+
+
+            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`) VALUES (?,?,?,?,?)");
+            $sql->bindParam(1, $getsemesterid);
+            $sql->bindParam(2, $getsubjectid);
+            $sql->bindParam(3, $getlecturedate);
+            $sql->bindParam(4, $getlectureno);
+            $sql->bindParam(5, $getlectureplan);
+            if ($sql->execute()) {
+                $count = count($getid);
+                for ($i = 0; $i < $count; $i++) {
+                    $checkstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `studentid` = ?");
+                    $checkstudent->bindParam(1, $getid[$i]);
+                    $checkstudent->execute();
+                    if ($checkstudent->rowCount() == 1) {
+                        $sql = $this->conn->prepare("INSERT INTO `studentabsent`(`studentid`, `subjectid`, `semesterid`, `markdate`) VALUES (?,?,?,?)");
+                        $sql->bindParam(2, $getsubjectid);
+                        $sql->bindParam(3, $getsemesterid);
+                        $sql->bindParam(4, $getlecturedate);
+                        $sql->bindParam(1, $getid[$i]);
+                        $sql->execute();
+                    } else {
+                        continue;
+                    }
+                }
+                echo 3;
+            } else {
+
+                echo 0;
+            }
         }
     }
 }
