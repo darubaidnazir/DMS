@@ -239,7 +239,7 @@ require_once("../coordinator/dbcon.php");
                 </p>
 
                 <main>
-                    <button id="exportstudents" class="btn btn-info" style="display:none;">Export</button>
+
                     <table>
                         <thead>
                             <tr>
@@ -250,6 +250,7 @@ require_once("../coordinator/dbcon.php");
                                 <th>Present </th>
                                 <th>Absent</th>
                                 <th>Percentage</th>
+                                <th>Update Attendance</th>
 
 
                             </tr>
@@ -298,6 +299,42 @@ require_once("../coordinator/dbcon.php");
                 </div>
             </div>
         </div>
+
+
+        <div class="modal fade" id="updateattendnce" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Update Attendance
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <p>
+                            SELECT A DATE AND LECTURE YOU WANT TO UPDATE FOR THIS STUDENT
+                        </p>
+                        <div>
+                            <select class="form-control" id="selectdateandlecture">
+
+
+                            </select>
+                        </div>
+                        <div id="updatedrecordofstudent">
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
 
 </body>
 
@@ -365,6 +402,7 @@ function viewlecturetable(value, semesterid) {
 
 }
 
+
 function viewstudenttable(value, semesterid) {
     $.ajax({
         url: "loaddata/loadstudent.php",
@@ -384,6 +422,152 @@ function viewstudenttable(value, semesterid) {
 
 }
 
+$(document).on("click", "#clickonupdate", function() {
+    var studentid = $(this).data("studentid");
+    var semesterid = $(this).data("semesterid");
+    var subjectid = $(this).data("subjectid");
+    $("#selectdateandlecture").html("");
+    $("#updatedrecordofstudent").html("");
+    getdateandlecture(studentid, semesterid, subjectid);
+    $('#selectdateandlecture').data('studentid', studentid);
+
+
+
+
+
+
+
+
+
+
+});
+$("#selectdateandlecture").on("change", function() {
+    var studentid = $(this).data("studentid");
+    var semesterid = $("#clickonupdate").data("semesterid");
+    var subjectid = $("#clickonupdate").data("subjectid");
+    var value = $(this).val();
+    gettheupdaterecord(studentid, semesterid, subjectid, value);
+
+
+});
+
+
+
+function gettheupdaterecord(studentid, semesterid, subjectid, value) {
+
+    $.ajax({
+        url: "loaddata/loadattedancerecord.php",
+        type: "POST",
+        data: {
+            getsemesterid: semesterid,
+            getsubjectid: subjectid,
+            getstudentid: studentid,
+            getvalue: value,
+            connection: true
+        },
+        success: function(data) {
+            $("#updatedrecordofstudent").html("");
+            $("#updatedrecordofstudent").html(data);
+            viewstudenttable(subjectid, semesterid)
+
+        }
+
+
+    });
+
+}
+
+$(document).on("click", "#marknew", function() {
+    var id = $(this).data("value");
+    var studentid = $("#selectdateandlecture").data("studentid");
+    var semesterid = $("#clickonupdate").data("semesterid");
+    var subjectid = $("#clickonupdate").data("subjectid");
+    var date = $("#selectdateandlecture").val();
+    $("#selectdateandlecture").prop("disabled", true);
+
+    swal({
+            title: "Are you sure?",
+            text: "You want to Update this record!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                marknewattendance(id, studentid, subjectid, semesterid, date);
+            } else {
+                swal("Cancled Record is safe!");
+            }
+        });
+
+
+
+
+});
+
+function marknewattendance(id, studentid, subjectid, semesterid, date) {
+
+    $.ajax({
+        url: "senddata/sendupdated.php",
+        type: "POST",
+        data: {
+            getid: id,
+            getsemesterid: semesterid,
+            getstudentid: studentid,
+            getsubjectid: subjectid,
+            getdate: date,
+            connection: true
+        },
+        success: function(data) {
+
+            if (data == 3) {
+                gettheupdaterecord(studentid, semesterid, subjectid, date);
+                $("#selectdateandlecture").prop("disabled", false);
+
+            } else if (data == 1) {
+
+                swal("ohoohoh!", "Updating not Successfully! try again", "error");
+                $("#selectdateandlecture").prop("disabled", false);
+
+
+
+            } else {
+                swal("ohoohoh!", "Something went wrong! try again", "error");
+                $("#selectdateandlecture").prop("disabled", false);
+
+            }
+
+        }
+
+
+
+
+    });
+
+}
+
+
+function getdateandlecture(studentid, semesterid, subjectid) {
+
+    $.ajax({
+        url: "loaddata/loaddate.php",
+        type: "POST",
+        data: {
+            getsemesterid: semesterid,
+            getsubjectid: subjectid,
+            connection: true
+        },
+        success: function(data) {
+            $("#selectdateandlecture").html(data);
+
+        }
+
+
+    });
+
+
+}
 
 $(window).on('load', function() {
     $("#cover").fadeOut(5000);

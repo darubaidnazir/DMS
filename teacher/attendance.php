@@ -60,7 +60,7 @@ $getsubjectid =  $_GET['subjectid'];
 <body>
 
     <div class="mainboxdiv">
-        <span style="color:red;" id="message"></span>
+        <h3 style="color:red;" id="message"></h3>
         <label>Enter Today's Lecture Topic</label>
         <input type="text" class="form-control" id="lectureplan" placeholder="Introduction to Computer's " required>
         <input type="hidden" id="semester_hidden" value="<?php echo $getsemesterid; ?>">
@@ -173,7 +173,18 @@ $(document).ready(function() {
         var semesterid = $("#semester_hidden").val();
         var subjectid = $("#subject_hidden").val();
         if (lecturedate == "" || lectureplan == "" || defaultplan == "" || lectureno == "") {
-            $("#message").html("* All field are required");
+            $("#message").html("");
+            $("#message").html("* All field are required. Empty field's are not allowed");
+
+        } else if (!/^[a-zA-Z-0-9\s.,]+$/.test(lectureplan)) {
+            $("#message").html("");
+            $("#message").html(
+                "* Please enter a valid Lecture Topic. No special character is allowed.");
+
+        } else if (lectureno > 5 || lectureno < 1) {
+            $("#message").html("");
+            $("#message").html(
+                "*Lecture Hour Must be From 1 to 5 only.");
 
         } else {
             $("#message").html("");
@@ -185,14 +196,30 @@ $(document).ready(function() {
                 id[key] = $(this).val();
 
             });
+            swal({
+                    title: "Are you sure?",
+                    text: "Attendance will be recorded!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        if (defaultplan === "PRESENT") {
+                            markattendance(semesterid, lecturedate, defaultplan, lectureplan, id,
+                                subjectid,
+                                lectureno);
+                        } else if (defaultplan === "ABSENT") {
+                            markattendance(semesterid, lecturedate, defaultplan, lectureplan, ids,
+                                subjectid,
+                                lectureno);
+                        }
+                    } else {
+                        swal("Attendance not recorded!");
+                    }
+                });
 
-            if (defaultplan == "PRESENT") {
-                markattendance(semesterid, lecturedate, defaultplan, lectureplan, id, subjectid,
-                    lectureno);
-            } else if (defaultplan == "ABSENT") {
-                markattendance(semesterid, lecturedate, defaultplan, lectureplan, ids, subjectid,
-                    lectureno);
-            }
+
 
 
         }
@@ -240,12 +267,13 @@ $(document).ready(function() {
                 connection: true
             },
             success: function(data) {
-                alert(data);
+
                 if (data == 3) {
                     swal("Good job!", "Attendance Recored Sucessfully! ", "success");
                     $("#sendattendance").html("Submited");
                     document.getElementById("lectureplan").value = "";
                     $("#sendattendance").prop("disabled", true);
+                    $("#sendattendance").parent().html("<a href='dashboard'>Go to Dashboard</a>");
 
 
                 } else if (data == 2) {

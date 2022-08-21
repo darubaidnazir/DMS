@@ -68,7 +68,12 @@ class loadstudent extends db_connection
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
-           <td data-title='Absent'>{$absentcount}</td><td data-title='Percentage'>{$percentage}%</td></tr>";
+           <td data-title='Absent'>{$absentcount}</td><td data-title='Percentage'>{$percentage}%</td>
+           <td data-title='Update Attendance'> <button type='button' class='btn btn-success clickbutton'
+           data-bs-toggle='modal' data-bs-target='#updateattendnce' id='clickonupdate' data-studentid='{$row['studentid']}' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>
+           Update
+       </button></td>
+           </tr>";
             $Sno++;
         }
 
