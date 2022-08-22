@@ -57,8 +57,8 @@ class sendattendance extends db_connection
     }
 }
 if (isset($_POST['connection']) && isset($_POST['getsubjectid'])) {
-
     $run = new sendattendance($_POST['getsemesterid'], $_POST['getsubjectid'], $_POST['getlectureplan'], $_POST['getlecturedate'], $_POST['getlectureno'], $_POST['getdefaultplan'], $_POST['getid']);
+    $run->closeConnection();
 } else {
 
     header("Location:../../teacher/teacherlogin.html");

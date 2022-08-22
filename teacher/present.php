@@ -41,6 +41,7 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Present Students</title>
     <link rel="stylesheet" href="../coordinator/table.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <style>
     p {
         font: 1.4rem molot;
@@ -69,6 +70,11 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
         <p class="caption">Topic: <?php echo $_GET['lecturetopic']; ?><br>
             Date:
             <?php echo $_GET['dateoflecture']; ?></p>
+        <div class="text-center" style="margin:5px;">
+
+            <input type="text" id="seachstudent" class="form-control form-input" placeholder="Search anything...">
+
+        </div>
         <main class="maintable">
             <h3 style="color:green; text-align:center;font-weight:bolder">List of Student's Present</h3>
             <table>
@@ -84,7 +90,7 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
                         <th colspan="3"></th>
                     </tr>
                 </tfoot>
-                <tbody>
+                <tbody id="presentone">
                     <?php
                     $getbatch = $conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
                     $getbatch->bindParam(1, $batchid);
@@ -121,3 +127,17 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
 </body>
 
 </html>
+<?php
+$conn = null;
+?>
+<script>
+$(document).ready(function() {
+    $("#seachstudent").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#presentone tr").filter(function() {
+            $(this).toggle($(this).text()
+                .toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+</script>

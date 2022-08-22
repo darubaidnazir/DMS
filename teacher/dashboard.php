@@ -1,7 +1,23 @@
 <?php
+
 session_start();
+if (!isset($_SESSION['active']) || !isset($_SESSION['teacheruserid'])) {
+    header("Location:../teacher/teacherlogin.html");
+    exit();
+}
 $teacherid = $_SESSION['teacheruserid'];
 require_once("../coordinator/dbcon.php");
+
+$get = $conn->prepare("SELECT * FROM `teacher` WHERE `teacherid` = ?");
+$get->bindParam(1, $teacherid);
+$get->execute();
+$result = $get->fetchAll(PDO::FETCH_ASSOC);
+foreach ($result as $getid) {
+    $coordinatorinfo = $getid['coordinatorid'];
+    break;
+}
+$_SESSION['$coordinatorinfo'] = $coordinatorinfo;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,13 +151,14 @@ require_once("../coordinator/dbcon.php");
                 <span class="tag-wrap">
                     <span class="tag">
                         <?php echo $_SESSION['teacherusername'];    ?><br>
-                        <form>
-                            <input type="hidden" id="teacher_hidden" value="<?php echo $teacherid; ?>" />
-                        </form>
+
                     </span>
                 </span>
             </div>
         </section>
+        <form>
+            <input type="hidden" id="teacher_hidden" value="<?php echo $teacherid; ?>" />
+        </form>
         <section id="maindashboardsection">
             <?php require_once("../teacher/loaddata/loadactivesemester.php"); ?>
 
@@ -189,6 +206,8 @@ require_once("../coordinator/dbcon.php");
                                 <th>Total Student</th>
                                 <th>Present</th>
                                 <th>Absent</th>
+                                <th>Action</th>
+
 
 
                             </tr>
@@ -237,11 +256,18 @@ require_once("../coordinator/dbcon.php");
                         < </select>
                             <small id="mm1" style="color:red;"></small>
                 </p>
+                <div class="text-center" style="margin:5px;">
 
+                    <input type="text" id="seachstudent" class="form-control form-input"
+                        placeholder="Search anything...">
+
+                </div>
                 <main>
 
                     <table>
+
                         <thead>
+
                             <tr>
                                 <th>S.No</th>
                                 <th>Student Roll No</th>
@@ -265,6 +291,7 @@ require_once("../coordinator/dbcon.php");
                         </tbody>
 
                     </table>
+
                 </main>
             </div>
         </section>
@@ -344,6 +371,26 @@ require_once("../coordinator/dbcon.php");
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+</script>
+
+<script>
+
+</script>
+<script>
+$(document).ready(function() {
+
+
+
+
+
+    $("#seachstudent").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#addstudenttable tr").filter(function() {
+            $(this).toggle($(this).text()
+                .toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
 </script>
 <script>
 $("#subjectlecture").on("change", function() {
@@ -525,6 +572,7 @@ function marknewattendance(id, studentid, subjectid, semesterid, date) {
                 gettheupdaterecord(studentid, semesterid, subjectid, date);
                 $("#selectdateandlecture").prop("disabled", false);
 
+
             } else if (data == 1) {
 
                 swal("ohoohoh!", "Updating not Successfully! try again", "error");
@@ -566,6 +614,66 @@ function getdateandlecture(studentid, semesterid, subjectid) {
 
     });
 
+
+}
+
+$(document).on("click", "#deletelecture", function() {
+    var date = $(this).data("lecturedate");
+    var subjectid = $(this).data("subjectid");
+    var semesterid = $(this).data("semesterid");
+
+    swal("*Warning Lecture Date and It's all record will be Deleted.. Write CONFIRM in the BOX:", {
+            content: "input",
+        })
+        .then((value) => {
+            if (value == "CONFIRM") {
+                deletelecture(date, subjectid, semesterid);
+            } else {
+                swal(`oohoh You typed: ${value}. Type CONFIRM  `);
+            }
+        });
+
+
+});
+
+function deletelecture(date, subjectid, semesterid) {
+
+    $.ajax({
+        url: "deletedata/deletelecture.php",
+        type: "POST",
+        beforeSend: function() {
+
+
+        },
+        data: {
+            getdate: date,
+            getsemesterid: semesterid,
+            getsubjectid: subjectid,
+            connection: true
+        },
+        success: function(data) {
+            if (data == 3) {
+
+                swal("Good JOB!", "Lecture Deleted Successfully", "success");
+                viewlecturetable(subjectid, semesterid);
+
+            } else if (data == 0) {
+
+                swal("ohoohoh!", "Deleting Lecture Failed", "error");
+
+
+
+
+            } else {
+                swal("ohoohoh!", "Something went wrong! try again", "error");
+
+
+            }
+        }
+
+
+
+    });
 
 }
 

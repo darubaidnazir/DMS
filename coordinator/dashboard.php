@@ -1,6 +1,11 @@
 <?php
 session_start();
+if (!isset($_SESSION['active']) || !isset($_SESSION['userid'])) {
+    header("Location:../coordinator/coordinatorlogin_signup.html");
+    exit();
+}
 $coordinatorid = $_SESSION['userid'];
+
 require_once('dbcon.php');
 ?>
 <!DOCTYPE html>

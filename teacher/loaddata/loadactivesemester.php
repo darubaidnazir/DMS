@@ -1,3 +1,12 @@
+<?php
+
+if (!isset($_SESSION['active'])) {
+    header("Location../../teacher/teacherlogin.html");
+    die();
+}
+
+
+?>
 <style>
 .maintable {
     max-height: 700px;

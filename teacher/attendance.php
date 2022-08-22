@@ -1,8 +1,24 @@
 <?php
+session_start();
+if (!isset($_SESSION['active']) || !isset($_GET['teacherid']) ||  !isset($_GET['semesterid']) ||  !isset($_GET['subjectid'])) {
+    header("Location:../teacher/teacherlogin.html");
+    exit();
+}
+require_once("../coordinator/dbcon.php");
 $getteacherid =  $_GET['teacherid'];
 $getsemesterid =  $_GET['semesterid'];
 $getsubjectid =  $_GET['subjectid'];
-
+$coo = $_SESSION['$coordinatorinfo'];
+$check = $conn->prepare("SELECT * FROM `subject` WHERE subjectid = ? && `coordinatorid`= ?");
+$check->bindParam(1, $getsemesterid);
+$check->bindParam(2, $coo);
+$check->execute();
+$checkcountsemestercoo = $check->rowCount();
+if ($checkcountsemestercoo != 1) {
+    session_destroy();
+    header("../teacher/teacherlogin.html");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +108,7 @@ $getsubjectid =  $_GET['subjectid'];
 
 
 <?php
-require_once("../coordinator/dbcon.php");
+
 $check = $conn->prepare("SELECT * FROM `semester` WHERE semesterid = ?");
 $check->bindParam(1, $getsemesterid);
 $check->execute();
@@ -140,6 +156,7 @@ if ($checkcountsemester > 0 && $checkcountteacher > 0 && $checkcountsubject > 0)
     echo "</div>";
 } else {
     //bothe par not found
+    session_destroy();
     header("Location:../teacher/teacherlogin.html");
 }
 ?>
@@ -306,4 +323,12 @@ $(document).ready(function() {
 
 
 });
+window.addEventListener('popstate', function(event) {
+    // Log the state data to the console
+    console.log(event.state);
+});
 </script>
+
+<?php
+$conn = null;
+?>
