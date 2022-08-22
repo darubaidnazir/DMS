@@ -8,34 +8,58 @@ $(document).ready(function () {
       if (getSemester > 13 || isNaN(getSemester) || !/^[a-zA-Z\s.,]+$/.test(getBranch)) {
          swal("ohoho!", "Semester Should not be Greater than 13 or Branch name should be correct", "error");
       } else {
-         $.ajax({
-            url: "javascript/sendinfo/sendBranch.php",
-            type: "POST",
-            beforeSend: function () {
-               $("#sendBranch").html("Creating...");
-            },
-            data: { get_Branch: getBranch, get_Semester: getSemester, get_Coordinator: coordinate, connection: true },
-            success: function (data) {
-               if (data == 2) {
-                  swal("ohoho!", "Branch name already exits? try with different name", "error");
-                  $("#sendBranch").html("Add Branch");
-               } else if (data == 3) {
-                  swal("Good job ", "Branch added Sucessfully!", "success");
-                  bodyofbranch();
-                  $("#sendBranch").html("Created");
+
+         swal({
+            title: "Are you sure?",
+            text: "You want to create a branch !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+         })
+            .then((willDelete) => {
+               if (willDelete) {
+
+                  $.ajax({
+                     url: "javascript/sendinfo/sendBranch.php",
+                     type: "POST",
+                     beforeSend: function () {
+                        $("#sendBranch").html("Creating...");
+                     },
+                     data: { get_Branch: getBranch, get_Semester: getSemester, get_Coordinator: coordinate, connection: true },
+                     success: function (data) {
+                        if (data == 2) {
+                           swal("ohoho!", "Branch name already exits? try with different name", "error");
+                           $("#sendBranch").html("Add Branch");
+                        } else if (data == 3) {
+                           swal("Good job ", "Branch added Sucessfully!", "success");
+                           bodyofbranch();
+                           $("#sendBranch").html("Created");
+                           document.getElementById("branch-name").value = "";
+                           document.getElementById("branch-semester").value = "";
+                           $("#sendBranch").html("Add Branch");
 
 
+
+
+                        } else {
+                           swal("ohoho!", "Something went wrong! try again later", "error");
+                           $("#sendBranch").html("Add Branch");
+                        }
+
+                     }
+
+
+                  });
 
 
                } else {
-                  swal("ohoho!", "Something went wrong! try again later", "error");
-                  $("#sendBranch").html("Add Branch");
+                  swal("Cancled!");
                }
+            });
 
-            }
 
 
-         });
+
 
       }
    }); // end of branch information..
@@ -55,33 +79,56 @@ $(document).ready(function () {
             swal("ohoho!", "No Branch Exists? Create a Branch First", "error");
          } else {
 
-            $.ajax({
-               url: "javascript/sendinfo/sendBatch.php",
-               type: "POST",
-               beforeSend: function () {
-                  $("#sendBranch").html("Creating...");
-               },
-               data: { get_Year: getyear, get_Branch: getbranch, get_Coordinator: coordinate, connection: true },
-               success: function (data) {
 
-                  if (data == 2) {
-                     swal("ohoho!", "Batch with same Branch already exits?", "error");
-                     $("#sendBranch").html("Add Branch");
-                  } else if (data == 3) {
-                     swal("Good job ", "Batch added Sucessfully! wait we are reloading batch table", "success");
-                     $("#sendBranch").html("Created");
-                     bodyofbatch();
+            swal({
+               title: "Are you sure?",
+               text: "You want to create a batch!",
+               icon: "warning",
+               buttons: true,
+               dangerMode: true,
+            })
+               .then((willDelete) => {
+                  if (willDelete) {
 
 
+                     $.ajax({
+                        url: "javascript/sendinfo/sendBatch.php",
+                        type: "POST",
+                        beforeSend: function () {
+                           $("#sendBatch").html("Creating...");
+                        },
+                        data: { get_Year: getyear, get_Branch: getbranch, get_Coordinator: coordinate, connection: true },
+                        success: function (data) {
+
+                           if (data == 2) {
+                              swal("ohoho!", "Batch with same Branch already exits?", "error");
+                              $("#sendBatch").html("Add Batch");
+                           } else if (data == 3) {
+                              swal("Good job ", "Batch added Sucessfully! wait we are reloading batch table", "success");
+                              $("#sendBatch").html("Created");
+                              bodyofbatch();
+                              document.getElementById("batch-year").value = "";
+                              document.getElementById("branch_info").value = "";
+                              $("#sendBatch").html("Add Batch");
+
+                           } else {
+                              swal("ohoho!", "Something went wrong! try again later", "error");
+                              $("#sendBatch").html("Add Batch");
+                           }
+
+                        }
+
+
+                     });
                   } else {
-                     swal("ohoho!", "Something went wrong! try again later", "error");
-
+                     swal("Your imaginary file is safe!");
                   }
+               });
 
-               }
 
 
-            });
+
+
 
 
          }
@@ -94,31 +141,51 @@ $(document).ready(function () {
       var getBranchid = $(this).data("id");
       var coordinate = $("#coordinator_hidden").val().trim();
 
-      $.ajax({
-         url: "javascript/sendinfo/deleteBranch.php",
-         type: "POST",
-         beforeSend: function () {
-            $(this).html("Deleting...");
-         },
-         data: { get_Branchid: getBranchid, get_Coordinator: coordinate, connection: true },
-         success: function (data) {
-            if (data == 1) {
-               swal("ohoho!", "Branch has some batch's added. Can't delete the branch.", "error");
 
-            } else if (data == 3) {
-               swal("Good job ", "Branch deleted Sucessfully! ", "success");
-               bodyofbranch();
+      swal({
+         title: "Are you sure?",
+         text: "Once deleted, you will not be able to recover this imaginary file!",
+         icon: "warning",
+         buttons: true,
+         dangerMode: true,
+      })
+         .then((willDelete) => {
+            if (willDelete) {
+               $.ajax({
+                  url: "javascript/sendinfo/deleteBranch.php",
+                  type: "POST",
+                  beforeSend: function () {
+                     $(this).html("Deleting...");
+                  },
+                  data: { get_Branchid: getBranchid, get_Coordinator: coordinate, connection: true },
+                  success: function (data) {
+                     if (data == 1) {
+                        swal("ohoho!", "Branch has some batch's added. Can't delete the branch.", "error");
+
+                     } else if (data == 3) {
+                        swal("Good job ", "Branch deleted Sucessfully! ", "success");
+                        bodyofbranch();
+
+                     } else {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
+
+                     }
+                  }
+
+
+
+
+               });
+
+
 
             } else {
-               swal("ohoho!", "Something went wrong! try again later", "error");
-
+               swal("Your imaginary file is safe!");
             }
-         }
+         });
 
 
 
-
-      });
 
 
 
@@ -128,32 +195,57 @@ $(document).ready(function () {
       var getBatchid = $(this).data("id");
       var coordinate = $("#coordinator_hidden").val().trim();
 
-      $.ajax({
-         url: "javascript/sendinfo/deleteBatch.php",
-         type: "POST",
-         beforeSend: function () {
-            $(this).html("Deleting...");
-         },
-         data: { get_Batchid: getBatchid, get_Coordinator: coordinate, connection: true },
-         success: function (data) {
 
-            if (data == 1) {
-               swal("ohoho!", "Batch has some active semester added or student added. Can't delete the batch.", "error");
 
-            } else if (data == 3) {
-               swal("Good job ", "Branch deleted Sucessfully! ", "success");
-               bodyofbatch();
+      swal({
+         title: "Are you sure?",
+         text: "Once deleted, you will not be able to recover this imaginary file!",
+         icon: "warning",
+         buttons: true,
+         dangerMode: true,
+      })
+         .then((willDelete) => {
+            if (willDelete) {
+
+
+
+               $.ajax({
+                  url: "javascript/sendinfo/deleteBatch.php",
+                  type: "POST",
+                  beforeSend: function () {
+                     $(this).html("Deleting...");
+                  },
+                  data: { get_Batchid: getBatchid, get_Coordinator: coordinate, connection: true },
+                  success: function (data) {
+
+                     if (data == 1) {
+                        swal("ohoho!", "Batch has some active semester added or student added. Can't delete the batch.", "error");
+
+                     } else if (data == 3) {
+                        swal("Good job ", "Branch deleted Sucessfully! ", "success");
+                        bodyofbatch();
+
+                     } else {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
+
+                     }
+                  }
+
+
+
+
+               });
+
 
             } else {
-               swal("ohoho!", "Something went wrong! try again later", "error");
-               $("#sendBranch").html("Add Branch");
+               swal("Your imaginary file is safe!");
             }
-         }
+         });
 
 
 
 
-      });
+
 
 
 

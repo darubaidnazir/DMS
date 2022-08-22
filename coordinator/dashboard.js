@@ -160,64 +160,94 @@ function loadDataTeacher(pageno) {
 $(document).on("click", "#removestudent", function () {
 
     var studentid = $(this).data("id");
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this Student record!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
 
-    $.ajax({
-        url: "delete/deletestudent.php",
-        type: "POST",
-        data: { get_Studentid: studentid, connection: true },
-        success: function (data) {
-            if (data == 3) {
-                swal("Good job!", "Student Removed! ", "success");
-                $("#" + studentid).load(location.href + " #" + studentid);
-            } else if (data == 2) {
-                swal("ohoho!", "Student Can't be removed! Student already registered with a active semester ", "error");
-                $("#" + studentid).load(location.href + " #" + studentid);
+                $.ajax({
+                    url: "delete/deletestudent.php",
+                    type: "POST",
+                    data: { get_Studentid: studentid, connection: true },
+                    success: function (data) {
+                        if (data == 3) {
+                            swal("Good job!", "Student Removed! ", "success");
+                            $("#" + studentid).load(location.href + " #" + studentid);
+                        } else if (data == 2) {
+                            swal("ohoho!", "Student Can't be removed! Student already registered with a active semester ", "error");
+
+
+
+                        } else {
+                            swal("ohoho!", "Something went wrong ! we could not delete the student. try again", "error");
+                        }
+
+                    }
+
+
+
+
+                });
+
             } else {
-                swal("ohoho!", "Something went wrong ! we could not delete the student. try again", "error");
+                swal("Your Student record is safe!");
             }
+        });
 
-        }
-
-
-
-
-    });
 
 });
 $(document).on("click", "#removeteacher", function () {
 
     var teacherid = $(this).data("id");
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this Teacher record!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
 
-    $.ajax({
-        url: "delete/deleteteacher.php",
-        type: "POST",
-        data: { get_Teacherid: teacherid, connection: true },
-        success: function (data) {
-            if (data == 3) {
-                swal("Good job!", "Teacher Removed! ", "success");
-                $("#" + teacherid).load(location.href + " #" + teacherid);
-            }
-            else if (data == 2) {
-                swal("ohoho!", "Teacher has some subject assigned we can't delete this teacher! we have disabled the teacher ", "error");
-                $("#" + teacherid).load(location.href + " #" + teacherid);
+
+                $.ajax({
+                    url: "delete/deleteteacher.php",
+                    type: "POST",
+                    data: { get_Teacherid: teacherid, connection: true },
+                    success: function (data) {
+                        if (data == 3) {
+                            swal("Good job!", "Teacher Removed! ", "success");
+                            $("#" + teacherid).load(location.href + " #" + teacherid);
+                        }
+                        else if (data == 2) {
+                            swal("ohoho!", "Teacher has some subject assigned we can't delete this teacher! we have disabled the teacher ", "error");
+
+                        } else {
+                            swal("ohoho!", "Something went wrong ! we could not delete the teacher. try again", "error");
+                        }
+
+                    }
+
+
+
+
+                });
             } else {
-                swal("ohoho!", "Something went wrong ! we could not delete the teacher. try again", "error");
+                swal("Your Teacher record is safe!");
             }
+        });
 
-        }
-
-
-
-
-    });
 
 });
 //remve subject
 /*
   $(document).on("click", "#removesubject", function () {
-
   var subejctid = $(this).data("id");
-
   $.ajax({
       url: "delete/deletesubject.php",
       type: "POST",
@@ -229,14 +259,8 @@ $(document).on("click", "#removeteacher", function () {
           } else {
               swal("ohoho!", "Something went wrong ! we could not delete the teacher. try again", "error");
           }
-
       }
-
-
-
-
   });
-
 });*/
 
 // assign subject button 
@@ -253,28 +277,55 @@ $("#addsubjectcode").on("click", function (event) {
         if (!/^[a-zA-Z-0-9\s_]+$/.test(subjectcode) || !/^[a-zA-Z\s_-]+$/.test(subjectname)) {
             $("#messagesubject").html("* Enter a Valid Format eg: Database or CSE 1721 ");
         } else {
-            $.ajax({
 
-                url: "../coordinator/javascript/sendinfo/sendsubject.php",
-                type: "POST",
-                data: { get_Subjectname: subjectname, get_Subjectcode: subjectcode, get_Coordinator: coordinate, connection: true },
-                success: function (data) {
-                    if (data == 2) {
-                        swal("ohoho!", "Subject already exits? try with different Subject Code", "error");
-                    } else if (data == 3) {
-                        swal("Good job ", "Subeject added Sucessfully!", "success");
-                        bodyofsubject();
 
+
+            swal({
+                title: "Are you sure?",
+                text: "You want to add subject to this department!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+
+                        $.ajax({
+
+                            url: "../coordinator/javascript/sendinfo/sendsubject.php",
+                            type: "POST",
+                            beforeSend: function () {
+                                $("#addsubjectcode").html("wait...");
+                            },
+                            data: { get_Subjectname: subjectname, get_Subjectcode: subjectcode, get_Coordinator: coordinate, connection: true },
+                            success: function (data) {
+                                if (data == 2) {
+                                    swal("ohoho!", "Subject already exits? try with different Subject Code", "error");
+                                    $("#addsubjectcode").html("Add Subject");
+                                } else if (data == 3) {
+                                    swal("Good job ", "Subeject added Sucessfully!", "success");
+                                    bodyofsubject();
+                                    document.getElementById("enter-subject-name").value = "";
+                                    document.getElementById("enter-subject-code").value = "";
+                                    $("#addsubjectcode").html("Add Subject");
+
+                                } else {
+                                    swal("ohoho!", "Something went wrong! try again later", "error");
+                                    $("#addsubjectcode").html("Add Subject");
+
+                                }
+                            }
+
+
+
+
+                        });
                     } else {
-                        swal("ohoho!", "Something went wrong! try again later", "error");
-
+                        swal("Adding Subject Cancled!");
                     }
-                }
+                });
 
-
-
-
-            });
 
         }
 

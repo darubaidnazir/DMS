@@ -19,38 +19,67 @@ $(document).ready(function() {
             $(".message_teacher").html("<br>*Emp Id Should not cointain any special char");
         } else {
             $(".message_teacher").html("");
-            $.ajax({
-                url: "modal/sendmodaldata/sendteacher.php",
-                type: "POST",
-                beforeSend: function() {
-                    $("#addteacherdata").html("Adding...");
-                },
-                data: {
-                    get_Username: username,
-                    get_Empid: empid,
-                    get_Phonenumber: phonenumber,
-                    get_Position: position,
-                    connection: true,
-                    get_Coordinator: coordinate
-                },
-                success: function(data) {
 
-                    if (data == 2) {
-                        swal("ohoho!",
-                            "teacher username already exits! try different username",
-                            "error");
-                        $("#addteacherdata").html("Add teacher");
-                    } else if (data == 3) {
-                        swal("Good job ", "Teacher Added!", "success");
-                        $("#addteacherdata").html("Added");
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to add teacher to your department!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
 
-                        loadDataTeacher(1);
+
+
+                        $.ajax({
+                            url: "modal/sendmodaldata/sendteacher.php",
+                            type: "POST",
+                            beforeSend: function() {
+                                $("#addteacherdata").html("wait...");
+                            },
+                            data: {
+                                get_Username: username,
+                                get_Empid: empid,
+                                get_Phonenumber: phonenumber,
+                                get_Position: position,
+                                connection: true,
+                                get_Coordinator: coordinate
+                            },
+                            success: function(data) {
+
+                                if (data == 2) {
+                                    swal("ohoho!",
+                                        "teacher username already exits! try different username",
+                                        "error");
+                                    $("#addteacherdata").html("Add Teacher");
+                                } else if (data == 3) {
+                                    swal("Good job ", "Teacher Added!", "success");
+
+                                    loadDataTeacher(1);
+                                    $("#addteacherdata").html("Added");
+                                    $("#addteacherdata").html("Add Teacher");
+                                    document.getElementById("enter-teacher-username")
+                                        .value = "";
+                                    document.getElementById("enter-emp-id").value = "";
+                                    document.getElementById("enter-phonenumber").value =
+                                        "";
+                                    document.getElementById("teacher-position").value =
+                                        "";
+
+                                } else {
+                                    swal("ohoho!",
+                                        "Something went wrong! try again later",
+                                        "error");
+                                    $("#addteacherdata").html("Add Teacher");
+                                }
+                            }
+                        });
                     } else {
-                        swal("ohoho!", "Something went wrong! try again later", "error");
-                        $("#addteacherdata").html("Add teacher");
+                        swal("Adding Teacher Cancled!");
                     }
-                }
-            })
+                });
+
         }
     });
 });

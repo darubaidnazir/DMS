@@ -112,12 +112,15 @@
                             swal("Good job ", "Student Added!", "success");
                             $("#addstudentData").html("Added");
                             loadDataStudent(batchid, 1);
+                            document.getElementById("enter-student-email").value = "";
+                            $("#addstudentData").html("Add Student");
 
 
 
                         } else {
                             swal("ohoho!", "Something went wrong! try again later",
                                 "error");
+                            document.getElementById("enter-student-email").value = "";
                             $("#addstudentData").html("Add Student");
                         }
 

@@ -38,7 +38,7 @@ class loadTeacherData extends db_connection
             <td data-title='PhoneNumber'>{$row["teacherphonenumber"]}</td>
             <td data-title='Position'>{$position}</td>
 
-            <td data-title='Password'>{$row["teacherpassword"]}</td>
+          
             <td class='select'>
                 <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
                     <button type='button' class='btn btn-danger'>

@@ -30,21 +30,26 @@ $(document).ready(function () {
           url: "inner/login_coordinator.php",
           type: "POST",
           beforeSend: function () {
+            $("#login").html("wait..");
 
           },
           data: { emaillogin: email, passwordlogin: password, connection: conn },
           success: function (data) {
             if (data == 0) {
               swal("ohoho!", "Something went wrong! try again later", "error");
+              $("#login").html("Login");
 
             } else if (data == 1) {
               swal("ohoho!", "Email or password is incorrect!", "error");
+              $("#login").html("Login");
 
             } else if (data == 3) {
+              $("#login").html("Logined...");
               location.replace('dashboard');
 
             } else {
               swal("ohoho!", "Something went wrong! try again later", "error");
+              $("#login").html("Login");
 
             }
 

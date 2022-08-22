@@ -12,8 +12,9 @@ class sendsubject extends db_connection
                 //not valid 
                 echo 1;
             } else {
-                $sql1 = $this->conn->prepare("SELECT * FROM `subject` WHERE `subjectcode` = ?");
+                $sql1 = $this->conn->prepare("SELECT * FROM `subject` WHERE `subjectcode` = ? && `coordinatorid` = ?");
                 $sql1->bindParam(1, $getsubjectcode);
+                $sql1->bindParam(2, $getCoordinatorid);
                 $sql1->execute();
                 $count = $sql1->rowCount();
                 if ($count > 0) {

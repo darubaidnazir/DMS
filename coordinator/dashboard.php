@@ -289,7 +289,7 @@ require_once('dbcon.php');
                                     <th>Emp ID</th>
                                     <th>Phone Number</th>
                                     <th>Position</th>
-                                    <th>Password</th>
+
                                     <th>Action</th>
 
                                 </tr>
@@ -848,12 +848,43 @@ $(document).ready(function() {
 
     $(document).on("click", "#opensemester", function(event) {
         var batchid = $(this).data("id");
-        sendactivesemester(batchid);
+
+        swal({
+                title: "Are you sure?",
+                text: "You want to open the first semester of this batch!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    sendactivesemester(batchid);
+                } else {
+                    swal("Open Semester Cancled!");
+                }
+            });
+
 
     });
     $(document).on("click", "#closesemester", function(event) {
         var batchid = $(this).data("id");
-        sendactivesemester(batchid);
+
+        swal({
+                title: "Are you sure?",
+                text: "You want to open the Close this semester and open a new semester of this batch!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    sendactivesemester(batchid);
+                } else {
+                    swal("Open Semester Cancled!");
+                }
+            });
+
 
 
     });
@@ -883,34 +914,54 @@ $(document).ready(function() {
 
             $("#messagesubjects").html("*Select a Subject and Teacher");
         } else {
-            $.ajax({
-                url: "../coordinator/modal/sendmodaldata/sendassignedsubject.php",
-                type: "POST",
-                data: {
-                    get_Semesterid: semesterid,
-                    get_Subjectid: subejctid,
-                    get_Teacherid: teacherid,
-                    connection: true
-                },
-                success: function(data) {
-                    if (data == 2) {
-                        swal("ohoho!",
-                            "Subject already Assigned to this semester? try with different Subject ",
-                            "error");
-                    } else if (data == 3) {
-                        swal("Good job ",
-                            "Subjectt Assigned Sucessfully!*Refresh page to see changes ",
-                            "success");
-                        assignsubjectbox(semesterid, coordinate);
-                        //   $("#messagesubjects").html("*Refresh page to see change");
+
+
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to add this teacher with this subject!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            url: "../coordinator/modal/sendmodaldata/sendassignedsubject.php",
+                            type: "POST",
+                            data: {
+                                get_Semesterid: semesterid,
+                                get_Subjectid: subejctid,
+                                get_Teacherid: teacherid,
+                                connection: true
+                            },
+                            success: function(data) {
+                                if (data == 2) {
+                                    swal("ohoho!",
+                                        "Subject already Assigned to this semester? try with different Subject ",
+                                        "error");
+                                } else if (data == 3) {
+                                    swal("Good job ",
+                                        "Subjectt Assigned Sucessfully! ",
+                                        "success");
+                                    assignsubjectbox(semesterid, coordinate);
+
+
+                                } else {
+                                    swal("ohoho!",
+                                        "Something went wrong! try again later",
+                                        "error");
+
+                                }
+                            }
+
+                        });
 
                     } else {
-                        swal("ohoho!", "Something went wrong! try again later", "error");
-
+                        swal("Assign Function Canacled!");
                     }
-                }
+                });
 
-            });
 
         }
     });
@@ -927,24 +978,18 @@ $(document).ready(function() {
             success: function(data) {
                 if (data == 3) {
                     swal("Good Job!", "First Semester of the Batch has been Opened ", "success");
-                    setTimeout(() => {
-                        location.reload();
-                    }, 5000);
+                    bodyofbatch();
 
                 } else if (data == 5) {
                     swal("Good job ",
                         "Batch has been Closed...!",
                         "success");
-                    setTimeout(() => {
-                        location.reload();
-                    }, 5000);
+                    bodyofbatch();
                 } else if (data == 4) {
                     swal("Good job ",
                         "Previous semester has been Closed and New Semester has be Opend!",
                         "success");
-                    setTimeout(() => {
-                        location.reload();
-                    }, 5000);
+                    bodyofbatch();
                 } else {
                     swal("ohoho!", "Something went wrong! try again later", "error");
                     $("#sendBranch").html("Add Branch");
