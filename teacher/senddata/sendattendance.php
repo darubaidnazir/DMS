@@ -5,7 +5,7 @@ require_once("../../coordinator/inner/db_connection.php");
 class sendattendance extends db_connection
 {
 
-    function __construct($getsemesterid, $getsubjectid, $getlectureplan, $getlecturedate, $getlectureno, $getdefaultplan, $getid)
+    function __construct($getsemesterid, $getsubjectid, $getlectureplan, $getlecturedate, $getlectureno, $getdefaultplan, $getid, $gettimeslot)
     {
         parent::__construct();
 
@@ -23,12 +23,14 @@ class sendattendance extends db_connection
 
 
 
-            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`) VALUES (?,?,?,?,?)");
+            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`,`timeslot`) VALUES (?,?,?,?,?,?)");
             $sql->bindParam(1, $getsemesterid);
             $sql->bindParam(2, $getsubjectid);
             $sql->bindParam(3, $getlecturedate);
             $sql->bindParam(4, $getlectureno);
             $sql->bindParam(5, $getlectureplan);
+            $sql->bindParam(6, $gettimeslot);
+
             if ($sql->execute()) {
                 $count = count($getid);
                 for ($i = 0; $i < $count; $i++) {
@@ -57,7 +59,7 @@ class sendattendance extends db_connection
     }
 }
 if (isset($_POST['connection']) && isset($_POST['getsubjectid'])) {
-    $run = new sendattendance($_POST['getsemesterid'], $_POST['getsubjectid'], $_POST['getlectureplan'], $_POST['getlecturedate'], $_POST['getlectureno'], $_POST['getdefaultplan'], $_POST['getid']);
+    $run = new sendattendance($_POST['getsemesterid'], $_POST['getsubjectid'], $_POST['getlectureplan'], $_POST['getlecturedate'], $_POST['getlectureno'], $_POST['getdefaultplan'], $_POST['getid'], $_POST['gettimeslot']);
     $run->closeConnection();
 } else {
 

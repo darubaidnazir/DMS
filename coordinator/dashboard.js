@@ -7,10 +7,11 @@ $(document).ready(function () {
     myArray[3] = "addteachersection";
     myArray[4] = "addactivesemestersection";
     myArray[5] = "addsubjectsection";
+    myArray[6] = "requestsection";
     $(".menu_button").click(function () {
         $("#maindashboardsection").css("display", "none");
         var getId = this.id;
-        //  alert(getId);
+        alert(getId);
         if (getId == "addbatch") {
             getId = "addbatchsection";
             bodyofbatch();
@@ -24,11 +25,15 @@ $(document).ready(function () {
             loadDataTeacher(1);
         } else if (getId == "activesemster") {
             getId = "addactivesemestersection";
-        } else if (getId == "addsetting") {
+        } else if (getId == "addsettingboard") {
             getId = "addsettingsection";
         } else if (getId == "addsubject") {
             getId = "addsubjectsection";
             bodyofsubject();
+
+        } else if (getId == "addrequest") {
+            getId = "requestsection";
+
 
         }
 
@@ -331,6 +336,7 @@ $("#addsubjectcode").on("click", function (event) {
 
 });
 
+
 function bodyofsubject() {
     var coordinate = $("#coordinator_hidden").val().trim();
 
@@ -387,6 +393,3 @@ function bodyofbatch() {
 
 }
 
-$(window).on('load', function () {
-    $("#cover").fadeOut(5000);
-});

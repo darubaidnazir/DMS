@@ -92,6 +92,59 @@ if ($checkcountsemestercoo != 1) {
 
         <label>Select Today's Lecture Date</label>
         <input type="date" class="form-control" id="lecturedate" required>
+        <label>Select Time Slot</label>
+        <?php
+        $start = "";
+        $end = "";
+        $sql = $conn->prepare("SELECT * FROM `timeslot` WHERE `coordinatorid` = ?");
+        $sql->bindParam(1, $_SESSION['$coordinatorinfo']);
+        $sql->execute();
+        $fetch = $sql->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($fetch as $row) {
+            $start = $row['start'];
+            $end = $row['end'];
+            break;
+        }
+
+        function getTimeSlot($interval, $start_time, $end_time)
+        {
+            $start = new DateTime($start_time);
+            $end = new DateTime($end_time);
+            $startTime = $start->format('H:i');
+            $endTime = $end->format('H:i');
+            $i = 0;
+            $time = [];
+            while (strtotime($startTime) <= strtotime($endTime)) {
+                $start = $startTime;
+                $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                $i++;
+                if (strtotime($startTime) <= strtotime($endTime)) {
+                    $time[$i]['slot_start_time'] = $start;
+                    $time[$i]['slot_end_time'] = $end;
+                }
+            }
+            return $time;
+        }
+        $slots = getTimeSlot(30, $start, $end);
+        $length = count($slots);
+        ?>
+        <select id="timeslot" class="form-control">
+            <option value="0" Selected>Select a Time Slot</option>
+            <?php
+
+            for ($i = 1; $i <= $length; $i++) {
+            ?>
+
+            <option value="<?php echo $slots[$i]['slot_start_time']; ?>"><?php echo $slots[$i]['slot_start_time']; ?>
+            </option>
+            <?php
+
+            }
+            ?>
+
+
+        </select>
         <label>Select a Mode</label>
         <select id="defaultattendance" class="form-select" aria-label="Default select example">
             <option selected value="PRESENT">PRESENT</option>
@@ -189,7 +242,9 @@ $(document).ready(function() {
         var defaultplan = $("#defaultattendance").val();
         var semesterid = $("#semester_hidden").val();
         var subjectid = $("#subject_hidden").val();
-        if (lecturedate == "" || lectureplan == "" || defaultplan == "" || lectureno == "") {
+        var timeslot = $("#timeslot").val();
+        if (lecturedate == "" || lectureplan == "" || defaultplan == "" || lectureno == "" ||
+            timeslot == "" || timeslot == 0) {
             $("#message").html("");
             $("#message").html("* All field are required. Empty field's are not allowed");
 
@@ -225,11 +280,11 @@ $(document).ready(function() {
                         if (defaultplan === "PRESENT") {
                             markattendance(semesterid, lecturedate, defaultplan, lectureplan, id,
                                 subjectid,
-                                lectureno);
+                                lectureno, timeslot);
                         } else if (defaultplan === "ABSENT") {
                             markattendance(semesterid, lecturedate, defaultplan, lectureplan, ids,
                                 subjectid,
-                                lectureno);
+                                lectureno, timeslot);
                         }
                     } else {
                         swal("Attendance not recorded!");
@@ -266,7 +321,8 @@ $(document).ready(function() {
 
 
 
-    function markattendance(semesterid, lecturedate, defaultplan, lectureplan, id, subjectid, lectureno) {
+    function markattendance(semesterid, lecturedate, defaultplan, lectureplan, id, subjectid, lectureno,
+        timeslot) {
         $.ajax({
             url: "senddata/sendattendance.php",
             type: "POST",
@@ -281,7 +337,8 @@ $(document).ready(function() {
                 getlectureplan: lectureplan,
                 getlecturedate: lecturedate,
                 getlectureno: lectureno,
-                connection: true
+                connection: true,
+                gettimeslot: timeslot
             },
             success: function(data) {
 

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+   getbranchupdate();
    //sending the branch information
    $("#sendBranch").on("click", function (event) {
       event.preventDefault();
@@ -37,6 +39,7 @@ $(document).ready(function () {
                            document.getElementById("branch-name").value = "";
                            document.getElementById("branch-semester").value = "";
                            $("#sendBranch").html("Add Branch");
+                           getbranchupdate();
 
 
 
@@ -63,6 +66,20 @@ $(document).ready(function () {
 
       }
    }); // end of branch information..
+
+   function getbranchupdate() {
+
+      $.ajax({
+         url: "../../../DMS/coordinator/loadbranch.php",
+         success: function (data) {
+
+            $("#branch_info").html(data);
+         }
+
+
+      });
+   }
+
 
    $("#sendBatch").on("click", function (event) {
       event.preventDefault();

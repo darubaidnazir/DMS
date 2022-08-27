@@ -29,9 +29,7 @@ require_once('dbcon.php');
 
 
 <body>
-    <div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!<br>While we are
-        Fetching<br>
-        Data From the Server...</div>
+
     <?php
     require_once("svg.php");
     ?>
@@ -97,6 +95,14 @@ require_once('dbcon.php');
                         <span id="addsubject" class="menu_button">Subject</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#0">
+                        <svg>
+                            <use xlink:href="#subject"></use>
+                        </svg>
+                        <span id="addrequest" class="menu_button">Request's</span>
+                    </a>
+                </li>
 
                 <li class="menu-heading">
                     <h3>Settings</h3>
@@ -107,7 +113,7 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#setting"></use>
                         </svg>
-                        <span id="addsetting" class="menu_button">Settings</span>
+                        <span id="addsettingboard" class="menu_button">Settings</span>
                     </a>
                 </li>
                 <li>
@@ -115,7 +121,7 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#logout"></use>
                         </svg>
-                        <span id="addsetting">Logout</span>
+                        <span id="addlogout">Logout</span>
                     </a>
                 </li>
 
@@ -377,6 +383,24 @@ require_once('dbcon.php');
 
 
         </section>
+        <section class="grid" id="requestsection">
+            <div class='m-3'>
+                <p class='fw-bold text-uppercase'> Attendance Update Request Form</p>
+                <table class='table table-success table-striped'>
+                    <tr>
+                        <td class='table-secondary'>S.No</td>
+                        <td class='table-secondary'>Teacher Name</td>
+                        <td class='table-secondary'>Subject Name</td>
+                        <td class='table-secondary'></td>
+                        <td class='table-secondary'>Action</td>
+                    </tr>
+                    <tbody id="tablerequest">
+
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
         <section class="grid" id="addsubjectsection">
 
 
@@ -416,7 +440,12 @@ require_once('dbcon.php');
     </section>
     <section class="grid" id="addsettingsection">
 
-        Add SettingSection
+        Add SettingSectionddd
+        <div>
+            djskds
+        </div>
+
+
     </section>
     <footer class="page-footer">
         <span>Department Management System North Campus</span>
@@ -448,25 +477,7 @@ require_once('dbcon.php');
                             <div class="form-group mt-5">
                                 <select class="form-select" aria-label="Default select example" id="branch_info"
                                     required>
-                                    <option selected value="0">Select a Branch</option>
-                                    <!-- For loop for the Branch Details-->
-                                    <?php
-                                    $sql_1 = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
-                                    $sql_1->bindParam(1, $coordinatorid);
-                                    $sql_1->execute();
-                                    if ($sql_1->rowCount() > 0) {
-                                        while ($row_1 = $sql_1->fetch(PDO::FETCH_ASSOC)) {
 
-
-
-                                    ?>
-                                    <option value="<?php echo $row_1['branchid']; ?>">
-                                        <?php echo $row_1['branchname']; ?></option>
-
-                                    <?php
-                                        }
-                                    }
-                                    ?>
                                 </select>
                             </div>
 
@@ -1001,6 +1012,113 @@ $(document).ready(function() {
         });
     }
 });
+</script>
+<script type='text/javascript'>
+$("#addrequest").on('click', function() {
+    getrequest();
+
+});
+
+function getrequest() {
+    var coordinate = $("#coordinator_hidden").val().trim();
+    $.ajax({
+        url: "loadData/loadrequest.php",
+        type: "POST",
+        data: {
+            getcoordinatorid: coordinate,
+            connection: true
+        },
+        success: function(data) {
+
+            $("#tablerequest").html(data);
+        }
+
+
+
+    });
+
+}
+
+
+$(document).on('click', "#grantpermission", function() {
+    var teacherid = $(this).data("teacherid");
+    var semesterid = $(this).data("semesterid");
+    var subjectid = $(this).data("subjectid");
+    swal({
+            title: "Are you sure?",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                sendrequestresponse(teacherid, semesterid, subjectid, "1");
+            } else {
+                swal("Ohoho Action Cancled");
+            }
+        });
+
+
+
+});
+$(document).on('click', "#rejectpermission", function() {
+    var teacherid = $(this).data("teacherid");
+    var semesterid = $(this).data("semesterid");
+    var subjectid = $(this).data("subjectid");
+    swal({
+            title: "Are you sure?",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                sendrequestresponse(teacherid, semesterid, subjectid, "2");
+            } else {
+                swal("Ohoho Action Cancled");
+            }
+        });
+
+
+});
+
+function sendrequestresponse(teacherid, semesterid, subjectid, value) {
+    $.ajax({
+        url: "../coordinator/modal/sendmodaldata/sendrequest.php",
+        type: "POST",
+        data: {
+
+            getteacherid: teacherid,
+            getsemesterid: semesterid,
+            getsubjectid: subjectid,
+            getvalue: value,
+            connection: true
+        },
+        success: function(data) {
+
+            getrequest();
+            if (data == 3) {
+                swal("Good Job!", "Permission Granted! Untill You Revoke Permission ", "success");
+
+
+            } else if (data == 4) {
+                swal("oohoho ",
+                    "Permission denied",
+                    "error");
+
+            } else {
+                swal("ohoho!", "Something went wrong! try again later", "error");
+                $("#sendBranch").html("Add Branch");
+            }
+
+        }
+
+
+    });
+
+}
 </script>
 
 </html>

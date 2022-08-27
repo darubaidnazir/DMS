@@ -26,16 +26,29 @@ class loadteachersubject extends db_connection
             $Sno = 1;
             foreach ($resulttable as $rows) {
                 if ($rows['semesterstatus'] == 1) {
+                    $totalstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
+                    $totalstudent->bindParam(1, $rows["batchid"]);
+                    $totalstudent->execute();
+                    $countstudent = $totalstudent->rowCount();
 
                     $output .= "<tr style='color:white;font-weight:bold;'>
         <td style='color:green;' class='table-primary'>{$Sno}</td>
         <td style='color:green;' class='table-primary'>{$rows["subjectname"]}</td>
         <td style='color:green;' class='table-primary'>{$rows["subjectcode"]}</td>
         <td style='color:green;' class='table-primary'>{$rows["batchyear"]}</td>
-        <td style='color:green;' class='table-primary'>{$rows["semesterno"]}</td>
-        <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
+        <td style='color:green;' class='table-primary'>{$rows["semesterno"]}</td>";
+
+                    if ($countstudent > 0) {
+                        $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
         
-    </tr>";
+</tr>";
+                    } else {
+                        $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger'  style='pointer-events: none' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
+        
+                        </tr>";
+                    }
+
+
                     $Sno++;
                 } else {
                 }

@@ -62,9 +62,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 </style>
 
 <body>
-    <div id="cover"> <span class="glyphicon glyphicon-refresh w3-spin preloader-Icon"></span> Wait!<br>While we are
-        Fetching<br>
-        Data From the Server...</div>
+
     <?php
     require_once("../coordinator/svg.php");
     ?>
@@ -202,6 +200,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                                 <th>S.No</th>
                                 <th>Lecture Topic</th>
                                 <th>Lecture Hour</th>
+                                <th>Lecture Start time</th>
                                 <th>Lecture Date</th>
                                 <th>Total Student</th>
                                 <th>Present</th>
@@ -230,7 +229,12 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                 <p>
                     <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to View Student
                         Attendnace
-                        Record.</lable>
+                        Record.</lable><br>
+                    <small class="text-uppercase" style="color:red;">* Update is disabled <br>Click on the
+                        below Request button to get permission</small>
+
+
+
 
                     <select class="form-control" aria-label="Default select example" id='subjectlecture1'>
                         <option selected value="0">Select a Subject</option>
@@ -246,7 +250,8 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                             $string .=  $row['subjectcode'];
 
                         ?>
-                        <option data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid']; ?>">
+                        <option data-permission="<?php echo $row['updatepermission']; ?>"
+                            data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid']; ?>">
                             <?php echo $string; ?></option>
 
                         <?php
@@ -264,7 +269,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                 </div>
                 <main>
 
-                    <table>
+                    <table id="studenttable1">
 
                         <thead>
 
@@ -289,7 +294,9 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                         <tbody id="addstudenttable">
 
                         </tbody>
-
+                        <?php
+                        echo '<div class="download"><button id="downloadpdf" onclick="downloadPdf()">Download Pdf</button></div>';
+                        ?>
                     </table>
 
                 </main>
@@ -341,6 +348,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                     <div class="modal-body m-3">
                         <p>
                             SELECT A DATE AND LECTURE YOU WANT TO UPDATE FOR THIS STUDENT
+                            <br> <span style='color:red'>* Note update attendance can be done only once.</span>
                         </p>
                         <div>
                             <select class="form-control" id="selectdateandlecture">
@@ -373,8 +381,73 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
+
 <script>
 
+</script>
+<script>
+function downloadPdf() {
+    var element = document.getElementById("studenttable1");
+    var value = $("#subjectlecture1").val();
+    var semesterid = $("#subjectlecture1").find(':selected').data('city');
+    alert(value);
+    alert(semesterid);
+    swal({
+            title: "Are you sure?",
+            text: "Do you want to Download the Pdf Format Record!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "pdf/pdfstudent.php",
+                    type: "POST",
+                    data: {
+                        getsemesterid: semesterid,
+                        getsubjectid: value,
+                        connection: true
+                    },
+                    success: function(data) {
+                        html2pdf(element, {
+                            margin: 0,
+                            filename: 'Classreport.pdf',
+                            image: {
+                                type: 'png',
+                                quality: 1
+                            },
+                            html2canvas: {
+                                scale: 2,
+                                logging: true,
+                                dpi: 192,
+                                useCORS: true,
+                                letterRendering: true,
+                                allowTaint: true,
+                            },
+                            jsPDF: {
+                                unit: 'in',
+                                format: 'letter',
+                                orientation: 'landscape'
+                            }
+                        });
+                        swal("Poof! Downloading Started!", {
+                            icon: "success",
+                        });
+
+                    }
+
+
+
+
+                });
+            } else {
+                swal("Downloading Cancled!");
+            }
+        });
+
+}
 </script>
 <script>
 $(document).ready(function() {
@@ -413,6 +486,10 @@ $("#subjectlecture").on("change", function() {
 $("#subjectlecture1").on("change", function() {
     var value = $(this).val();
     var semesterid = $(this).find(':selected').data('city');
+    var permission = $(this).find(':selected').data('permission');
+
+
+
 
     if (value == 0) {
 
@@ -421,7 +498,7 @@ $("#subjectlecture1").on("change", function() {
     } else {
 
         $("#mm1").html("");
-        viewstudenttable(value, semesterid);
+        viewstudenttable(value, semesterid, permission);
         $("#exportstudents").css("display", "block");
 
     }
@@ -450,14 +527,15 @@ function viewlecturetable(value, semesterid) {
 }
 
 
-function viewstudenttable(value, semesterid) {
+function viewstudenttable(value, semesterid, permission) {
     $.ajax({
         url: "loaddata/loadstudent.php",
         type: "POST",
         data: {
             getsubjectid: value,
             connection: true,
-            getsemesterid: semesterid
+            getsemesterid: semesterid,
+            getper: permission
         },
         success: function(data) {
             $("#addstudenttable").html(data);
@@ -515,7 +593,7 @@ function gettheupdaterecord(studentid, semesterid, subjectid, value) {
         success: function(data) {
             $("#updatedrecordofstudent").html("");
             $("#updatedrecordofstudent").html(data);
-            viewstudenttable(subjectid, semesterid)
+            viewstudenttable(subjectid, semesterid, 0)
 
         }
 
@@ -526,34 +604,103 @@ function gettheupdaterecord(studentid, semesterid, subjectid, value) {
 
 $(document).on("click", "#marknew", function() {
     var id = $(this).data("value");
+    var remarkmessage = $("#remakmessage").val();
     var studentid = $("#selectdateandlecture").data("studentid");
     var semesterid = $("#clickonupdate").data("semesterid");
     var subjectid = $("#clickonupdate").data("subjectid");
     var date = $("#selectdateandlecture").val();
     $("#selectdateandlecture").prop("disabled", true);
 
+    if (remarkmessage == "") {
+        $("#mess").html("* enter a remark");
+    } else {
+        $("#mess").html("");
+
+        swal({
+                title: "Are you sure?",
+                text: "You want to Update this record!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage);
+                } else {
+                    swal("Cancled Record is safe!");
+                }
+            });
+
+    }
+
+
+});
+$(document).on("click", "#requestupdatebox", function() {
+    var semesterid = $(this).data("semesterid");
+    var subjectid = $(this).data("subjectid");
+    var teacherid = $("#teacher_hidden").val();
+
     swal({
             title: "Are you sure?",
-            text: "You want to Update this record!",
+            text: "",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         })
         .then((willDelete) => {
             if (willDelete) {
+                $.ajax({
+                    url: "request/requestpermission.php",
+                    type: "POST",
+                    data: {
+                        connection: true,
+                        getsemesterid: semesterid,
+                        getsubjectid: subjectid,
+                        getteacherid: teacherid
+                    },
+                    success: function(data) {
 
-                marknewattendance(id, studentid, subjectid, semesterid, date);
+                        if (data == 3) {
+
+                            swal("God job!",
+                                "Request has been send to Coordinator. We will notify you when permission is granted",
+                                "success");
+
+
+                        } else if (data == 1) {
+
+                            swal("ohoohoh!", "Request Sent failed", "error");
+
+
+
+
+                        } else {
+                            swal("ohoohoh!", "Something went wrong! try again", "error");
+
+
+                        }
+
+                    }
+
+
+                });
+
             } else {
-                swal("Cancled Record is safe!");
+                swal("Request Cancled!");
             }
         });
 
 
 
 
+
+
+
 });
 
-function marknewattendance(id, studentid, subjectid, semesterid, date) {
+
+function marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage) {
 
     $.ajax({
         url: "senddata/sendupdated.php",
@@ -564,9 +711,11 @@ function marknewattendance(id, studentid, subjectid, semesterid, date) {
             getstudentid: studentid,
             getsubjectid: subjectid,
             getdate: date,
-            connection: true
+            connection: true,
+            getremarkmessage: remarkmessage
         },
         success: function(data) {
+
 
             if (data == 3) {
                 gettheupdaterecord(studentid, semesterid, subjectid, date);
@@ -652,6 +801,7 @@ function deletelecture(date, subjectid, semesterid) {
             connection: true
         },
         success: function(data) {
+            alert(data);
             if (data == 3) {
 
                 swal("Good JOB!", "Lecture Deleted Successfully", "success");
@@ -660,6 +810,13 @@ function deletelecture(date, subjectid, semesterid) {
             } else if (data == 0) {
 
                 swal("ohoohoh!", "Deleting Lecture Failed", "error");
+
+
+
+
+            } else if (data == 1) {
+
+                swal("ohoohoh!", "You can't delete the Lecture! Contact Coordinator", "error");
 
 
 
@@ -675,11 +832,9 @@ function deletelecture(date, subjectid, semesterid) {
 
     });
 
-}
 
-$(window).on('load', function() {
-    $("#cover").fadeOut(5000);
-});
+
+}
 </script>
 <?php
 $conn = null;
