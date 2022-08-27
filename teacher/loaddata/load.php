@@ -39,7 +39,7 @@ class loadteachersubject extends db_connection
         <td style='color:green;' class='table-primary'>{$rows["semesterno"]}</td>";
 
                     if ($countstudent > 0) {
-                        $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
+                        $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectname={$rows['subjectname']}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
         
 </tr>";
                     } else {

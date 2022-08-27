@@ -76,6 +76,11 @@ if ($checkcountsemestercoo != 1) {
 <body>
 
     <div class="mainboxdiv">
+        <p>
+        <h3 class="text-center" style="text-align: center;color:blue;">
+            <?php echo $_GET['subjectname']; ?>
+        </h3>
+        </p>
         <h3 style="color:red;" id="message"></h3>
         <label>Enter Today's Lecture Topic</label>
         <input type="text" class="form-control" id="lectureplan" placeholder="Introduction to Computer's " required>
@@ -93,55 +98,10 @@ if ($checkcountsemestercoo != 1) {
         <label>Select Today's Lecture Date</label>
         <input type="date" class="form-control" id="lecturedate" required>
         <label>Select Time Slot</label>
-        <?php
-        $start = "";
-        $end = "";
-        $sql = $conn->prepare("SELECT * FROM `timeslot` WHERE `coordinatorid` = ?");
-        $sql->bindParam(1, $_SESSION['$coordinatorinfo']);
-        $sql->execute();
-        $fetch = $sql->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($fetch as $row) {
-            $start = $row['start'];
-            $end = $row['end'];
-            break;
-        }
 
-        function getTimeSlot($interval, $start_time, $end_time)
-        {
-            $start = new DateTime($start_time);
-            $end = new DateTime($end_time);
-            $startTime = $start->format('H:i');
-            $endTime = $end->format('H:i');
-            $i = 0;
-            $time = [];
-            while (strtotime($startTime) <= strtotime($endTime)) {
-                $start = $startTime;
-                $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-                $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-                $i++;
-                if (strtotime($startTime) <= strtotime($endTime)) {
-                    $time[$i]['slot_start_time'] = $start;
-                    $time[$i]['slot_end_time'] = $end;
-                }
-            }
-            return $time;
-        }
-        $slots = getTimeSlot(30, $start, $end);
-        $length = count($slots);
-        ?>
+
         <select id="timeslot" class="form-control">
-            <option value="0" Selected>Select a Time Slot</option>
-            <?php
 
-            for ($i = 1; $i <= $length; $i++) {
-            ?>
-
-            <option value="<?php echo $slots[$i]['slot_start_time']; ?>"><?php echo $slots[$i]['slot_start_time']; ?>
-            </option>
-            <?php
-
-            }
-            ?>
 
 
         </select>
@@ -157,8 +117,69 @@ if ($checkcountsemestercoo != 1) {
 
 </html>
 
+<script type="text/javascript">
+$("#lecturedate").on("change", function() {
+    $("#sendattendance").prop("disabled", true);
+    $("#timeslot").prop("disabled", false);
+    var date = $(this).val();
+    $.ajax({
+        url: "loadData/loadtimeslot.php",
+        type: "POST",
+        data: {
+            connection: true,
+            getdate: date
+        },
+        success: function(data) {
+            if (data == 5) {
+                swal("ohoho!",
+                    "Attendance Should be Performed Within 3 Days",
+                    "error");
+            }
+            $("#timeslot").html(data);
 
 
+        }
+    });
+});
+$("#timeslot").on("change", function() {
+
+    var time = $(this).val();
+    var hour = $("#lectureno").val();
+    var date = $("#lecturedate").val();
+    var semesterid = $("#semester_hidden").val();
+
+
+    $.ajax({
+        url: "loadData/checktime.php",
+        type: "POST",
+        data: {
+            connection: true,
+            gettime: time,
+            gethour: hour,
+            getdate: date,
+            getsemesterid: semesterid
+        },
+        success: function(data) {
+
+            if (data == 3) {
+                $("#sendattendance").prop("disabled", false);
+            } else if (data == 1) {
+                swal("ohoho!",
+                    "Change the Time Slot! This Slot is Already Taken for this day",
+                    "error");
+            } else {
+                swal("ohoho!",
+                    "Something went wrong ! try again ",
+                    "error");
+            }
+
+        }
+    });
+
+
+
+});
+</script>
 
 <?php
 
@@ -219,6 +240,9 @@ if ($checkcountsemester > 0 && $checkcountteacher > 0 && $checkcountsubject > 0)
 <script>
 $(document).ready(function() {
 
+
+    $("#sendattendance").prop("disabled", true);
+    $("#timeslot").prop("disabled", true);
     $("#defaultattendance").on("change", function() {
         var value = $("#defaultattendance").val();
         if (value == "PRESENT") {
@@ -359,6 +383,12 @@ $(document).ready(function() {
                 } else if (data == 4) {
                     swal("ohoho!",
                         "Attendance with this date already exits ! try with different date ",
+                        "error");
+                    $("#sendattendance").html("Submit");
+
+                } else if (data == 9) {
+                    swal("ohoho!",
+                        "Time Slot is already taken! Try with different slot",
                         "error");
                     $("#sendattendance").html("Submit");
 

@@ -23,13 +23,21 @@ class sendattendance extends db_connection
 
 
 
-            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`,`timeslot`) VALUES (?,?,?,?,?,?)");
+
+
+            $timestamp = strtotime($gettimeslot) + 60 * 60 * $getlectureno;
+            $time = date('H:i', $timestamp);
+
+
+
+            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`,`timeslotstart`,`timeslotend`) VALUES (?,?,?,?,?,?,?)");
             $sql->bindParam(1, $getsemesterid);
             $sql->bindParam(2, $getsubjectid);
             $sql->bindParam(3, $getlecturedate);
             $sql->bindParam(4, $getlectureno);
             $sql->bindParam(5, $getlectureplan);
             $sql->bindParam(6, $gettimeslot);
+            $sql->bindParam(7, $time);
 
             if ($sql->execute()) {
                 $count = count($getid);
