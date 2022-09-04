@@ -11,8 +11,7 @@
                 <div class="row py-5 m-3 forms" id="form">
                     <div class="col-md-10">
                         <div class="form-group mt-2 text-center">
-                            <form action="../../../DMS/coordinator/modal/sendmodaldata/upload.php" method="post"
-                                enctype="multipart/form-data" id="myformupload">
+                            <form id="formexecel" action="ajaxupload.php" method="post" enctype="multipart/form-data">
                                 <p class="fw-bold">Import Email address using Excel File</p>
                                 <small style="color:red;font-weight:bold;">*Select a batch first</small>
                                 <?php
@@ -38,13 +37,10 @@
                                     }
                                     ?>
                                 </select>
-                                <input type="file" class="form-control m-2" name="file" id="file" required value=""
-                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                                <input required id="uploadImage" type="file" name="image" accept=".csv" />
 
-                                <button class="btn btn-primary" style="margin-top:5px;" type="submit" id="import"
-                                    name="import">Upload Excel</button>
+                                <input class="btn btn-success" type="submit" id="upbtn" value="Upload">
                             </form>
-
                         </div>
                         <h1 class="text-center m-3">OR</h1>
                         <div class="form-group mt-2">
@@ -70,6 +66,8 @@
 
                 </div>
 
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Close
@@ -80,6 +78,61 @@
     </div>
     <script>
     $(document).ready(function() {
+
+        $("#formexecel").on('submit', (function(e) {
+
+            e.preventDefault();
+            if ($("#formimport").val() == "") {
+                swal("ohoho!", "Select a Batch",
+                    "error");
+            } else {
+
+                $.ajax({
+                    url: "../../../DMS/coordinator/modal/sendmodaldata/uploadex.php",
+                    type: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $('#student-to-batch-add').modal('hide');
+                        $('#loader').removeClass('hidden')
+
+                    },
+                    success: function(data) {
+
+                        if (data == 1) {
+                            swal("ohoho!", "File not Uploaded! try again", "error");
+                            $("#upbtn").html("Upload");
+
+                        } else if (data == 3) {
+                            swal("Good job ", "Student Added to the Batch!", "success");
+                            $("#upbtn").html("Uploaded");
+                            $("#upbtn").attr("disabled", "disabled");
+
+                        } else if (data == 7) {
+                            swal("ohoohoh ", "Only .csv Files allowed", "warning");
+                            $("#upbtn").html("Upload");
+                        } else {
+                            swal("ohoho!", "Something went wrong! try again later",
+                                "error");
+                            $("#upbtn").html("Upload");
+
+                        }
+                    },
+                    complete: function() {
+                        $('#loader').addClass('hidden')
+                    },
+
+
+                });
+            }
+
+        }));
+
+
+
+
         $("#addstudentData").on("click", function() {
             var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             var email = $("#enter-student-email").val().trim();

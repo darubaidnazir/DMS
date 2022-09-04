@@ -22,6 +22,7 @@ require_once('dbcon.php');
     <link rel="stylesheet" href="table.css" />
     <link rel="stylesheet" href="dash.css" />
     <link rel="stylesheet" href="mainboard.css" />
+    <link rel="stylesheet" href="spin.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <title>Coordinator Dashboard</title>
@@ -29,7 +30,7 @@ require_once('dbcon.php');
 
 
 <body>
-
+    <div id="loader" class="lds-dual-ring hidden overlay"></div>
     <?php
     require_once("svg.php");
     ?>

@@ -10,7 +10,7 @@ $getsemesterid =  $_GET['semesterid'];
 $getsubjectid =  $_GET['subjectid'];
 $coo = $_SESSION['$coordinatorinfo'];
 $check = $conn->prepare("SELECT * FROM `subject` WHERE subjectid = ? && `coordinatorid`= ?");
-$check->bindParam(1, $getsemesterid);
+$check->bindParam(1, $getsubjectid);
 $check->bindParam(2, $coo);
 $check->execute();
 $checkcountsemestercoo = $check->rowCount();
