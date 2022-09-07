@@ -401,6 +401,53 @@ require_once('dbcon.php');
                 </table>
             </div>
 
+            <div class='m-3'>
+                <p class='fw-bold text-uppercase'> Select Time Slots</p>
+                <?php
+                function getTimeSlot($interval, $start_time, $end_time)
+                {
+                    $start = new DateTime($start_time);
+                    $end = new DateTime($end_time);
+                    $startTime = $start->format('H:i');
+                    $endTime = $end->format('H:i');
+                    $i = 0;
+                    $time = [];
+                    while (strtotime($startTime) <= strtotime($endTime)) {
+                        $start = $startTime;
+                        $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                        $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                        $i++;
+                        if (strtotime($startTime) <= strtotime($endTime)) {
+                            $time[$i]['slot_start_time'] = $start;
+                            $time[$i]['slot_end_time'] = $end;
+                        }
+                    }
+                    return $time;
+                }
+                $start = "9:00";
+                $end =  "18:00";
+                $slots = getTimeSlot(30,$start,$end);
+                $length = count($slots);
+                echo '<select id="menutimeslotstart" class="form-control">
+                <option selected value="0">Select a Start Time</option>';
+                for ($i = 1; $i <= $length; $i++) {
+ 
+                   echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
+                }
+                echo "</select>";
+                echo '<select id="menutimeslotend" class="form-control">
+                <option selected value="0">Select a End Time</option>';
+                for ($i = 1; $i <= $length; $i++) {
+ 
+                   echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
+                }
+                echo "</select>";
+            
+                ?>
+                <button class="btn btn-primary text-center" style="    margin: 0 auto;
+    display: block;" id="settimeslot"> Set Time </button>
+            </div>
+
         </section>
         <section class="grid" id="addsubjectsection">
 

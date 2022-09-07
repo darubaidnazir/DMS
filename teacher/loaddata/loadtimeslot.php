@@ -10,7 +10,17 @@ class loadtimeslot extends db_connection
         date_default_timezone_set("Asia/Kolkata");
         $date2 = date('Y-m-d');
         $date1 = $getdate;
-
+        $getsomedate = $this->conn->prepare("SELECT * FROM `timeslot` WHERE `coordinatorid` = ?");
+        $getsomedate->bindParam(1, $_SESSION['$coordinatorinfo']);
+        $getsomedate->execute();
+        $fetch = $getsomedate->fetchAll(PDO::FETCH_ASSOC);
+        $coordinatordate = "0";
+        foreach ($fetch as $row) {
+            $coordinatordate = $row['attendancerecord'];
+           
+            break;
+        }
+        
 
         $diff = abs(strtotime($date2) - strtotime($date1));
 
@@ -18,7 +28,8 @@ class loadtimeslot extends db_connection
         $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
         $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
 
-        if ($days > 3) {
+        if ($days > $coordinatordate) {
+            
             echo 5;
             exit();
         }
