@@ -399,6 +399,14 @@ require_once('dbcon.php');
 
                     </tbody>
                 </table>
+                <p>
+                    Enter Maximum days to mark attendance from current date.<br>
+                    <p>
+                            <input type="number" min="0" class="form-control m-2" id="days" placeholder="3"> 
+                             <button class="btn btn-danger" style="    margin: 0 auto;
+                                 display: block;" id="update_days">Update Days</button> 
+                    </p>
+                </p>
             </div>
 
             <div class='m-3'>
