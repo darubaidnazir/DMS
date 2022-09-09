@@ -351,6 +351,7 @@ $(document).ready(function() {
 
     function markattendance(semesterid, lecturedate, defaultplan, lectureplan, id, subjectid, lectureno,
         timeslot) {
+
         $.ajax({
             url: "senddata/sendattendance.php",
             type: "POST",

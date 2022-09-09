@@ -374,9 +374,92 @@ require_once('dbcon.php');
                     </main>
                 </div>
             </section>
+            <section>
+                <div class="text-center maintable">
+                    <p>
+                        <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to View
+                            Student
+                            Attendnace
+                            Record.</lable><br>
+                        <small class="text-uppercase" style="color:red;">* Update is disabled <br>Click on the
+                            below Request button to get permission</small>
+                        <select class="form-control" aria-label="Default select example" id='subjectlecture1new'>
+                            <option selected value="0">Select a Subject</option>
+                            <?php
+                            $find = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE subject.coordinatorid = ? && semester.semesterstatus = 1");
+                            $find->bindParam(1, $coordinatorid);
+                            $find->execute();
+                            $resulttable = $find->fetchAll(PDO::FETCH_ASSOC);
+                            $string = "";
+                            foreach ($resulttable as $row) {
+                                $string .=  $row['subjectname'];
+                                $string .= "-";
+                                $string .=  $row['subjectcode'];
+
+                            ?>
+                            <option data-permission="<?php echo $row['updatepermission']; ?>"
+                                data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid']; ?>">
+                                <?php echo $string; ?></option>
+
+                            <?php
+                                $string = "";
+                            }
+                            ?>
+
+
+                            ?>
+
+
+                        </select>
+
+
+
+
+                        <small id="mm1" style="color:red;"></small>
+                    </p>
+                    <div class="text-center" style="margin:5px;">
+
+                        <input type="text" id="seachstudent" class="form-control form-input"
+                            placeholder="Search anything...">
+
+                    </div>
+                    <main>
+
+                        <table id="studenttable1">
+
+                            <thead>
+
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Student Roll No</th>
+                                    <th>Student Name</th>
+                                    <th>Total Class</th>
+                                    <th>Present </th>
+                                    <th>Absent</th>
+                                    <th>Percentage</th>
+                                    <th>Update Attendance</th>
+
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="3"></th>
+                                </tr>
+                            </tfoot>
+                            <tbody id="addstudenttable">
+
+                            </tbody>
+
+                        </table>
+
+                    </main>
+                </div>
+
+            </section>
         </section>
         <section class=" grid" id="addactivesemestersection">
-            <button class="maindashbutton">Main Dashboard</button>
+
             <?php
             require_once("../coordinator/modal/loadactivesemester.php");
 
@@ -948,6 +1031,43 @@ require_once('dbcon.php');
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="updateattendnce" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Update Attendance
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body m-3">
+                    <p>
+                        SELECT A DATE AND LECTURE YOU WANT TO UPDATE FOR THIS STUDENT
+                        <br> <span style='color:red'>* Note update attendance can be done only once.</span>
+                    </p>
+                    <div>
+                        <select class="form-control" id="selectdateandlecture">
+
+
+                        </select>
+                    </div>
+                    <div id="updatedrecordofstudent">
+
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Add Subject  informationModal End-->
     <!-- Add Student  Modal -->
     <?php
@@ -971,6 +1091,225 @@ require_once('dbcon.php');
 </script>
 <script>
 $(document).ready(function() {
+    $(document).on("click", "#clickonupdate", function() {
+
+        var studentid = $(this).data("studentid");
+        var semesterid = $(this).data("semesterid");
+        var subjectid = $(this).data("subjectid");
+        $("#selectdateandlecture").html("");
+        $("#updatedrecordofstudent").html("");
+        getdateandlecture(studentid, semesterid, subjectid);
+        $('#selectdateandlecture').data('studentid', studentid);
+
+
+    });
+
+    function getdateandlecture(studentid, semesterid, subjectid) {
+
+        $.ajax({
+            url: "../../DMS/teacher/loaddata/loaddate.php",
+            type: "POST",
+            data: {
+                getsemesterid: semesterid,
+                getsubjectid: subjectid,
+                connection: true
+            },
+            success: function(data) {
+                $("#selectdateandlecture").html(data);
+
+            }
+
+
+        });
+
+
+    }
+
+    $(document).on("click", "#marknew", function() {
+        var id = $(this).data("value");
+        var remarkmessage = $("#remakmessage").val();
+        var studentid = $("#selectdateandlecture").data("studentid");
+        var semesterid = $("#clickonupdate").data("semesterid");
+        var subjectid = $("#clickonupdate").data("subjectid");
+        var date = $("#selectdateandlecture").val();
+        $("#selectdateandlecture").prop("disabled", true);
+
+        if (remarkmessage == "" || date == 0) {
+            $("#mess").html("* enter a remark- or check the date");
+
+        } else {
+            $("#mess").html("");
+
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to Update this record!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        marknewattendance(id, studentid, subjectid, semesterid, date,
+                            remarkmessage);
+                    } else {
+                        swal("Cancled Record is safe!");
+                    }
+                });
+
+        }
+
+
+    });
+
+
+    function marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage) {
+        var coordinator = 0;
+        $.ajax({
+            url: "../../DMS/teacher/senddata/sendupdated.php",
+            type: "POST",
+            data: {
+                getid: id,
+                getsemesterid: semesterid,
+                getstudentid: studentid,
+                getsubjectid: subjectid,
+                getdate: date,
+                connection: true,
+                getremarkmessage: remarkmessage,
+                accesslevel: coordinator,
+            },
+            success: function(data) {
+
+
+                if (data == 3) {
+                    gettheupdaterecord(studentid, semesterid, subjectid, date);
+                    $("#selectdateandlecture").prop("disabled", false);
+
+
+                } else if (data == 1) {
+
+                    swal("ohoohoh!", "Updating not Successfully! try again", "error");
+                    $("#selectdateandlecture").prop("disabled", false);
+
+
+
+                } else {
+                    swal("ohoohoh!", "Something went wrong! try again", "error");
+                    $("#selectdateandlecture").prop("disabled", false);
+
+                }
+
+            }
+
+
+
+
+        });
+
+    }
+
+
+
+    $("#selectdateandlecture").on("change", function() {
+        var studentid = $(this).data("studentid");
+        var semesterid = $("#clickonupdate").data("semesterid");
+        var subjectid = $("#clickonupdate").data("subjectid");
+        var value = $(this).val();
+        if (value == 0) {
+            $("#updatedrecordofstudent").html("");
+        } else {
+            gettheupdaterecord(studentid, semesterid, subjectid, value);
+        }
+
+    });
+
+    function gettheupdaterecord(studentid, semesterid, subjectid, value) {
+        var coordinator = 0;
+        $.ajax({
+            url: "../../DMS/teacher/loaddata/loadattedancerecord.php",
+            type: "POST",
+            data: {
+                getsemesterid: semesterid,
+                getsubjectid: subjectid,
+                getstudentid: studentid,
+                getvalue: value,
+                connection: true,
+                accesslevel: coordinator,
+            },
+            success: function(data) {
+
+                $("#updatedrecordofstudent").html("");
+                $("#updatedrecordofstudent").html(data);
+                viewstudenttable(subjectid, semesterid, 0)
+
+            }
+
+
+        });
+
+    }
+
+    $("#subjectlecture1new").on("change", function() {
+
+        var value = $(this).val();
+        var semesterid = $(this).find(':selected').data('city');
+        var permission = $(this).find(':selected').data('permission');
+
+        if (value == 0) {
+
+            $("#mm1").html("* Select a Subject");
+
+        } else {
+
+            $("#mm1").html("");
+            viewstudenttable(value, semesterid, permission);
+            $("#exportstudents").css("display", "block");
+
+        }
+
+
+    });
+
+    function viewstudenttable(value, semesterid, permission) {
+        var coordinator = 0;
+        $.ajax({
+            url: "../../DMS/teacher/loaddata/loadstudent.php",
+            type: "POST",
+            data: {
+                getsubjectid: value,
+                connection: true,
+                getsemesterid: semesterid,
+                getper: permission,
+                accesslevel: coordinator,
+            },
+            success: function(data) {
+                $("#addstudenttable").html(data);
+
+
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $("#some").hide();
     $("#minus").hide();
     $("#plus").on("click", function() {

@@ -6,6 +6,10 @@ class sendupdated extends db_connection
     function  __construct($getsemesterid, $getsubjectid, $getstudentid, $getid, $getdate, $message)
     {
         parent::__construct();
+        $accesslevel = 0;
+        if (!isset($_POST['accesslevel'])) {
+            $accesslevel = 1;
+        }
         $action = "";
         if ($getid == 0) { //mark absend
             $getlecturehour = $this->conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ? && `lecturedate`= ?");
@@ -29,13 +33,16 @@ class sendupdated extends db_connection
 
             if ($sql->execute()) {
                 $action = 0;
-                $sql1 = $this->conn->prepare("INSERT INTO `updateattendance`(`studentid`, `semesterid`, `subjectid`, `message`, `action`,`updatedate`) VALUES (?,?,?,?,?,?)");
+
+                $sql1 = $this->conn->prepare("INSERT INTO `updateattendance`(`studentid`, `semesterid`, `subjectid`, `message`, `action`,`updatedate`,`updatedby`) VALUES (?,?,?,?,?,?,?)");
                 $sql1->bindParam(1, $getstudentid);
                 $sql1->bindParam(3, $getsubjectid);
                 $sql1->bindParam(2, $getsemesterid);
                 $sql1->bindParam(4, $message);
                 $sql1->bindParam(5, $action);
                 $sql1->bindParam(6, $getdate);
+                $sql1->bindParam(7, $accesslevel);
+
                 $sql1->execute();
                 echo 3;
             } else {
@@ -43,13 +50,16 @@ class sendupdated extends db_connection
             }
         } else if ($getid == 1) { //mark present delete
             $action = 1;
-            $sql = $this->conn->prepare("INSERT INTO `updateattendance`(`studentid`, `semesterid`, `subjectid`, `message`, `action`,`updatedate`) VALUES (?,?,?,?,?,?)");
+
+            $sql = $this->conn->prepare("INSERT INTO `updateattendance`(`studentid`, `semesterid`, `subjectid`, `message`, `action`,`updatedate`,`updatedby`) VALUES (?,?,?,?,?,?,?)");
             $sql->bindParam(1, $getstudentid);
             $sql->bindParam(3, $getsubjectid);
             $sql->bindParam(2, $getsemesterid);
             $sql->bindParam(4, $message);
             $sql->bindParam(5, $action);
             $sql->bindParam(6, $getdate);
+            $sql->bindParam(7, $accesslevel);
+
             $sql->execute();
             $sql = $this->conn->prepare("DELETE FROM `studentabsent` WHERE `studentid`= ? && `subjectid` = ? && `semesterid` = ? && `markdate`= ?");
             $sql->bindParam(1, $getstudentid);

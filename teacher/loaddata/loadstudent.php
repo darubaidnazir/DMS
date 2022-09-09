@@ -9,6 +9,10 @@ class loadstudent extends db_connection
     function __construct($getsubjectid, $getsemeterid, $getper)
     {
         parent::__construct();
+        $accesslevel = 0;
+        if (!isset($_POST['accesslevel'])) {
+            $accesslevel = 1;
+        }
 
         $getbatchid = $this->conn->prepare("SELECT * FROM `semester` WHERE `semesterid` = ?");
         $getbatchid->bindParam(1, $getsemeterid);
@@ -25,7 +29,11 @@ class loadstudent extends db_connection
         if ($getallstudent->rowCount() == 0) {
             $output = "";
         } else {
-            $output = "<tr><td></td><td></td> <td></td><td></td><td></td><td></td><td></td><td><button class='btn btn-primary' id='requestupdatebox' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>Request</button></td></tr>";
+            if ($accesslevel == 0) {
+                $output = "";
+            } else {
+                $output = "<tr><td></td><td></td> <td></td><td></td><td></td><td></td><td></td><td><button class='btn btn-primary' id='requestupdatebox' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>Request</button></td></tr>";
+            }
         }
         $fetchallstudent = $getallstudent->fetchAll(PDO::FETCH_ASSOC);
         $Sno = 1;
