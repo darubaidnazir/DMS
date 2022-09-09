@@ -26,7 +26,27 @@ require_once('dbcon.php');
     <link rel="stylesheet" href="spin.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+
     <title>Coordinator Dashboard</title>
+    <style>
+    .min_max {
+
+        background-color: antiquewhite;
+        padding: 10px;
+        border: 2px solid;
+        width: 250px;
+        margin: 3px;
+
+    }
+
+    .min_max:hover {
+        background-color: white;
+        color: black;
+        border: 2px dash black;
+    }
+    </style>
+
 </head>
 
 
@@ -172,6 +192,7 @@ require_once('dbcon.php');
 
             <style></style>
             <div id="viewbatch">
+
                 <h2>
                     <button id="addbranchview" class="btn btn-outline-dark"> View Branch</button>
 
@@ -202,7 +223,6 @@ require_once('dbcon.php');
                             </tr>
                         </tfoot>
                         <tbody id="bodybatch">
-
                         </tbody>
                     </table>
                 </main>
@@ -317,8 +337,21 @@ require_once('dbcon.php');
             </section>
         </section>
         <section class="grid" id="addstudentsection">
+            <p class="text-center" style="margin:5px;">
+
+                <input style="padding:5px; border:1px solid black;" type="text" class="seachstudent"
+                    class="form-control form-input" placeholder="Search anything...">
+
+            </p>
             <section>
-                <div class="text-center">
+                <button class="min_max" id="plusstudent1"><i class="fa-solid fa-plus"></i><small
+                        style="color:red;  ">Maximize the
+                        Student Add List </small></button>
+                <button class="min_max" id="minusstudent1"><i class="fa-solid fa-minus"></i><small
+                        style="color:green; ">Minimize the
+                        Student Add List
+                    </small></button>
+                <div class="text-center" id="divstudent1">
 
                     <button class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#student-to-batch-add"
                         id="addstudentbutton">Add
@@ -367,7 +400,7 @@ require_once('dbcon.php');
                                     <th colspan="3"></th>
                                 </tr>
                             </tfoot>
-                            <tbody id="addStudentData">
+                            <tbody id="addStudentData" class="addstudenttable">
 
                             </tbody>
                         </table>
@@ -375,7 +408,14 @@ require_once('dbcon.php');
                 </div>
             </section>
             <section>
-                <div class="text-center maintable">
+                <button class="min_max" id="plusstudent2"><i class="fa-solid fa-plus"></i><small
+                        style="color:red;  ">Maximize the
+                        Student Update List </small></button>
+                <button class="min_max" id="minusstudent2"><i class="fa-solid fa-minus"></i><small
+                        style="color:green; ">Minimize the
+                        Student Update List
+                    </small></button>
+                <div class="text-center maintable" id="divstudent2">
                     <p>
                         <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to View
                             Student
@@ -417,12 +457,7 @@ require_once('dbcon.php');
 
                         <small id="mm1" style="color:red;"></small>
                     </p>
-                    <div class="text-center" style="margin:5px;">
 
-                        <input type="text" id="seachstudent" class="form-control form-input"
-                            placeholder="Search anything...">
-
-                    </div>
                     <main>
 
                         <table id="studenttable1">
@@ -447,7 +482,7 @@ require_once('dbcon.php');
                                     <th colspan="3"></th>
                                 </tr>
                             </tfoot>
-                            <tbody id="addstudenttable">
+                            <tbody id="addstudenttable" class="addstudenttable">
 
                             </tbody>
 
@@ -492,13 +527,11 @@ require_once('dbcon.php');
             </div>
 
             <div style="all:unset;" class='m-3'>
-                <button style="  background-color: antiquewhite;
-    padding: 10px;
-    border: 2px solid;" id="plus"><i class="fa-solid fa-plus"></i><small style="color:red;  ">Maximize the timeslot
+                <button class="min_max" id="plus"><i class="fa-solid fa-plus"></i><small style="color:red;  ">Maximize
+                        the timeslot
                         setting </small></button>
-                <button style="  background-color: antiquewhite;
-    padding: 10px;
-    border: 2px solid;" id="minus"><i class="fa-solid fa-minus"></i><small style="color:green; ">Minimize the timeslot
+                <button class="min_max" id="minus"><i class="fa-solid fa-minus"></i><small
+                        style="color:green; ">Minimize the timeslot
                         setting
                     </small></button>
                 <div id="some">
@@ -1091,6 +1124,34 @@ require_once('dbcon.php');
 </script>
 <script>
 $(document).ready(function() {
+
+    $("#minusstudent1").hide();
+    $("#divstudent1").hide();
+    $("#divstudent2").hide();
+    $("#minusstudent2").hide();
+    $("#plusstudent1").on("click", function() {
+        $("#divstudent1").show();
+        $("#plusstudent1").hide();
+        $("#minusstudent1").show();
+
+    });
+    $("#plusstudent2").on("click", function() {
+        $("#divstudent2").show();
+        $("#plusstudent2").hide();
+        $("#minusstudent2").show();
+
+    });
+    $("#minusstudent1").on("click", function() {
+        $("#divstudent1").hide();
+        $("#minusstudent1").hide();
+        $("#plusstudent1").show();
+    });
+    $("#minusstudent2").on("click", function() {
+        $("#divstudent2").hide();
+        $("#minusstudent2").hide();
+        $("#plusstudent2").show();
+
+    });
     $(document).on("click", "#clickonupdate", function() {
 
         var studentid = $(this).data("studentid");
@@ -1294,7 +1355,13 @@ $(document).ready(function() {
 
 
 
-
+    $(".seachstudent").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".addstudenttable tr").filter(function() {
+            $(this).toggle($(this).text()
+                .toLowerCase().indexOf(value) > -1)
+        });
+    });
 
 
 
@@ -1722,4 +1789,6 @@ function sendrequestresponse(teacherid, semesterid, subjectid, value) {
 </html>
 <?php
 $conn = null;
+
+
 ?>
