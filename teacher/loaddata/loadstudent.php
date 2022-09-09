@@ -9,7 +9,7 @@ class loadstudent extends db_connection
     function __construct($getsubjectid, $getsemeterid, $getper)
     {
         parent::__construct();
-        $output = "<tr><td></td><td></td> <td></td><td></td><td></td><td></td><td></td><td><button class='btn btn-primary' id='requestupdatebox' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>Request</button></td></tr>";
+
         $getbatchid = $this->conn->prepare("SELECT * FROM `semester` WHERE `semesterid` = ?");
         $getbatchid->bindParam(1, $getsemeterid);
         $getbatchid->execute();
@@ -22,6 +22,11 @@ class loadstudent extends db_connection
         $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
         $getallstudent->bindParam(1, $batchid);
         $getallstudent->execute();
+        if ($getallstudent->rowCount() == 0) {
+            $output = "";
+        } else {
+            $output = "<tr><td></td><td></td> <td></td><td></td><td></td><td></td><td></td><td><button class='btn btn-primary' id='requestupdatebox' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>Request</button></td></tr>";
+        }
         $fetchallstudent = $getallstudent->fetchAll(PDO::FETCH_ASSOC);
         $Sno = 1;
         $totalclasssql = $this->conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ?");

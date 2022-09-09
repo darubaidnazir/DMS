@@ -305,7 +305,44 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
 
         <section class="grid" id="addsettingsection">
-            setting
+            <div id="some">
+
+                <?php
+                $getdate = $conn->prepare('SELECT * FROM `timeslot` WHERE `coordinatorid` = ?');
+                $getdate->bindParam(1,  $coordinatorinfo);
+                $getdate->execute();
+                $result = $getdate->fetchAll(PDO::FETCH_ASSOC);
+
+                ?>
+
+
+                </p>
+                </p>
+                <p class='fw-bold text-uppercase'>Department Time Slot's</p>
+                <table class='table table-success table-striped'>
+                    <tr>
+                        <td class='table-secondary'>Start Time</td>
+                        <td class='table-secondary'>End Time</td>
+                        <td class='table-secondary'>Update Day's</td>
+
+                    </tr>
+                    <tbody>
+
+                        <tr>
+                            <?php foreach ($result as $row) { ?>
+                            <td class='table-primary'><?php echo $row['start']; ?></td>
+                            <td class='table-secondary'><?php echo $row['end']; ?></td>
+                            <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
+                            <?php
+                                break;
+                            }
+
+                            ?>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
         </section>
 
 
@@ -801,7 +838,7 @@ function deletelecture(date, subjectid, semesterid) {
             connection: true
         },
         success: function(data) {
-            alert(data);
+
             if (data == 3) {
 
                 swal("Good JOB!", "Lecture Deleted Successfully", "success");

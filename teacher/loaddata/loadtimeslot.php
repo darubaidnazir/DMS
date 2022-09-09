@@ -16,20 +16,24 @@ class loadtimeslot extends db_connection
         $fetch = $getsomedate->fetchAll(PDO::FETCH_ASSOC);
         $coordinatordate = "0";
         foreach ($fetch as $row) {
-            $coordinatordate = $row['attendancerecord'];
-           
+            $coordinatordate = $row['updateattendance'];
+
             break;
         }
-        
+
 
         $diff = abs(strtotime($date2) - strtotime($date1));
 
         $years = floor($diff / (365 * 60 * 60 * 24));
         $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
         $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+        if ($getdate > $date2) {
+            echo 5;
+            exit();
+        }
 
         if ($days > $coordinatordate) {
-            
+
             echo 5;
             exit();
         }

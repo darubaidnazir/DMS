@@ -124,6 +124,7 @@ $("#lecturedate").on("change", function() {
     $("#sendattendance").prop("disabled", true);
     $("#timeslot").prop("disabled", false);
     var date = $(this).val();
+
     $.ajax({
         url: "loadData/loadtimeslot.php",
         type: "POST",
@@ -132,6 +133,7 @@ $("#lecturedate").on("change", function() {
             getdate: date
         },
         success: function(data) {
+
             if (data == 5) {
                 swal("ohoho!",
                     "Attendance Should be Performed Within 3 Days",

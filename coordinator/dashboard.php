@@ -415,7 +415,7 @@ require_once('dbcon.php');
                         setting </small></button>
                 <button style="  background-color: antiquewhite;
     padding: 10px;
-    border: 2px solid;" id="minus"><i class="fa-solid fa-minus"></i><small style="color:green; ">Minmize the timeslot
+    border: 2px solid;" id="minus"><i class="fa-solid fa-minus"></i><small style="color:green; ">Minimize the timeslot
                         setting
                     </small></button>
                 <div id="some">

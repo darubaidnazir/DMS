@@ -12,6 +12,7 @@ class loadupdaterecord extends db_connection
         $sql->bindParam(3, $getsemesterid);
         $sql->bindParam(4, $getvalue);
         $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         $count = $sql->rowCount();
 
         $output = "";
@@ -43,7 +44,26 @@ class loadupdaterecord extends db_connection
             </tr>";
             }
         } else {
-            $output .= "<h5 style='color:red;margin-top:10px;'>* Update to this date has been already Made..</h5>";
+            $output .= "<div class-'m-3'><p class='fw-bold text-uppercase'> Student Record
+            <br> <span style='color:red;' id='mess'></span></p><table class='table table-success table-striped'><tr>
+            <td class='table-secondary''>Updated Mark</td>
+            <td class='table-secondary'>Remark</td>
+            <td class='table-secondary'>Updated Date</td>
+            </tr>";
+            foreach ($result as $record) {
+                $marked = $record['action'];
+                if ($marked == 1) {
+                    $marked = "Present";
+                } else {
+                    $marked = "Absent";
+                }
+
+                $output .= "<tr style='color:white;font-weight:bold;'>
+                <td style='color:green;' class='table-primary'>{$marked}</td>
+                <td style='color:white;' class='table-primary' >{$record["message"]}</td>
+                <td style='color:green;' class='table-primary'>{$record["updatedate"]}</td>
+                </tr>";
+            }
         }
 
         echo $output;

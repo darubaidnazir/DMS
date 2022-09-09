@@ -29,6 +29,12 @@ class deletelecture extends db_connection
                 $deletelecture->bindParam(1, $getsubjectid);
                 $deletelecture->bindParam(2, $getsemesterid);
                 $deletelecture->bindParam(3, $getdate);
+                $deletelecture1 = $this->conn->prepare("DELETE FROM `updateattendance` WHERE `subjectid` = ? && `semesterid` = ? && `updatedate` = ?");
+                $deletelecture1->bindParam(1, $getsubjectid);
+                $deletelecture1->bindParam(2, $getsemesterid);
+                $deletelecture1->bindParam(3, $getdate);
+                $deletelecture1->execute();
+
                 if ($deletelecture->execute()) {
                     echo 3;
                 } else {
