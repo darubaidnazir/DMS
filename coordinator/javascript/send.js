@@ -1,5 +1,16 @@
 $(document).ready(function () {
+   function getbranchupdate() {
 
+      $.ajax({
+         url: "../../../DMS/coordinator/loadbranch.php",
+         success: function (data) {
+
+            $("#branch_info").html(data);
+         }
+
+
+      });
+   }
    getbranchupdate();
    //sending the branch information
    $("#sendBranch").on("click", function (event) {
@@ -67,18 +78,7 @@ $(document).ready(function () {
       }
    }); // end of branch information..
 
-   function getbranchupdate() {
 
-      $.ajax({
-         url: "../../../DMS/coordinator/loadbranch.php",
-         success: function (data) {
-
-            $("#branch_info").html(data);
-         }
-
-
-      });
-   }
 
 
    $("#sendBatch").on("click", function (event) {
@@ -182,6 +182,7 @@ $(document).ready(function () {
                      } else if (data == 3) {
                         swal("Good job ", "Branch deleted Sucessfully! ", "success");
                         bodyofbranch();
+                        getbranchupdate();
 
                      } else {
                         swal("ohoho!", "Something went wrong! try again later", "error");
@@ -241,6 +242,7 @@ $(document).ready(function () {
                      } else if (data == 3) {
                         swal("Good job ", "Branch deleted Sucessfully! ", "success");
                         bodyofbatch();
+                        getbranchupdate();
 
                      } else {
                         swal("ohoho!", "Something went wrong! try again later", "error");
@@ -289,4 +291,6 @@ $(document).ready(function () {
 
 
    }); // end of branch information..
+
+
 });

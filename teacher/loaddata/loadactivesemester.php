@@ -150,6 +150,8 @@ $(document).on("click", "#assignsubjectbox", function() {
 
 });
 
+
+
 function assignsubjectbox(semesterid, teacherid) {
     $.ajax({
 

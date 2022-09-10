@@ -45,6 +45,12 @@ require_once('dbcon.php');
         color: black;
         border: 2px dash black;
     }
+
+    .alert {
+        background-color: red;
+        color: black;
+        border-radius: 50%;
+    }
     </style>
 
 </head>
@@ -122,7 +128,23 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#subject"></use>
                         </svg>
-                        <span id="addrequest" class="menu_button">Request's</span>
+                        <?php
+                        $sql2 = $conn->prepare("SELECT * FROM `coordinator` INNER
+                           JOIN `teacher` on coordinator.coordinatiorid = teacher.coordinatorid INNER JOIN `assignedsubject` on teacher.teacherid = assignedsubject.teacherid INNER JOIN   subject on assignedsubject.subjectid = subject.subjectid  WHERE  coordinator.coordinatiorid = ? and assignedsubject.updatepermission != 0");
+                        $sql2->bindParam(1, $coordinatorid);
+                        $sql2->execute();
+                        $countnum = $sql2->rowCount();
+
+
+                        ?>
+                        <span id="addrequest" class="menu_button">Request's
+                            <?php if ($countnum != 0) {
+                                echo "<i class='fa fa-bell'
+                                style='font-size:15px;color:red'></i>";
+                                echo $countnum;
+                            }
+                            ?>
+                        </span>
                     </a>
                 </li>
 
@@ -298,6 +320,69 @@ require_once('dbcon.php');
             font-weight: bolder;
             text-align: center;
         }
+
+
+
+
+        .search-box {
+            width: fit-content;
+            height: fit-content;
+            position: relative;
+        }
+
+        .input-search {
+            height: 50px;
+            width: 50px;
+            border-style: none;
+            padding: 10px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            outline: none;
+            border-radius: 25px;
+            transition: all .5s ease-in-out;
+            background-color: #22a6b3;
+            padding-right: 40px;
+            color: #fff;
+        }
+
+        .input-search::placeholder {
+            color: rgba(255, 255, 255, .5);
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 100;
+        }
+
+        .btn-search {
+            width: 50px;
+            height: 50px;
+            border-style: none;
+            font-size: 20px;
+            font-weight: bold;
+            outline: none;
+            cursor: pointer;
+            border-radius: 50%;
+            position: absolute;
+            right: 0px;
+            color: #ffffff;
+            background-color: transparent;
+            pointer-events: painted;
+        }
+
+        .btn-search:focus~.input-search {
+            width: 300px;
+            border-radius: 0px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, .5);
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+        }
+
+        .input-search:focus {
+            width: 300px;
+            border-radius: 0px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, .5);
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+        }
         </style>
         <section class="grid" id="addteachersection">
 
@@ -339,17 +424,19 @@ require_once('dbcon.php');
         <section class="grid" id="addstudentsection">
             <p class="text-center" style="margin:5px;">
 
-                <input style="padding:5px; border:1px solid black;" type="text" class="seachstudent"
-                    class="form-control form-input" placeholder="Search anything...">
+                <span class="search-box">
+                    <button class="btn-search"><i class="fas fa-search"></i></button>
+                    <input type="text" class="input-search seachstudent" placeholder="Type to Search...">
+                </span>
 
             </p>
             <section>
-                <button class="min_max" id="plusstudent1"><i class="fa-solid fa-plus"></i><small
-                        style="color:red;  ">Maximize the
-                        Student Add List </small></button>
-                <button class="min_max" id="minusstudent1"><i class="fa-solid fa-minus"></i><small
-                        style="color:green; ">Minimize the
-                        Student Add List
+                <button class="min_max" id="plusstudent1"><i class="fa-solid fa-arrow-right"></i><small
+                        style="color:red;  ">
+                        Add Student </small></button>
+                <button class="min_max" id="minusstudent1"><i class="fa-solid fa-arrow-down"></i><small
+                        style="color:green; ">
+                        Add Student
                     </small></button>
                 <div class="text-center" id="divstudent1">
 
@@ -357,25 +444,10 @@ require_once('dbcon.php');
                         id="addstudentbutton">Add
                         Student</button>
 
-                    <br><small class="form-text text-muted">Select the Branch First</small>
-                    <select class="selectBranchstudent form-select" aria-label="Default select example">
-                        <option selected value="0">Select a Branch</option>
-                        <?php
-                        $sql = $conn->prepare("SELECT * FROM `branch` WHERE `coordinatorid` = ?");
-                        $sql->bindParam(1, $coordinatorid);
-                        $sql->execute();
-                        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($result as $row) {
-                        ?>
-
-                        <option value="<?php echo $row['branchid']; ?>"><?php echo $row['branchname']; ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
+                    <br>
                     <small class="form-text text-muted">Select the Batch to Show Student's Enrolled</small>
                     <select class="addStudentData_batch_Select form-select" aria-label="Default select example">
-                        <option selected value="0">Select a Batch</option>
+
 
                     </select>
 
@@ -408,12 +480,12 @@ require_once('dbcon.php');
                 </div>
             </section>
             <section>
-                <button class="min_max" id="plusstudent2"><i class="fa-solid fa-plus"></i><small
-                        style="color:red;  ">Maximize the
-                        Student Update List </small></button>
-                <button class="min_max" id="minusstudent2"><i class="fa-solid fa-minus"></i><small
-                        style="color:green; ">Minimize the
-                        Student Update List
+                <button class="min_max" id="plusstudent2"><i class="fa-solid fa-arrow-right"></i><small
+                        style="color:red;  ">
+                        Update Attendance </small></button>
+                <button class="min_max" id="minusstudent2"><i class="fa-solid fa-arrow-down"></i><small
+                        style="color:green; ">
+                        Update Attendance
                     </small></button>
                 <div class="text-center maintable" id="divstudent2">
                     <p>
@@ -426,7 +498,7 @@ require_once('dbcon.php');
                         <select class="form-control" aria-label="Default select example" id='subjectlecture1new'>
                             <option selected value="0">Select a Subject</option>
                             <?php
-                            $find = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE subject.coordinatorid = ? && semester.semesterstatus = 1");
+                            $find = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE subject.coordinatorid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
                             $find->bindParam(1, $coordinatorid);
                             $find->execute();
                             $resulttable = $find->fetchAll(PDO::FETCH_ASSOC);
@@ -526,110 +598,6 @@ require_once('dbcon.php');
 
             </div>
 
-            <div style="all:unset;" class='m-3'>
-                <button class="min_max" id="plus"><i class="fa-solid fa-plus"></i><small style="color:red;  ">Maximize
-                        the timeslot
-                        setting </small></button>
-                <button class="min_max" id="minus"><i class="fa-solid fa-minus"></i><small
-                        style="color:green; ">Minimize the timeslot
-                        setting
-                    </small></button>
-                <div id="some">
-                    <p>
-                        Enter Maximum days to mark attendance from current date.<br>
-                    <p>
-                        <?php
-                        $getdate = $conn->prepare('SELECT * FROM `timeslot` WHERE `coordinatorid` = ?');
-                        $getdate->bindParam(1, $coordinatorid);
-                        $getdate->execute();
-                        $result = $getdate->fetchAll(PDO::FETCH_ASSOC);
-
-                        foreach ($result as $days) {
-                        ?>
-                        <span style="color:red;" id="daysmessage"></span>
-                        <input type="number" id="daystoupdate" min="0" class="form-control m-2" id="days"
-                            placeholder="<?php echo $days['updateattendance']; ?>"
-                            value="<?php echo $days['updateattendance']; ?>">
-                        <button class="btn btn-danger" style="    margin: 0 auto;
-                                 display: block;" id="update_days">Update Days</button>
-                        <?php
-                            break;
-                        }
-                        ?>
-
-                    </p>
-                    </p>
-                    <p class='fw-bold text-uppercase'> Select Time Slots</p>
-                    <table class='table table-success table-striped'>
-                        <tr>
-                            <td class='table-secondary'>Start Time</td>
-                            <td class='table-secondary'>End Time</td>
-                            <td class='table-secondary'>Update Day's</td>
-
-                        </tr>
-                        <tbody>
-
-                            <tr>
-                                <?php foreach ($result as $row) { ?>
-                                <td class='table-primary'><?php echo $row['start']; ?></td>
-                                <td class='table-secondary'><?php echo $row['end']; ?></td>
-                                <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
-                                <?php
-                                    break;
-                                }
-
-                                ?>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <span id="timemessage" style="color:red;"></span>
-
-                    <?php
-
-                    function getTimeSlot($interval, $start_time, $end_time)
-                    {
-                        $start = new DateTime($start_time);
-                        $end = new DateTime($end_time);
-                        $startTime = $start->format('H:i');
-                        $endTime = $end->format('H:i');
-                        $i = 0;
-                        $time = [];
-                        while (strtotime($startTime) <= strtotime($endTime)) {
-                            $start = $startTime;
-                            $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-                            $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-                            $i++;
-                            if (strtotime($startTime) <= strtotime($endTime)) {
-                                $time[$i]['slot_start_time'] = $start;
-                                $time[$i]['slot_end_time'] = $end;
-                            }
-                        }
-                        return $time;
-                    }
-                    $start = "9:00";
-                    $end =  "18:00";
-                    $slots = getTimeSlot(30, $start, $end);
-                    $length = count($slots);
-                    echo '<select id="menutimeslotstart" class="form-control">
-                <option selected value="0">Select a Start Time</option>';
-                    for ($i = 1; $i <= $length; $i++) {
-
-                        echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
-                    }
-                    echo "</select>";
-                    echo '<select id="menutimeslotend" class="form-control">
-                <option selected value="0">Select a End Time</option>';
-                    for ($i = 1; $i <= $length; $i++) {
-
-                        echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
-                    }
-                    echo "</select>";
-
-                    ?>
-                    <button class="btn btn-primary text-center" style="    margin: 0 auto;
-    display: block;" id="settimeslot"> Set Time </button>
-                </div>
-            </div>
 
         </section>
         <section class="grid" id="addsubjectsection">
@@ -652,6 +620,7 @@ require_once('dbcon.php');
                                     <th>Subject Id</th>
                                     <th>Subject Name</th>
                                     <th>Subject Code</th>
+                                    <th>Subject Level</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -669,11 +638,109 @@ require_once('dbcon.php');
             </div>
         </section>
     </section>
-    <section class="grid" id="addsettingsection">
+    <section class="grid page-content" id="addsettingsection">
+        <div style="all:unset;" class='m-3'>
+            <button class="min_max" id="plus"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">Add
+                    Time slot </small></button>
+            <button class="min_max" id="minus"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">Add
+                    Time slot
 
-        Add SettingSectionddd
-        <div>
-            djskds
+                </small></button>
+            <div id="some">
+                <p>
+                    Enter Maximum days to mark attendance from current date.<br>
+                <p>
+                    <?php
+                    $getdate = $conn->prepare('SELECT * FROM `timeslot` WHERE `coordinatorid` = ?');
+                    $getdate->bindParam(1, $coordinatorid);
+                    $getdate->execute();
+                    $result = $getdate->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach ($result as $days) {
+                    ?>
+                    <span style="color:red;" id="daysmessage"></span>
+                    <input type="number" id="daystoupdate" min="0" class="form-control m-2" id="days"
+                        placeholder="<?php echo $days['updateattendance']; ?>"
+                        value="<?php echo $days['updateattendance']; ?>">
+                    <button class="btn btn-danger" style="    margin: 0 auto;
+                                 display: block;" id="update_days">Update Days</button>
+                    <?php
+                        break;
+                    }
+                    ?>
+
+                </p>
+                </p>
+                <p class='fw-bold text-uppercase'> Select Time Slots</p>
+                <table class='table table-success table-striped'>
+                    <tr>
+                        <td class='table-secondary'>Start Time</td>
+                        <td class='table-secondary'>End Time</td>
+                        <td class='table-secondary'>Update Day's</td>
+
+                    </tr>
+                    <tbody>
+
+                        <tr>
+                            <?php foreach ($result as $row) { ?>
+                            <td class='table-primary'><?php echo $row['start']; ?></td>
+                            <td class='table-secondary'><?php echo $row['end']; ?></td>
+                            <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
+                            <?php
+                                break;
+                            }
+
+                            ?>
+                        </tr>
+                    </tbody>
+                </table>
+                <span id="timemessage" style="color:red;"></span>
+
+                <?php
+
+                function getTimeSlot($interval, $start_time, $end_time)
+                {
+                    $start = new DateTime($start_time);
+                    $end = new DateTime($end_time);
+                    $startTime = $start->format('H:i');
+                    $endTime = $end->format('H:i');
+                    $i = 0;
+                    $time = [];
+                    while (strtotime($startTime) <= strtotime($endTime)) {
+                        $start = $startTime;
+                        $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                        $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                        $i++;
+                        if (strtotime($startTime) <= strtotime($endTime)) {
+                            $time[$i]['slot_start_time'] = $start;
+                            $time[$i]['slot_end_time'] = $end;
+                        }
+                    }
+                    return $time;
+                }
+                $start = "9:00";
+                $end =  "18:00";
+                $slots = getTimeSlot(30, $start, $end);
+                $length = count($slots);
+                echo '<select id="menutimeslotstart" class="form-control">
+                <option selected value="0">Select a Start Time</option>';
+                for ($i = 1; $i <= $length; $i++) {
+
+                    echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
+                }
+                echo "</select>";
+                echo '<select id="menutimeslotend" class="form-control">
+                <option selected value="0">Select a End Time</option>';
+                for ($i = 1; $i <= $length; $i++) {
+
+                    echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
+                }
+                echo "</select>";
+
+                ?>
+                <button class="btn btn-primary text-center" style="    margin: 0 auto;
+    display: block;" id="settimeslot"> Set Time </button>
+            </div>
         </div>
 
 
@@ -1042,6 +1109,14 @@ require_once('dbcon.php');
                             <small class="form-text text-muted mt-1">
                                 Enter a valid Subject Code
                             </small>
+                            <div class="form-group mt-2">
+                                <label>Select a Subject Level</label>
+                                <select class="form-control" id="enter-subject-level">
+                                    <option selected value="T">Theory</option>
+                                    <option value="L">Lab</option>
+                                </select>
+                            </div>
+
 
 
 
@@ -1115,8 +1190,8 @@ require_once('dbcon.php');
 </body>
 
 <script src="dash.js"></script>
-<script src="dashboard.js"></script>
 <script src="javascript/send.js"></script>
+<script src="dashboard.js"></script>
 
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
@@ -1480,10 +1555,16 @@ $(document).ready(function() {
                                 connection: true
                             },
                             success: function(data) {
+
                                 if (data == 2) {
                                     swal("ohoho!",
                                         "Subject already Assigned to this semester? try with different Subject ",
                                         "error");
+                                } else if (data == 9) {
+                                    swal("ohoho!",
+                                        "Teacher already assigned to this subject and is disabled. you can't enable the teacher? try with different teacher ",
+                                        "error");
+
                                 } else if (data == 3) {
                                     swal("Good job ",
                                         "Subjectt Assigned Sucessfully! ",
@@ -1656,16 +1737,19 @@ $(document).ready(function() {
                         "success");
                     bodyofbatch();
 
+
                 } else if (data == 5) {
                     swal("Good job ",
                         "Batch has been Closed...!",
                         "success");
                     bodyofbatch();
+
                 } else if (data == 4) {
                     swal("Good job ",
                         "Previous semester has been Closed and New Semester has be Opend!",
                         "success");
                     bodyofbatch();
+
                 } else {
                     swal("ohoho!", "Something went wrong! try again later", "error");
                     $("#sendBranch").html("Add Branch");

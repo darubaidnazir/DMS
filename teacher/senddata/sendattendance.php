@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once("../../coordinator/inner/db_connection.php");
 
@@ -30,7 +31,7 @@ class sendattendance extends db_connection
 
 
 
-            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`,`timeslotstart`,`timeslotend`) VALUES (?,?,?,?,?,?,?)");
+            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`,`timeslotstart`,`timeslotend`,`teacherid`) VALUES (?,?,?,?,?,?,?,?)");
             $sql->bindParam(1, $getsemesterid);
             $sql->bindParam(2, $getsubjectid);
             $sql->bindParam(3, $getlecturedate);
@@ -38,6 +39,7 @@ class sendattendance extends db_connection
             $sql->bindParam(5, $getlectureplan);
             $sql->bindParam(6, $gettimeslot);
             $sql->bindParam(7, $time);
+            $sql->bindParam(8, $_SESSION['teacheruserid']);
 
             if ($sql->execute()) {
                 $count = count($getid);

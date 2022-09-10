@@ -18,7 +18,7 @@ class loadteachersubject extends db_connection
         <td class='table-secondary'>Semester No</td>
         <td class='table-secondary'>Action</td>
     </tr>";
-            $sql1 = $this->conn->prepare("Select * FROM `semester` INNER join `assignedsubject` on semester.semesterid = assignedsubject.semesterid INNER join subject on assignedsubject.subjectid = subject.subjectid INNER join batch on batch.batchid = semester.batchid WHERE assignedsubject.teacherid = ? && assignedsubject.semesterid = ?");
+            $sql1 = $this->conn->prepare("Select * FROM `semester` INNER join `assignedsubject` on semester.semesterid = assignedsubject.semesterid INNER join subject on assignedsubject.subjectid = subject.subjectid INNER join batch on batch.batchid = semester.batchid WHERE assignedsubject.teacherid = ? && assignedsubject.semesterid = ? && assignedsubject.assignedstatus = 'active' ");
             $sql1->bindParam(1, $getteacherid);
             $sql1->bindParam(2, $getsemesterid);
             $sql1->execute();

@@ -14,10 +14,17 @@ class loadSubject extends db_connection
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $row) {
+            $marked = $row["subjectlevel"];
+            if ($marked == "T") {
+                $marked = "Theory";
+            } else if ($marked == "L") {
+                $marked = "Lab";
+            }
             $output .= "<td data-title='S.No'>{$Sno}</td>
                    <td data-title='Subejct Id'>{$row["subjectid"]}</td>
                    <td data-title='Subject Name'>{$row["subjectname"]}</td>
                    <td data-title='Subject Code'>{$row["subjectcode"]}</td> 
+                   <td data-title='Subject Level'>{$marked}</td> 
                    <td class='select'>
                    <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
                                             <button type='button' class='btn btn-danger'>

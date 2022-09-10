@@ -67,10 +67,14 @@ class loadsemestersubject extends db_connection
         <td style='color:green;' class='table-primary'>{$rows["subjectname"]}</td>
         <td style='color:green;' class='table-primary'>{$rows["subjectcode"]}</td>
         <td style='color:green;' class='table-primary'>{$rows["teacherusername"]}</td>
-        <td style='color:green;' class='table-primary'>
-            <button type='button' class='btn btn-danger btn-sm'>Remove</button>
-        </td>
-    </tr>";
+        <td style='color:green;' class='table-primary'>";
+            if ($rows["assignedstatus"] == "active") {
+                $output .= "<button type='button' class='btn btn-danger btn-sm' id='removeassignedsubject' data-subjectid='{$rows['subjectid']}' data-teacherid='{$rows['teacherid']}' data-semesterid='{$getsemesterid}'>Remove</button>
+         </td></tr>";
+            } else if ($rows["assignedstatus"] == "disabled") {
+                $output .= "<button type='button' class='btn btn-danger btn-sm' disabled >Disabled</button>
+                </td></tr>";
+            }
             $Sno++;
         }
 
