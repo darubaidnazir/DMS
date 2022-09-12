@@ -530,6 +530,9 @@ $("#subjectlecture1").on("change", function() {
     var permission = $(this).find(':selected').data('permission');
 
 
+    console.log(semesterid);
+
+
 
 
     if (value == 0) {
