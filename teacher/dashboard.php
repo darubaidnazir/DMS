@@ -238,8 +238,9 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
 
 
-
-                    <select class="form-control" aria-label="Default select example" id='subjectlecture1'>
+                <form action='../pdfgenerator/teacher/subjectpdf.php' method='post'>
+                    <select class="form-control" aria-label="Default select example" id='subjectlecture1'
+                        name='pdf_generator_free'>
                         <option selected value="0">Select a Subject</option>
                         <?php
                         $sql1 = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE assignedsubject.teacherid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
@@ -254,7 +255,8 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
                         ?>
                         <option data-permission="<?php echo $row['updatepermission']; ?>"
-                            data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid']; ?>">
+                            data-city="<?php echo $row['semesterid']; ?>"
+                            value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
                             <?php echo $string; ?></option>
 
                         <?php
@@ -262,7 +264,10 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                         }
                         ?>
                     </select>
-                    <small id="mm1" style="color:red;"></small>
+                    <input type="submit" name="pdf_button" class='btn btn-primary' id='pdf_button'
+                        style='display:none;margin:5px' value='Generator Pdf'>
+                </form>
+                <small id="mm1" style="color:red;"></small>
                 </p>
                 <div class="text-center" style="margin:5px;">
 
@@ -297,9 +302,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                         <tbody id="addstudenttable">
 
                         </tbody>
-                        <?php
-                        echo '<div class="download"><button id="downloadpdf" onclick="downloadPdf()">Download Pdf</button></div>';
-                        ?>
+
                     </table>
 
                 </main>
@@ -422,74 +425,11 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
 
 <script>
 
 </script>
-<script>
-function downloadPdf() {
-    var element = document.getElementById("studenttable1");
-    var value = $("#subjectlecture1").val();
-    var semesterid = $("#subjectlecture1").find(':selected').data('city');
-    alert(value);
-    alert(semesterid);
-    swal({
-            title: "Are you sure?",
-            text: "Do you want to Download the Pdf Format Record!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: "pdf/pdfstudent.php",
-                    type: "POST",
-                    data: {
-                        getsemesterid: semesterid,
-                        getsubjectid: value,
-                        connection: true
-                    },
-                    success: function(data) {
-                        html2pdf(element, {
-                            margin: 0,
-                            filename: 'Classreport.pdf',
-                            image: {
-                                type: 'png',
-                                quality: 1
-                            },
-                            html2canvas: {
-                                scale: 2,
-                                logging: true,
-                                dpi: 192,
-                                useCORS: true,
-                                letterRendering: true,
-                                allowTaint: true,
-                            },
-                            jsPDF: {
-                                unit: 'in',
-                                format: 'letter',
-                                orientation: 'landscape'
-                            }
-                        });
-                        swal("Poof! Downloading Started!", {
-                            icon: "success",
-                        });
 
-                    }
-
-
-
-
-                });
-            } else {
-                swal("Downloading Cancled!");
-            }
-        });
-
-}
-</script>
 <script>
 $(document).ready(function() {
 
@@ -525,23 +465,19 @@ $("#subjectlecture").on("change", function() {
 
 });
 $("#subjectlecture1").on("change", function() {
-    var value = $(this).val();
+    var value = $(this).val().split(',')[0];
     var semesterid = $(this).find(':selected').data('city');
     var permission = $(this).find(':selected').data('permission');
-
-
-    console.log(semesterid);
-
-
-
 
     if (value == 0) {
 
         $("#mm1").html("* Select a Subject");
+        $('#pdf_button').css("display", "none");
 
     } else {
 
         $("#mm1").html("");
+        $('#pdf_button').css("display", "block");
         viewstudenttable(value, semesterid, permission);
         $("#exportstudents").css("display", "block");
 
