@@ -72,7 +72,7 @@ class loadstudent extends db_connection
                     $percentage = ceil($presentcount / $totalclass * 100);
                 }
 
-                $output .= " <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr> <tr>
+                $output .= "<tr>
             <td data-title='Sno'>{$Sno}
            </td>
            <td data-title='Student Roll no'>{$row["studentemail"]}</td>

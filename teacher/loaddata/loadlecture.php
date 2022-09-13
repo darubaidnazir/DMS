@@ -48,7 +48,8 @@ class loadlecture extends db_connection
            </td>
            <td data-title='Lecture Topic'>{$row["lecturetopic"]}</td>
            <td data-title='Lecture Hour's'>{$row["lecturehour"]}</td>
-           <td data-title='Lecture Starttime'>{$row["timeslotstart"]}</td>
+           <td data-title='Lecture Start time'>{$row["timeslotstart"]}</td>
+           <td data-title='Lecture End time'>{$row["timeslotend"]}</td>
            <td data-title='Lecture date'>{$row["lecturedate"]}</td><td data-title='Total Student'>{$totalstudent}</td><td data-title='Present'><a href='present?subjectid={$getsubjectid}&semesterid={$getsemeterid}&dateoflecture={$date}&lecturetopic={$row["lecturetopic"]}'>{$present}</a></td><td data-title='Absent'><a href='absent?subjectid={$getsubjectid}&semesterid={$getsemeterid}&dateoflecture={$date}&lecturetopic={$row["lecturetopic"]}'>{$countabsent}</a></td>
            <td data-title='Action'><button class='btn btn-danger' id='deletelecture' data-lecturedate='{$row['lecturedate']}'  data-semesterid='{$getsemeterid}'  data-subjectid='{$getsubjectid}'>Delete</button></td>
            </tr>";

@@ -493,9 +493,9 @@ require_once('dbcon.php');
                             Student
                             Attendnace
                             Record.</lable><br>
-                        <small class="text-uppercase" style="color:red;">* Update is disabled <br>Click on the
-                            below Request button to get permission</small>
-                        <select class="form-control" aria-label="Default select example" id='subjectlecture1new'>
+                    <form action="../pdfgenerator/teacher/subjectpdf.php" method="post">
+                        <select class="form-control" aria-label="Default select example" id='subjectlecture1new'
+                            name='pdf_generator_free'>
                             <option selected value="0">Select a Subject</option>
                             <?php
                             $find = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE subject.coordinatorid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
@@ -510,7 +510,8 @@ require_once('dbcon.php');
 
                             ?>
                             <option data-permission="<?php echo $row['updatepermission']; ?>"
-                                data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid']; ?>">
+                                data-city="<?php echo $row['semesterid']; ?>"
+                                value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
                                 <?php echo $string; ?></option>
 
                             <?php
@@ -523,11 +524,14 @@ require_once('dbcon.php');
 
 
                         </select>
+                        <input type="submit" name="pdf_button" class='btn btn-secondary' id='pdf_button'
+                            style='display:none;margin:5px' value='Generate pdf'>
+                    </form>
 
 
 
 
-                        <small id="mm1" style="color:red;"></small>
+                    <small id="mm1" style="color:red;"></small>
                     </p>
 
                     <main>
@@ -1387,16 +1391,16 @@ $(document).ready(function() {
 
     $("#subjectlecture1new").on("change", function() {
 
-        var value = $(this).val();
+        var value = $(this).val().split(',')[1];
         var semesterid = $(this).find(':selected').data('city');
         var permission = $(this).find(':selected').data('permission');
 
-        if (value == 0) {
-
+        if (value == 0 || value == undefined) {
+            $('#pdf_button').css('display', 'none');
             $("#mm1").html("* Select a Subject");
 
         } else {
-
+            $('#pdf_button').css('display', 'block');
             $("#mm1").html("");
             viewstudenttable(value, semesterid, permission);
             $("#exportstudents").css("display", "block");

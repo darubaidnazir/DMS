@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['teacheruserid']) || $_SESSION['active'] != true) {
+if ($_SESSION['active'] != true) {
     header('Location:../../teacher/teacherlogin.html');
     die();
 }
@@ -25,6 +25,7 @@ class myPDF extends FPDF
     }
     function headerTable($title, $coursecode, $year, $semno)
     {
+        $this->SetTextColor(0, 0, 0);
         $this->SetFont('Times', '', 10);
         $this->Cell(40, 5, 'Batch/Semester: ' . $year . '/' . $semno, 0, 0, 'C');
         $this->SetFont('Times', '', 10);
@@ -50,6 +51,7 @@ class myPDF extends FPDF
 
     function Footer()
     {
+        $this->SetTextColor(0, 0, 0);
         $this->SetY(-15);
         $this->SetFont('Times', '', 10);
         $this->Cell(500, 10, 'Coordinator', 0, 0, 'C');
@@ -64,7 +66,7 @@ class myPDF extends FPDF
     {
         if ($percentage < 75) {
             $this->SetFont('Times', 'B', 12);
-            $this->SetTextColor(220, 50, 50);
+
             $this->Cell(70, 10, $row["studentemail"], 1, 0, 'C');
             $this->Cell(70, 10, $row["studentname"], 1, 0, 'C');
             $this->Cell(30, 10, $totalclass, 1, 0, 'C');
@@ -88,7 +90,8 @@ class myPDF extends FPDF
 
 
 require_once("../../coordinator/dbcon.php");
-if (isset($_POST['pdf_button'])) {
+if (isset($_POST['pdf_button']) && $_POST['pdf_generator_free'] != 0) {
+
     $result = explode(',', $_POST['pdf_generator_free']);
 
     $getsemeterid = $result[0];

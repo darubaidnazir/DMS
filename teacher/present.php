@@ -75,7 +75,7 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
             <input type="text" id="seachstudent" class="form-control form-input" placeholder="Search anything...">
 
         </div>
-        <main class="maintable">
+        <main class="maintable" style='background-color:white;'>
             <h3 style="color:green; text-align:center;font-weight:bolder">List of Student's Present</h3>
             <table>
                 <thead>

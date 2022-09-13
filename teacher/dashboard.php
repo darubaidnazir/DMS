@@ -28,8 +28,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS only -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
     <link rel="stylesheet" href="../coordinator/table.css" />
     <link rel="stylesheet" href="../coordinator/dash.css" />
     <link rel="stylesheet" href="../coordinator/mainboard.css" />
@@ -38,27 +37,27 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
     <title>Teacher Dashboard</title>
 </head>
 <style>
-#addstudentrecordsection {
-    display: none;
-}
-
-.tag-wrap {
-    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
-}
-
-.tag {
-    background: #FB8C00;
-    color: white;
-    padding: 1rem 2rem 1rem 2rem;
-    font: bold 20px system-ui;
-    clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
-}
-
-@media screen and (max-width: 767px) {
-    .tag {
+    #addstudentrecordsection {
         display: none;
     }
-}
+
+    .tag-wrap {
+        filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+    }
+
+    .tag {
+        background: #FB8C00;
+        color: white;
+        padding: 1rem 2rem 1rem 2rem;
+        font: bold 20px system-ui;
+        clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0 50%);
+    }
+
+    @media screen and (max-width: 767px) {
+        .tag {
+            display: none;
+        }
+    }
 </style>
 
 <body>
@@ -170,8 +169,8 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                 <p>
                     <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to View Lecture
                         details.</lable>
-
-                    <select class="form-control" aria-label="Default select example" id='subjectlecture'>
+                <form method="post" action="../pdfgenerator/teacher/lecturepdf.php">
+                    <select class="form-control" aria-label="Default select example" id='subjectlecture' name="subjectlecture">
                         <option selected value="0">Select a Subject</option>
                         <?php
                         $sql1 = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE assignedsubject.teacherid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
@@ -185,15 +184,17 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                             $string .=  $row['subjectcode'];
 
                         ?>
-                        <option data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid']; ?>">
-                            <?php echo $string; ?></option>
+                            <option data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['subjectid'] . ',' . $row['semesterid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
+                                <?php echo $string; ?></option>
 
                         <?php
                             $string = "";
                         }
                         ?>
-                        < </select>
-                            <small id="mm" style="color:red;"></small>
+                    </select>
+                    <input type="submit" name="subjectlecturepdf" id='subjectlecturepdf' class="btn btn-secondary" style="display:none;margin:5px" Value='Generate pdf'>
+                </form>
+                <small id="mm" style="color:red;"></small>
                 </p>
 
                 <main>
@@ -204,6 +205,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                                 <th>Lecture Topic</th>
                                 <th>Lecture Hour</th>
                                 <th>Lecture Start time</th>
+                                <th>Lecture End time</th>
                                 <th>Lecture Date</th>
                                 <th>Total Student</th>
                                 <th>Present</th>
@@ -239,8 +241,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
 
                 <form action='../pdfgenerator/teacher/subjectpdf.php' method='post'>
-                    <select class="form-control" aria-label="Default select example" id='subjectlecture1'
-                        name='pdf_generator_free'>
+                    <select class="form-control" aria-label="Default select example" id='subjectlecture1' name='pdf_generator_free'>
                         <option selected value="0">Select a Subject</option>
                         <?php
                         $sql1 = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE assignedsubject.teacherid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
@@ -254,25 +255,21 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                             $string .=  $row['subjectcode'];
 
                         ?>
-                        <option data-permission="<?php echo $row['updatepermission']; ?>"
-                            data-city="<?php echo $row['semesterid']; ?>"
-                            value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
-                            <?php echo $string; ?></option>
+                            <option data-permission="<?php echo $row['updatepermission']; ?>" data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
+                                <?php echo $string; ?></option>
 
                         <?php
                             $string = "";
                         }
                         ?>
                     </select>
-                    <input type="submit" name="pdf_button" class='btn btn-primary' id='pdf_button'
-                        style='display:none;margin:5px' value='Generator Pdf'>
+                    <input type="submit" name="pdf_button" class='btn btn-secondary' id='pdf_button' style='display:none;margin:5px' value='Generate pdf'>
                 </form>
                 <small id="mm1" style="color:red;"></small>
                 </p>
                 <div class="text-center" style="margin:5px;">
 
-                    <input type="text" id="seachstudent" class="form-control form-input"
-                        placeholder="Search anything...">
+                    <input type="text" id="seachstudent" class="form-control form-input" placeholder="Search anything...">
 
                 </div>
                 <main>
@@ -336,9 +333,9 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
                         <tr>
                             <?php foreach ($result as $row) { ?>
-                            <td class='table-primary'><?php echo $row['start']; ?></td>
-                            <td class='table-secondary'><?php echo $row['end']; ?></td>
-                            <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
+                                <td class='table-primary'><?php echo $row['start']; ?></td>
+                                <td class='table-secondary'><?php echo $row['end']; ?></td>
+                                <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
                             <?php
                                 break;
                             }
@@ -353,8 +350,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
 
 
-        <div class="modal fade" id="assign-teacher" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="assign-teacher" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -378,8 +374,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
         </div>
 
 
-        <div class="modal fade" id="updateattendnce" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="updateattendnce" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -421,8 +416,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 <script src="../teacher/javascipt/dashboard.js"> </script>
 <script src="../coordinator/dash.js"></script>
 <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
 </script>
 
 
@@ -431,394 +425,395 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 </script>
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
 
 
 
 
-    $("#seachstudent").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#addstudenttable tr").filter(function() {
-            $(this).toggle($(this).text()
-                .toLowerCase().indexOf(value) > -1)
+        $("#seachstudent").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#addstudenttable tr").filter(function() {
+                $(this).toggle($(this).text()
+                    .toLowerCase().indexOf(value) > -1)
+            });
         });
     });
-});
 </script>
 <script>
-$("#subjectlecture").on("change", function() {
-    var value = $(this).val();
-    var semesterid = $(this).find(':selected').data('city');
+    $("#subjectlecture").on("change", function() {
+        var value = $(this).val().split(",")[0];
+        var semesterid = $(this).find(':selected').data('city');
 
-    if (value == 0) {
+        if (value == 0) {
+            $("#subjectlecturepdf").css('display', 'none');
+            $("#mm").html("* Select a Subject");
 
-        $("#mm").html("* Select a Subject");
+        } else {
+            $("#subjectlecturepdf").css('display', 'block');
+            $("#mm").html("");
+            viewlecturetable(value, semesterid);
 
-    } else {
-
-        $("#mm").html("");
-        viewlecturetable(value, semesterid);
-
-    }
-
-
-});
-$("#subjectlecture1").on("change", function() {
-    var value = $(this).val().split(',')[0];
-    var semesterid = $(this).find(':selected').data('city');
-    var permission = $(this).find(':selected').data('permission');
-
-    if (value == 0) {
-
-        $("#mm1").html("* Select a Subject");
-        $('#pdf_button').css("display", "none");
-
-    } else {
-
-        $("#mm1").html("");
-        $('#pdf_button').css("display", "block");
-        viewstudenttable(value, semesterid, permission);
-        $("#exportstudents").css("display", "block");
-
-    }
-
-
-});
-
-
-function viewlecturetable(value, semesterid) {
-    $.ajax({
-        url: "loaddata/loadlecture.php",
-        type: "POST",
-        data: {
-            getsubjectid: value,
-            connection: true,
-            getsemesterid: semesterid
-        },
-        success: function(data) {
-            $("#addlecturetable").html(data);
         }
 
+
+    });
+    $("#subjectlecture1").on("change", function() {
+        var value = $(this).val().split(',')[1];
+        var semesterid = $(this).find(':selected').data('city');
+        var permission = $(this).find(':selected').data('permission');
+        $("#pdf_button").css('display', 'none');
+
+        if (value == 0 || value == undefined) {
+
+            $("#mm1").html("* Select a Subject");
+
+
+        } else {
+
+            $("#mm1").html("");
+            $('#pdf_button').css("display", "block");
+            viewstudenttable(value, semesterid, permission);
+            $("#exportstudents").css("display", "block");
+
+        }
 
 
     });
 
-}
 
-
-function viewstudenttable(value, semesterid, permission) {
-    $.ajax({
-        url: "loaddata/loadstudent.php",
-        type: "POST",
-        data: {
-            getsubjectid: value,
-            connection: true,
-            getsemesterid: semesterid,
-            getper: permission
-        },
-        success: function(data) {
-            $("#addstudenttable").html(data);
-
-
-
-        }
-    });
-
-}
-
-$(document).on("click", "#clickonupdate", function() {
-    var studentid = $(this).data("studentid");
-    var semesterid = $(this).data("semesterid");
-    var subjectid = $(this).data("subjectid");
-    $("#selectdateandlecture").html("");
-    $("#updatedrecordofstudent").html("");
-    getdateandlecture(studentid, semesterid, subjectid);
-    $('#selectdateandlecture').data('studentid', studentid);
+    function viewlecturetable(value, semesterid) {
+        $.ajax({
+            url: "loaddata/loadlecture.php",
+            type: "POST",
+            data: {
+                getsubjectid: value,
+                connection: true,
+                getsemesterid: semesterid
+            },
+            success: function(data) {
+                $("#addlecturetable").html(data);
+            }
 
 
 
+        });
+
+    }
+
+
+    function viewstudenttable(value, semesterid, permission) {
+        $.ajax({
+            url: "loaddata/loadstudent.php",
+            type: "POST",
+            data: {
+                getsubjectid: value,
+                connection: true,
+                getsemesterid: semesterid,
+                getper: permission
+            },
+            success: function(data) {
+                $("#addstudenttable").html(data);
 
 
 
+            }
+        });
 
+    }
 
-
-
-});
-$("#selectdateandlecture").on("change", function() {
-    var studentid = $(this).data("studentid");
-    var semesterid = $("#clickonupdate").data("semesterid");
-    var subjectid = $("#clickonupdate").data("subjectid");
-    var value = $(this).val();
-    if (value == 0) {
+    $(document).on("click", "#clickonupdate", function() {
+        var studentid = $(this).data("studentid");
+        var semesterid = $(this).data("semesterid");
+        var subjectid = $(this).data("subjectid");
+        $("#selectdateandlecture").html("");
         $("#updatedrecordofstudent").html("");
-    } else {
-        gettheupdaterecord(studentid, semesterid, subjectid, value);
+        getdateandlecture(studentid, semesterid, subjectid);
+        $('#selectdateandlecture').data('studentid', studentid);
+
+
+
+
+
+
+
+
+
+
+    });
+    $("#selectdateandlecture").on("change", function() {
+        var studentid = $(this).data("studentid");
+        var semesterid = $("#clickonupdate").data("semesterid");
+        var subjectid = $("#clickonupdate").data("subjectid");
+        var value = $(this).val();
+        if (value == 0) {
+            $("#updatedrecordofstudent").html("");
+        } else {
+            gettheupdaterecord(studentid, semesterid, subjectid, value);
+        }
+
+    });
+
+
+
+    function gettheupdaterecord(studentid, semesterid, subjectid, value) {
+
+        $.ajax({
+            url: "loaddata/loadattedancerecord.php",
+            type: "POST",
+            data: {
+                getsemesterid: semesterid,
+                getsubjectid: subjectid,
+                getstudentid: studentid,
+                getvalue: value,
+                connection: true
+            },
+            success: function(data) {
+                $("#updatedrecordofstudent").html("");
+                $("#updatedrecordofstudent").html(data);
+                viewstudenttable(subjectid, semesterid, 0)
+
+            }
+
+
+        });
+
     }
 
-});
+    $(document).on("click", "#marknew", function() {
+        var id = $(this).data("value");
+        var remarkmessage = $("#remakmessage").val();
+        var studentid = $("#selectdateandlecture").data("studentid");
+        var semesterid = $("#clickonupdate").data("semesterid");
+        var subjectid = $("#clickonupdate").data("subjectid");
+        var date = $("#selectdateandlecture").val();
+        $("#selectdateandlecture").prop("disabled", true);
 
+        if (remarkmessage == "" || date == 0) {
+            $("#mess").html("* enter a remark- or check the date");
 
+        } else {
+            $("#mess").html("");
 
-function gettheupdaterecord(studentid, semesterid, subjectid, value) {
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to Update this record!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
 
-    $.ajax({
-        url: "loaddata/loadattedancerecord.php",
-        type: "POST",
-        data: {
-            getsemesterid: semesterid,
-            getsubjectid: subjectid,
-            getstudentid: studentid,
-            getvalue: value,
-            connection: true
-        },
-        success: function(data) {
-            $("#updatedrecordofstudent").html("");
-            $("#updatedrecordofstudent").html(data);
-            viewstudenttable(subjectid, semesterid, 0)
+                        marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage);
+                    } else {
+                        swal("Cancled Record is safe!");
+                    }
+                });
 
         }
 
 
     });
-
-}
-
-$(document).on("click", "#marknew", function() {
-    var id = $(this).data("value");
-    var remarkmessage = $("#remakmessage").val();
-    var studentid = $("#selectdateandlecture").data("studentid");
-    var semesterid = $("#clickonupdate").data("semesterid");
-    var subjectid = $("#clickonupdate").data("subjectid");
-    var date = $("#selectdateandlecture").val();
-    $("#selectdateandlecture").prop("disabled", true);
-
-    if (remarkmessage == "" || date == 0) {
-        $("#mess").html("* enter a remark- or check the date");
-
-    } else {
-        $("#mess").html("");
+    $(document).on("click", "#requestupdatebox", function() {
+        var semesterid = $(this).data("semesterid");
+        var subjectid = $(this).data("subjectid");
+        var teacherid = $("#teacher_hidden").val();
 
         swal({
                 title: "Are you sure?",
-                text: "You want to Update this record!",
+                text: "",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
             })
             .then((willDelete) => {
                 if (willDelete) {
+                    $.ajax({
+                        url: "request/requestpermission.php",
+                        type: "POST",
+                        data: {
+                            connection: true,
+                            getsemesterid: semesterid,
+                            getsubjectid: subjectid,
+                            getteacherid: teacherid
+                        },
+                        success: function(data) {
 
-                    marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage);
+                            if (data == 3) {
+
+                                swal("God job!",
+                                    "Request has been send to Coordinator. We will notify you when permission is granted",
+                                    "success");
+
+
+                            } else if (data == 1) {
+
+                                swal("ohoohoh!", "Request Sent failed", "error");
+
+
+
+
+                            } else {
+                                swal("ohoohoh!", "Something went wrong! try again", "error");
+
+
+                            }
+
+                        }
+
+
+                    });
+
                 } else {
-                    swal("Cancled Record is safe!");
+                    swal("Request Cancled!");
                 }
             });
+
+
+
+
+
+
+
+    });
+
+
+    function marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage) {
+
+        $.ajax({
+            url: "senddata/sendupdated.php",
+            type: "POST",
+            data: {
+                getid: id,
+                getsemesterid: semesterid,
+                getstudentid: studentid,
+                getsubjectid: subjectid,
+                getdate: date,
+                connection: true,
+                getremarkmessage: remarkmessage
+            },
+            success: function(data) {
+
+
+                if (data == 3) {
+                    gettheupdaterecord(studentid, semesterid, subjectid, date);
+                    $("#selectdateandlecture").prop("disabled", false);
+
+
+                } else if (data == 1) {
+
+                    swal("ohoohoh!", "Updating not Successfully! try again", "error");
+                    $("#selectdateandlecture").prop("disabled", false);
+
+
+
+                } else {
+                    swal("ohoohoh!", "Something went wrong! try again", "error");
+                    $("#selectdateandlecture").prop("disabled", false);
+
+                }
+
+            }
+
+
+
+
+        });
 
     }
 
 
-});
-$(document).on("click", "#requestupdatebox", function() {
-    var semesterid = $(this).data("semesterid");
-    var subjectid = $(this).data("subjectid");
-    var teacherid = $("#teacher_hidden").val();
+    function getdateandlecture(studentid, semesterid, subjectid) {
 
-    swal({
-            title: "Are you sure?",
-            text: "",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: "request/requestpermission.php",
-                    type: "POST",
-                    data: {
-                        connection: true,
-                        getsemesterid: semesterid,
-                        getsubjectid: subjectid,
-                        getteacherid: teacherid
-                    },
-                    success: function(data) {
+        $.ajax({
+            url: "loaddata/loaddate.php",
+            type: "POST",
+            data: {
+                getsemesterid: semesterid,
+                getsubjectid: subjectid,
+                connection: true
+            },
+            success: function(data) {
+                $("#selectdateandlecture").html(data);
 
-                        if (data == 3) {
-
-                            swal("God job!",
-                                "Request has been send to Coordinator. We will notify you when permission is granted",
-                                "success");
-
-
-                        } else if (data == 1) {
-
-                            swal("ohoohoh!", "Request Sent failed", "error");
-
-
-
-
-                        } else {
-                            swal("ohoohoh!", "Something went wrong! try again", "error");
-
-
-                        }
-
-                    }
-
-
-                });
-
-            } else {
-                swal("Request Cancled!");
             }
+
+
+        });
+
+
+    }
+
+    $(document).on("click", "#deletelecture", function() {
+        var date = $(this).data("lecturedate");
+        var subjectid = $(this).data("subjectid");
+        var semesterid = $(this).data("semesterid");
+
+        swal("*Warning Lecture Date and It's all record will be Deleted.. Write CONFIRM in the BOX:", {
+                content: "input",
+            })
+            .then((value) => {
+                if (value == "CONFIRM") {
+                    deletelecture(date, subjectid, semesterid);
+                } else {
+                    swal(`oohoh You typed: ${value}. Type CONFIRM  `);
+                }
+            });
+
+
+    });
+
+    function deletelecture(date, subjectid, semesterid) {
+
+        $.ajax({
+            url: "deletedata/deletelecture.php",
+            type: "POST",
+            beforeSend: function() {
+
+
+            },
+            data: {
+                getdate: date,
+                getsemesterid: semesterid,
+                getsubjectid: subjectid,
+                connection: true
+            },
+            success: function(data) {
+
+                if (data == 3) {
+
+                    swal("Good JOB!", "Lecture Deleted Successfully", "success");
+                    viewlecturetable(subjectid, semesterid);
+
+                } else if (data == 0) {
+
+                    swal("ohoohoh!", "Deleting Lecture Failed", "error");
+
+
+
+
+                } else if (data == 1) {
+
+                    swal("ohoohoh!", "You can't delete the Lecture! Contact Coordinator", "error");
+
+
+
+
+                } else {
+                    swal("ohoohoh!", "Something went wrong! try again", "error");
+
+
+                }
+            }
+
+
+
         });
 
 
 
-
-
-
-
-});
-
-
-function marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage) {
-
-    $.ajax({
-        url: "senddata/sendupdated.php",
-        type: "POST",
-        data: {
-            getid: id,
-            getsemesterid: semesterid,
-            getstudentid: studentid,
-            getsubjectid: subjectid,
-            getdate: date,
-            connection: true,
-            getremarkmessage: remarkmessage
-        },
-        success: function(data) {
-
-
-            if (data == 3) {
-                gettheupdaterecord(studentid, semesterid, subjectid, date);
-                $("#selectdateandlecture").prop("disabled", false);
-
-
-            } else if (data == 1) {
-
-                swal("ohoohoh!", "Updating not Successfully! try again", "error");
-                $("#selectdateandlecture").prop("disabled", false);
-
-
-
-            } else {
-                swal("ohoohoh!", "Something went wrong! try again", "error");
-                $("#selectdateandlecture").prop("disabled", false);
-
-            }
-
-        }
-
-
-
-
-    });
-
-}
-
-
-function getdateandlecture(studentid, semesterid, subjectid) {
-
-    $.ajax({
-        url: "loaddata/loaddate.php",
-        type: "POST",
-        data: {
-            getsemesterid: semesterid,
-            getsubjectid: subjectid,
-            connection: true
-        },
-        success: function(data) {
-            $("#selectdateandlecture").html(data);
-
-        }
-
-
-    });
-
-
-}
-
-$(document).on("click", "#deletelecture", function() {
-    var date = $(this).data("lecturedate");
-    var subjectid = $(this).data("subjectid");
-    var semesterid = $(this).data("semesterid");
-
-    swal("*Warning Lecture Date and It's all record will be Deleted.. Write CONFIRM in the BOX:", {
-            content: "input",
-        })
-        .then((value) => {
-            if (value == "CONFIRM") {
-                deletelecture(date, subjectid, semesterid);
-            } else {
-                swal(`oohoh You typed: ${value}. Type CONFIRM  `);
-            }
-        });
-
-
-});
-
-function deletelecture(date, subjectid, semesterid) {
-
-    $.ajax({
-        url: "deletedata/deletelecture.php",
-        type: "POST",
-        beforeSend: function() {
-
-
-        },
-        data: {
-            getdate: date,
-            getsemesterid: semesterid,
-            getsubjectid: subjectid,
-            connection: true
-        },
-        success: function(data) {
-
-            if (data == 3) {
-
-                swal("Good JOB!", "Lecture Deleted Successfully", "success");
-                viewlecturetable(subjectid, semesterid);
-
-            } else if (data == 0) {
-
-                swal("ohoohoh!", "Deleting Lecture Failed", "error");
-
-
-
-
-            } else if (data == 1) {
-
-                swal("ohoohoh!", "You can't delete the Lecture! Contact Coordinator", "error");
-
-
-
-
-            } else {
-                swal("ohoohoh!", "Something went wrong! try again", "error");
-
-
-            }
-        }
-
-
-
-    });
-
-
-
-}
+    }
 </script>
 <?php
 $conn = null;
