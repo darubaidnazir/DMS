@@ -1,5 +1,6 @@
 
 $(document).ready(function () {
+    loadstudentbatchinfo();
     var myArray = new Array();
     myArray[0] = "addstudentsection";
     myArray[1] = "addsettingsection";
@@ -8,9 +9,11 @@ $(document).ready(function () {
     myArray[4] = "addactivesemestersection";
     myArray[5] = "addsubjectsection";
     myArray[6] = "requestsection";
+    myArray[7] = "addpdfsection";
     $(".menu_button").click(function () {
         $("#maindashboardsection").css("display", "none");
         var getId = this.id;
+
 
         if (getId == "addbatch") {
             getId = "addbatchsection";
@@ -18,7 +21,7 @@ $(document).ready(function () {
             bodyofbranch();
         } else if (getId == "addstudent") {
             getId = "addstudentsection";
-            //  loadDataStudent();
+
             loadstudentbatchinfo();
         } else if (getId == "addteacher") {
             getId = "addteachersection";
@@ -29,6 +32,7 @@ $(document).ready(function () {
 
         } else if (getId == "addsettingboard") {
             getId = "addsettingsection";
+
         } else if (getId == "addsubject") {
             getId = "addsubjectsection";
             bodyofsubject();
@@ -37,6 +41,9 @@ $(document).ready(function () {
             getId = "requestsection";
 
 
+        } else if (getId == "addpdfsectionbutton") {
+            getId = "addpdfsection";
+            $("#addpdfsection").css("display", "block");
         }
 
         for (var i = 0; i < myArray.length; i++) {

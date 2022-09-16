@@ -124,6 +124,14 @@ require_once('dbcon.php');
                     </a>
                 </li>
                 <li>
+                    <a href="#Generate PDF Coordintor">
+                        <svg>
+                            <use xlink:href="#subject"></use>
+                        </svg>
+                        <span id="addpdfsectionbutton" class="menu_button">Generate PDF</span>
+                    </a>
+                </li>
+                <li>
                     <a href="#Request's">
                         <svg>
                             <use xlink:href="#subject"></use>
@@ -460,7 +468,7 @@ require_once('dbcon.php');
                                     <th>Student Email</th>
                                     <th>Student Name</th>
                                     <th>Student Enrollment</th>
-                                    <th>Student Dob</th>
+                                    <th>Group</th>
 
                                     <th>Status</th>
                                     <th>Action</th>
@@ -642,112 +650,302 @@ require_once('dbcon.php');
             </div>
         </section>
     </section>
+
     <section class="grid page-content" id="addsettingsection">
-        <div style="all:unset;" class='m-3'>
+        <div style="all:unset;">
+            <button class="min_max" id="plus1"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">Add
+                    Group's </small></button>
+            <button class="min_max" id="minus1"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">Add
+                    Group's
+
+                </small></button>
             <button class="min_max" id="plus"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">Add
                     Time slot </small></button>
             <button class="min_max" id="minus"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">Add
                     Time slot
 
                 </small></button>
-            <div id="some">
-                <p>
-                    Enter Maximum days to mark attendance from current date.<br>
-                <p>
-                    <?php
-                    $getdate = $conn->prepare('SELECT * FROM `timeslot` WHERE `coordinatorid` = ?');
-                    $getdate->bindParam(1, $coordinatorid);
-                    $getdate->execute();
-                    $result = $getdate->fetchAll(PDO::FETCH_ASSOC);
 
-                    foreach ($result as $days) {
-                    ?>
-                    <span style="color:red;" id="daysmessage"></span>
-                    <input type="number" id="daystoupdate" min="0" class="form-control m-2" id="days"
-                        placeholder="<?php echo $days['updateattendance']; ?>"
-                        value="<?php echo $days['updateattendance']; ?>">
-                    <button class="btn btn-danger" style="    margin: 0 auto;
-                                 display: block;" id="update_days">Update Days</button>
-                    <?php
-                        break;
-                    }
-                    ?>
+            <div class='text-center' id='some1'>
 
-                </p>
-                </p>
-                <p class='fw-bold text-uppercase'> Select Time Slots</p>
-                <table class='table table-success table-striped'>
-                    <tr>
-                        <td class='table-secondary'>Start Time</td>
-                        <td class='table-secondary'>End Time</td>
-                        <td class='table-secondary'>Update Day's</td>
+                <div class="group_assign_modal_body text-center ">
+                    <form method="post" action="../coordinator/loadData/loadgroupstudent.php">
+                        <h4>Select a Batch to assign group's</h4>
+                        <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id'
+                            name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
 
-                    </tr>
-                    <tbody>
 
-                        <tr>
-                            <?php foreach ($result as $row) { ?>
-                            <td class='table-primary'><?php echo $row['start']; ?></td>
-                            <td class='table-secondary'><?php echo $row['end']; ?></td>
-                            <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
-                            <?php
-                                break;
-                            }
+                        </select>
+                        <input class='btn btn-primary' style='margin:5px' type="submit" name="load_group"
+                            value="Submit">
 
-                            ?>
-                        </tr>
-                    </tbody>
-                </table>
-                <span id="timemessage" style="color:red;"></span>
+                    </form>
 
-                <?php
-
-                function getTimeSlot($interval, $start_time, $end_time)
-                {
-                    $start = new DateTime($start_time);
-                    $end = new DateTime($end_time);
-                    $startTime = $start->format('H:i');
-                    $endTime = $end->format('H:i');
-                    $i = 0;
-                    $time = [];
-                    while (strtotime($startTime) <= strtotime($endTime)) {
-                        $start = $startTime;
-                        $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-                        $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-                        $i++;
-                        if (strtotime($startTime) <= strtotime($endTime)) {
-                            $time[$i]['slot_start_time'] = $start;
-                            $time[$i]['slot_end_time'] = $end;
-                        }
-                    }
-                    return $time;
-                }
-                $start = "9:00";
-                $end =  "18:00";
-                $slots = getTimeSlot(30, $start, $end);
-                $length = count($slots);
-                echo '<select id="menutimeslotstart" class="form-control">
-                <option selected value="0">Select a Start Time</option>';
-                for ($i = 1; $i <= $length; $i++) {
-
-                    echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
-                }
-                echo "</select>";
-                echo '<select id="menutimeslotend" class="form-control">
-                <option selected value="0">Select a End Time</option>';
-                for ($i = 1; $i <= $length; $i++) {
-
-                    echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
-                }
-                echo "</select>";
-
-                ?>
-                <button class="btn btn-primary text-center" style="    margin: 0 auto;
-    display: block;" id="settimeslot"> Set Time </button>
+                </div>
             </div>
-        </div>
 
 
+            <div style="all:unset;" class='m-3'>
+
+                <div id="some">
+                    <p>
+                        Enter Maximum days to mark attendance from current date.<br>
+                    <p>
+                        <?php
+                        $getdate = $conn->prepare('SELECT * FROM `timeslot` WHERE `coordinatorid` = ?');
+                        $getdate->bindParam(1, $coordinatorid);
+                        $getdate->execute();
+                        $result = $getdate->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($result as $days) {
+                        ?>
+                        <span style="color:red;" id="daysmessage"></span>
+                        <input type="number" id="daystoupdate" min="0" class="form-control m-2" id="days"
+                            placeholder="<?php echo $days['updateattendance']; ?>"
+                            value="<?php echo $days['updateattendance']; ?>">
+                        <button class="btn btn-danger" style="    margin: 0 auto;
+                                 display: block;" id="update_days">Update Days</button>
+                        <?php
+                            break;
+                        }
+                        ?>
+
+                    </p>
+                    </p>
+                    <p class='fw-bold text-uppercase'> Select Time Slots</p>
+                    <table class='table table-success table-striped'>
+                        <tr>
+                            <td class='table-secondary'>Start Time</td>
+                            <td class='table-secondary'>End Time</td>
+                            <td class='table-secondary'>Update Day's</td>
+
+                        </tr>
+                        <tbody>
+
+                            <tr>
+                                <?php foreach ($result as $row) { ?>
+                                <td class='table-primary'><?php echo $row['start']; ?></td>
+                                <td class='table-secondary'><?php echo $row['end']; ?></td>
+                                <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
+                                <?php
+                                    break;
+                                }
+
+                                ?>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <span id="timemessage" style="color:red;"></span>
+
+                    <?php
+
+                    function getTimeSlot($interval, $start_time, $end_time)
+                    {
+                        $start = new DateTime($start_time);
+                        $end = new DateTime($end_time);
+                        $startTime = $start->format('H:i');
+                        $endTime = $end->format('H:i');
+                        $i = 0;
+                        $time = [];
+                        while (strtotime($startTime) <= strtotime($endTime)) {
+                            $start = $startTime;
+                            $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                            $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+                            $i++;
+                            if (strtotime($startTime) <= strtotime($endTime)) {
+                                $time[$i]['slot_start_time'] = $start;
+                                $time[$i]['slot_end_time'] = $end;
+                            }
+                        }
+                        return $time;
+                    }
+                    $start = "9:00";
+                    $end =  "18:00";
+                    $slots = getTimeSlot(30, $start, $end);
+                    $length = count($slots);
+                    echo '<select id="menutimeslotstart" class="form-control">
+                <option selected value="0">Select a Start Time</option>';
+                    for ($i = 1; $i <= $length; $i++) {
+
+                        echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
+                    }
+                    echo "</select>";
+                    echo '<select id="menutimeslotend" class="form-control">
+                <option selected value="0">Select a End Time</option>';
+                    for ($i = 1; $i <= $length; $i++) {
+
+                        echo "<option value='{$slots[$i]['slot_start_time']}'>{$slots[$i]['slot_start_time']}</option>";
+                    }
+                    echo "</select>";
+
+                    ?>
+                    <button class="btn btn-primary text-center" style="    margin: 0 auto;
+    display: block;" id="settimeslot"> Set Time </button>
+                </div>
+            </div>
+
+
+    </section>
+
+    <section class="grid page-content" id="addpdfsection">
+        <section>
+
+            <button class="min_max" id="pluspdf1"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">PDF
+                    Student Record
+                </small></button>
+            <button class="min_max" id="minuspdf1"><i class="fa-solid fa-arrow-down"></i><small
+                    style="color:green; ">PDF
+                    Student Record
+
+                </small></button>
+
+            <div id='pdf1'>
+
+                <p>
+                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to Generate PDF
+                        for Student
+                        Attendnace
+                        Record.</lable><br>
+                <form action="../pdfgenerator/teacher/subjectpdf.php" method="post">
+                    <select class="form-control" aria-label="Default select example" name='pdf_generator_free'>
+                        <option selected value="0">Select a Subject</option>
+                        <?php
+                        $find = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE subject.coordinatorid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
+                        $find->bindParam(1, $coordinatorid);
+                        $find->execute();
+                        $resulttable = $find->fetchAll(PDO::FETCH_ASSOC);
+                        $string = "";
+                        foreach ($resulttable as $row) {
+                            $string .=  $row['subjectname'];
+                            $string .= "-";
+                            $string .=  $row['subjectcode'];
+
+                        ?>
+                        <option style='color:red;' data-permission="<?php echo $row['updatepermission']; ?>"
+                            data-city="<?php echo $row['semesterid']; ?>"
+                            value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
+                            <?php echo $string . ' Semester No ' . $row['semesterno']; ?></option>
+
+                        <?php
+                            $string = "";
+                        }
+                        ?>
+
+
+                        ?>
+
+
+                    </select>
+                    <input type="submit" name="pdf_button" class='btn btn-secondary' style='margin:5px'
+                        value='Generate pdf'>
+                </form>
+
+                </p>
+            </div>
+        </section>
+        <section>
+            <button class="min_max" id="pluspdf2"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">PDF
+                    LECTURE
+                </small></button>
+            <button class="min_max" id="minuspdf2"><i class="fa-solid fa-arrow-down"></i><small
+                    style="color:green; ">PDF
+                    LECTURE
+
+                </small></button>
+            <div class="text-center" id='pdf2'>
+                <p>
+                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to Generate PDF
+                        Lecture
+                    </lable>
+                </p>
+                <form method="post" action="../pdfgenerator/teacher/lecturepdf.php">
+                    <?php
+                    $sql = $conn->prepare("SELECT * FROM `coordinator` INNER JOIN `branch` ON
+                    `coordinator`.`coordinatiorid` = branch.coordinatorid INNER JOIN batch ON branch.branchid =
+                    batch.branchid WHERE coordinator.coordinatiorid = ?");
+                    $sql->bindParam(1, $coordinatorid);
+                    $sql->execute();
+                    $result = $sql->fetchAll();
+                    ?>
+                    <small class="form-text text-muted" style='color:red;' id='mmmmm'></small>
+                    <label for='subjectlevel'>Chosen a batch</label>
+                    <select class="form-control select_batch_id" id="select_batch_id" name='select_batch_id'>
+                        <option value="0">Select a Batch</option>
+                        <?php
+                        foreach ($result as $row) {
+                        ?>
+                        <option value='<?php echo $row['batchid'] ?>'>
+                            <?php echo $row['branchname'] . $row['batchyear']; ?></option>
+                        <?php
+
+                        }
+                        ?>
+                    </select>
+                    <label for='subjectlevel'>Chosen Semester No</label>
+                    <select class="form-control selectsemesterno" id='selectsemesterno' name='selectsemesterno'>
+
+                    </select>
+                    <select class="form-control" id='selectsemestersubject' name='subjectlecture'>
+
+                    </select>
+
+                    <input type="submit" name="subjectlecturepdf" class="btn btn-secondary" style='margin:5px;'
+                        Value='Generate pdf'>
+                </form>
+            </div>
+        </section>
+        <section>
+            <button class="min_max" id="pluspdf3"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">PDF
+                    Semester
+                </small></button>
+            <button class="min_max" id="minuspdf3"><i class="fa-solid fa-arrow-down"></i><small
+                    style="color:green; ">PDF
+                    Semester
+
+                </small></button>
+            <div class="text-center" id='pdf3'>
+                <p>
+                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Semester to Generate PDF
+
+                    </lable>
+                </p>
+                <form method="post" action="../pdfgenerator/teacher/allsubject.php">
+                    <?php
+                    $sql = $conn->prepare("SELECT * FROM `coordinator` INNER JOIN `branch` ON
+                    `coordinator`.`coordinatiorid` = branch.coordinatorid INNER JOIN batch ON branch.branchid =
+                    batch.branchid WHERE coordinator.coordinatiorid = ?");
+                    $sql->bindParam(1, $coordinatorid);
+                    $sql->execute();
+                    $result = $sql->fetchAll();
+                    ?>
+                    <small class="form-text text-muted" style='color:red;' id='mmmmm'></small>
+                    <label for='subjectlevel'>Chosen a batch</label>
+                    <select class="form-control select_batch_id" id="select_batch_id1" name='select_batch_id'>
+                        <option value="0">Select a Batch</option>
+                        <?php
+                        foreach ($result as $row) {
+                        ?>
+                        <option value='<?php echo $row['batchid'] ?>'>
+                            <?php echo $row['branchname'] . $row['batchyear']; ?></option>
+                        <?php
+
+                        }
+                        ?>
+                    </select>
+                    <label for='subjectlevel'>Chosen Semester No</label>
+                    <select class="form-control selectsemesterno" id='selectsemesterno2' name='selectsemesterno'>
+
+                    </select>
+                    <label for='subjectlevel'>Chosen Subject Mode</label>
+                    <select class="form-control" name='subjectlevel'>
+                        <option selected value='T'>Theory Subject's</option>
+                        <option value='L'>Lab Subject's</option>
+                    </select>
+                    <input type="submit" name="subjectlecturepdf" class="btn btn-secondary" style='margin:5px;'
+                        Value='Generate pdf'>
+                </form>
+            </div>
+        </section>
     </section>
     <footer class="page-footer">
         <span>Department Management System North Campus</span>
@@ -1056,6 +1254,53 @@ require_once('dbcon.php');
             </div>
         </div>
     </div>
+    <!-- dd -->
+    <div class="modal fade" id="group_assign_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Group Assign to Student's
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="group_assign_modal_body text-center ">
+                    <form method="post" action="../coordinator/loadData/loadgroupstudent.php">
+                        <h4>Select a Batch to assign group's</h4>
+                        <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id'
+                            name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
+
+
+                        </select>
+                        <input class='btn btn-primary' style='margin:5px' type="submit" name="load_group"
+                            value="Submit">
+
+                    </form>
+
+                </div>
+
+
+
+
+
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
     <!-- Active Semester  informationModal End-->
     <!-- Assign teacher Information Modal -->
     <div class="modal fade" id="assign-teacher" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1203,6 +1448,49 @@ require_once('dbcon.php');
 </script>
 <script>
 $(document).ready(function() {
+    $("#minuspdf1").hide();
+    $("#pdf1").hide();
+    $("#pluspdf1").on('click', function() {
+        $("#minuspdf1").show();
+        $("#pluspdf1").hide();
+        $("#pdf1").show();
+
+    });
+    $("#minuspdf1").on('click', function() {
+        $("#minuspdf1").hide();
+        $("#pluspdf1").show();
+        $("#pdf1").hide();
+
+    });
+    $("#minuspdf2").hide();
+    $("#pdf2").hide();
+    $("#pluspdf2").on('click', function() {
+        $("#minuspdf2").show();
+        $("#pluspdf2").hide();
+        $("#pdf2").show();
+
+    });
+    $("#minuspdf2").on('click', function() {
+        $("#minuspdf2").hide();
+        $("#pluspdf2").show();
+        $("#pdf2").hide();
+
+    });
+    $("#minuspdf3").hide();
+    $("#pdf3").hide();
+    $("#pluspdf3").on('click', function() {
+        $("#minuspdf3").show();
+        $("#pluspdf3").hide();
+        $("#pdf3").show();
+
+    });
+    $("#minuspdf3").on('click', function() {
+        $("#minuspdf3").hide();
+        $("#pluspdf3").show();
+        $("#pdf3").hide();
+
+    });
+
 
     $("#minusstudent1").hide();
     $("#divstudent1").hide();
@@ -1231,6 +1519,84 @@ $(document).ready(function() {
         $("#plusstudent2").show();
 
     });
+    $(".select_batch_id").on("change", function() {
+        var batchid = $(this).val();
+
+        if (batchid == "" || batchid == 0) {
+            $("#mmmmm").html("* Select a Batch");
+
+        } else {
+            $("#mmmmm").html("");
+            $.ajax({
+                url: "../coordinator/loadData/loadsemesterno.php",
+                type: "POST",
+                data: {
+                    batchid: batchid,
+                    connection: true
+                },
+                success: function(data) {
+                    $(".selectsemesterno").html(data);
+                }
+
+
+            });
+
+        }
+    });
+    $("#addStudentData_batch_Select_id_group").attr('disabled', true);
+    $("#addStudentData_batch_Select_id").on('change', function() {
+        var value = $(this).val();
+
+
+        if (value == 0) {
+            $("#addStudentData_batch_Select_id_group").attr('disabled', true);
+        } else {
+            $("#addStudentData_batch_Select_id_group").attr('disabled', false);
+        }
+
+
+    });
+    $("#some1").hide();
+    $("#minus1").hide();
+    $("#plus1").on('click', function() {
+        $("#minus1").show();
+        $("#some1").show();
+        $("#plus1").hide();
+    });
+    $("#minus1").on('click', function() {
+        $("#minus1").hide();
+        $("#some1").hide();
+        $("#plus1").show();
+    });
+
+
+
+    $("#selectsemesterno").on("change", function() {
+        var semesterid = $(this).val();
+        if (semesterid == "" || semesterid == 0) {
+
+        } else {
+            $.ajax({
+                url: "../coordinator/loadData/loadsubjectsem.php",
+                type: "POST",
+                data: {
+                    semesterid: semesterid,
+                    connection: true
+                },
+                success: function(data) {
+
+                    $("#selectsemestersubject").html(data);
+                }
+
+
+            });
+
+        }
+
+
+    });
+
+
     $(document).on("click", "#clickonupdate", function() {
 
         var studentid = $(this).data("studentid");

@@ -27,7 +27,7 @@ class loadStudentData extends db_connection
               <td data-title='Student Email'>{$row["studentemail"]}</td>
               <td data-title='Student Id'>{$row["studentname"]}</td>
               <td data-title='Student Enrollment'>{$row["studentrollno"]}</td>
-              <td data-title='Student Dob'>{$row["studentdob"]}</td>
+              <td data-title='Student Dob'>{$row["group_id"]}</td>
               <td data-title='Student Status'>{$row["studentstatus"]}</td>
              
               <td class='select'>

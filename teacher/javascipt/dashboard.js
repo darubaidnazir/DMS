@@ -5,6 +5,7 @@ $(document).ready(function () {
     myArray[0] = "addsettingsection";
     myArray[1] = "addbatchsection";
     myArray[2] = "addstudentrecordsection";
+    myArray[3] = "addpdfsection";
 
     $(".menu_button").click(function () {
         $("#maindashboardsection").css("display", "none");
@@ -19,6 +20,8 @@ $(document).ready(function () {
         }
         else if (getId == "addstudentrecord") {
             getId = "addstudentrecordsection";
+        } else if (getId == "addpdfsectionbutton") {
+            getId = "addpdfsection";
         }
 
 
