@@ -14,8 +14,8 @@ class loadteachersubject extends db_connection
         <td class='table-secondary'>S.No</td>
         <td class='table-secondary''>Subject Name</td>
         <td class='table-secondary''>Subject Code</td>
-        <td class='table-secondary'>Batch Year</td>
-        <td class='table-secondary'>Semester No</td>
+        <td class='table-secondary'>Year/Sem No</td>
+        <td class='table-secondary'>Mode</td>
         <td class='table-secondary'>Action</td>
     </tr>";
             $sql1 = $this->conn->prepare("Select * FROM `semester` INNER join `assignedsubject` on semester.semesterid = assignedsubject.semesterid INNER join subject on assignedsubject.subjectid = subject.subjectid INNER join batch on batch.batchid = semester.batchid WHERE assignedsubject.teacherid = ? && assignedsubject.semesterid = ? && assignedsubject.assignedstatus = 'active' ");
@@ -30,18 +30,32 @@ class loadteachersubject extends db_connection
                     $totalstudent->bindParam(1, $rows["batchid"]);
                     $totalstudent->execute();
                     $countstudent = $totalstudent->rowCount();
+                    $connn = $rows["batchyear"];
+                    $connn .= '/';
+                    $connn .= $rows["semesterno"];
+                    $subjectlevel = "Lab";
+                    if ($rows['subjectlevel'] == 'T') {
+                        $subjectlevel = "Theory";
+                    }
+
 
                     $output .= "<tr style='color:white;font-weight:bold;'>
         <td style='color:green;' class='table-primary'>{$Sno}</td>
         <td style='color:green;' class='table-primary'>{$rows["subjectname"]}</td>
         <td style='color:green;' class='table-primary'>{$rows["subjectcode"]}</td>
-        <td style='color:green;' class='table-primary'>{$rows["batchyear"]}</td>
-        <td style='color:green;' class='table-primary'>{$rows["semesterno"]}</td>";
+        <td style='color:green;' class='table-primary'>{$connn}</td>
+        <td style='color:green;' class='table-primary'>{$subjectlevel}</td>";
 
                     if ($countstudent > 0) {
-                        $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectname={$rows['subjectname']}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
+                        if ($rows["subjectlevel"] === "T") {
+                            $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectname={$rows['subjectname']}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
         
-</tr>";
+                            </tr>";
+                        } else if ($rows["subjectlevel"] === "L") {
+                            $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger' href='attendancelab?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectname={$rows['subjectname']}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
+        
+                            </tr>";
+                        }
                     } else {
                         $output .= " <td style='color:green;' class='table-primary'><a class='btn btn-danger'  style='pointer-events: none' href='attendance?semesterid={$rows['semesterid']}&teacherid={$getteacherid}&subjectid={$rows['subjectid']}'>Mark Attendance</a></td>
         
@@ -50,6 +64,7 @@ class loadteachersubject extends db_connection
 
 
                     $Sno++;
+                    $connn = "";
                 } else {
                 }
             }

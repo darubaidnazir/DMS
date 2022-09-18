@@ -107,6 +107,16 @@ if ($checkcountsemestercoo != 1) {
 
 
         </select>
+        <lable>Select Group</lable>
+        <select id="group_batch" class="form-control">
+            <option selected value="0"> Select a Group</option>
+            <option value="G1">G1</option>
+            <option value="G2">G2</option>
+            <option value="BOTH">G1 & G2</option>
+
+
+        </select>
+
         <label>Select a Mode</label>
         <select id="defaultattendance" class="form-select" aria-label="Default select example">
             <option selected value="PRESENT">PRESENT</option>
@@ -119,7 +129,13 @@ if ($checkcountsemestercoo != 1) {
 
 </html>
 
+<div class='modalattendance' id='modalattendance1'>
+</div>
+<div class="text-center"><button class="btn btn-primary" id="sendattendance">Submit</button></div>
+
+
 <script type="text/javascript">
+$("#group_batch").prop("disabled", true);
 $("#lecturedate").on("change", function() {
     $("#sendattendance").prop("disabled", true);
     $("#timeslot").prop("disabled", false);
@@ -140,6 +156,7 @@ $("#lecturedate").on("change", function() {
                     "error");
             }
             $("#timeslot").html(data);
+
 
 
         }
@@ -166,7 +183,8 @@ $("#timeslot").on("change", function() {
         success: function(data) {
 
             if (data == 3) {
-                $("#sendattendance").prop("disabled", false);
+
+                $("#group_batch").prop("disabled", false);
             } else if (data == 1) {
                 swal("ohoho!",
                     "Change the Time Slot! This Slot is Already Taken for this day",
@@ -179,68 +197,50 @@ $("#timeslot").on("change", function() {
 
         }
     });
+    $("#group_batch").on("change", function() {
+        var group_id = $(this).val();
+        if (group_id == "G1" || group_id == "G2" || group_id == "BOTH") {
+            group_load(group_id);
+            $("#message").html("");
+
+        } else {
+            $("#message").html("*Select a Group to Show Student's");
+            $("#sendattendance").prop("disabled", true);
+
+        }
+
+    });
+
+
+    function group_load(group) {
+
+        var semesterid = <?php echo $_GET['semesterid']; ?>;
+        $.ajax({
+            url: "../teacher/loaddata/getsem.php",
+            type: "POST",
+            data: {
+                group: group,
+                connection: true,
+                semesterid: semesterid
+            },
+            success: function(data) {
+
+                $("#modalattendance1").html(data);
+                $("#sendattendance").prop("disabled", false);
+
+            }
+
+        });
+
+    }
+
+
+
 
 
 
 });
 </script>
-
-<?php
-
-$check = $conn->prepare("SELECT * FROM `semester` WHERE semesterid = ?");
-$check->bindParam(1, $getsemesterid);
-$check->execute();
-$checkcountsemester = $check->rowCount();
-$check = $conn->prepare("SELECT * FROM `teacher` WHERE `teacherid` = ?");
-$check->bindParam(1, $getteacherid);
-$check->execute();
-$checkcountteacher = $check->rowCount();
-$check = $conn->prepare("SELECT * FROM `subject` WHERE `subjectid` = ?");
-$check->bindParam(1, $getsubjectid);
-$check->execute();
-$checkcountsubject = $check->rowCount();
-if ($checkcountsemester > 0 && $checkcountteacher > 0 && $checkcountsubject > 0) {
-
-    $sql = $conn->prepare("SELECT * FROM `semester` WHERE `semesterid` = ? ");
-    $sql->bindParam(1, $getsemesterid);
-    $sql->execute();
-    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($result as $rows) {
-        $newbatchid = $rows['batchid'];
-        break;
-    }
-    $sql = $conn->prepare("SELECT *  FROM `student` WHERE `batchid` = ? ");
-    $sql->bindParam(1, $newbatchid);
-    $sql->execute();
-    $resultnew = $sql->fetchAll(PDO::FETCH_ASSOC);
-    echo "<div class='modalattendance'>";
-    foreach ($resultnew as $row) {
-        $my_array1 = str_split($row['studentid']);
-        $length = count($my_array1);
-        $name = $my_array1[$length - 2];
-        $name .= $my_array1[$length - 1];
-
-?>
-
-<label class="attendancebutton"> <?php echo $name; ?>
-    <input type="checkbox" id='checkbox1' value="<?php echo $row['studentid']; ?>">
-
-</label>
-
-<?php
-
-        unset($my_array1);
-    }
-    echo "</div>";
-} else {
-    //bothe par not found
-    session_destroy();
-    header("Location:../teacher/teacherlogin.html");
-}
-?>
-<div class="text-center"><button class="btn btn-primary" id="sendattendance">Submit</button></div>
-
-
 <script>
 $(document).ready(function() {
 
@@ -351,7 +351,7 @@ $(document).ready(function() {
 
     function markattendance(semesterid, lecturedate, defaultplan, lectureplan, id, subjectid, lectureno,
         timeslot) {
-        var group = "BOTH";
+        var group = $("#group_batch").val();
         $.ajax({
             url: "senddata/sendattendance.php",
             type: "POST",
@@ -371,7 +371,7 @@ $(document).ready(function() {
                 group: group
             },
             success: function(data) {
-
+                alert(data);
                 if (data == 3) {
                     swal("Good job!", "Attendance Recored Sucessfully! ", "success");
                     $("#sendattendance").html("Submited");
@@ -415,10 +415,6 @@ $(document).ready(function() {
 
 
 
-});
-window.addEventListener('popstate', function(event) {
-    // Log the state data to the console
-    console.log(event.state);
 });
 </script>
 

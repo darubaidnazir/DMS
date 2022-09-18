@@ -6,17 +6,24 @@ require_once("../../coordinator/inner/db_connection.php");
 class sendattendance extends db_connection
 {
 
-    function __construct($getsemesterid, $getsubjectid, $getlectureplan, $getlecturedate, $getlectureno, $getdefaultplan, $getid, $gettimeslot)
+    function __construct($getsemesterid, $getsubjectid, $getlectureplan, $getlecturedate, $getlectureno, $getdefaultplan, $getid, $gettimeslot, $group)
     {
         parent::__construct();
+        $groups = array("BOTH", "G1", "G2");
+        for ($i = 0; $i <= 2; $i++) {
+            $check = $this->conn->prepare("SELECT * FROM `lectureplan` WHERE `semesterid` = ? && `subjectid` = ? && `lecturedate` = ? && groups = ?");
+            $check->bindParam(1, $getsemesterid);
+            $check->bindParam(2, $getsubjectid);
+            $check->bindParam(3, $getlecturedate);
+            $check->bindParam(4, $groups[$i]);
+            $check->execute();
+            $countdate = $check->rowCount();
+            if ($countdate > 0) {
+                break;
+            }
+        }
 
 
-        $check = $this->conn->prepare("SELECT * FROM `lectureplan` WHERE `semesterid` = ? && `subjectid` = ? && `lecturedate` = ?");
-        $check->bindParam(1, $getsemesterid);
-        $check->bindParam(2, $getsubjectid);
-        $check->bindParam(3, $getlecturedate);
-        $check->execute();
-        $countdate = $check->rowCount();
         if ($countdate > 0) {
 
             echo 4;
@@ -31,7 +38,7 @@ class sendattendance extends db_connection
 
 
 
-            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`,`timeslotstart`,`timeslotend`,`teacherid`) VALUES (?,?,?,?,?,?,?,?)");
+            $sql = $this->conn->prepare("INSERT INTO `lectureplan`(`semesterid`, `subjectid`, `lecturedate`, `lecturehour`, `lecturetopic`,`timeslotstart`,`timeslotend`,`teacherid`,`groups`) VALUES (?,?,?,?,?,?,?,?,?)");
             $sql->bindParam(1, $getsemesterid);
             $sql->bindParam(2, $getsubjectid);
             $sql->bindParam(3, $getlecturedate);
@@ -40,6 +47,7 @@ class sendattendance extends db_connection
             $sql->bindParam(6, $gettimeslot);
             $sql->bindParam(7, $time);
             $sql->bindParam(8, $_SESSION['teacheruserid']);
+            $sql->bindParam(9, $group);
 
             if ($sql->execute()) {
                 $count = count($getid);
@@ -68,8 +76,8 @@ class sendattendance extends db_connection
         }
     }
 }
-if (isset($_POST['connection']) && isset($_POST['getsubjectid'])) {
-    $run = new sendattendance($_POST['getsemesterid'], $_POST['getsubjectid'], $_POST['getlectureplan'], $_POST['getlecturedate'], $_POST['getlectureno'], $_POST['getdefaultplan'], $_POST['getid'], $_POST['gettimeslot']);
+if (isset($_POST['connection']) && isset($_POST['getsubjectid']) && $_POST['group']) {
+    $run = new sendattendance($_POST['getsemesterid'], $_POST['getsubjectid'], $_POST['getlectureplan'], $_POST['getlecturedate'], $_POST['getlectureno'], $_POST['getdefaultplan'], $_POST['getid'], $_POST['gettimeslot'], $_POST['group']);
     $run->closeConnection();
 } else {
 
