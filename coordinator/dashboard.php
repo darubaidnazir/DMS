@@ -807,33 +807,39 @@ require_once('dbcon.php');
                         Attendnace
                         Record.</lable><br>
                 <form action="../pdfgenerator/teacher/subjectpdf.php" method="post">
-                    <select class="form-control" aria-label="Default select example" name='pdf_generator_free'>
-                        <option selected value="0">Select a Subject</option>
-                        <?php
-                        $find = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE subject.coordinatorid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
-                        $find->bindParam(1, $coordinatorid);
-                        $find->execute();
-                        $resulttable = $find->fetchAll(PDO::FETCH_ASSOC);
-                        $string = "";
-                        foreach ($resulttable as $row) {
-                            $string .=  $row['subjectname'];
-                            $string .= "-";
-                            $string .=  $row['subjectcode'];
 
+
+                    <?php
+                    $sql = $conn->prepare("SELECT * FROM `coordinator` INNER JOIN `branch` ON
+                    `coordinator`.`coordinatiorid` = branch.coordinatorid INNER JOIN batch ON branch.branchid =
+                    batch.branchid WHERE coordinator.coordinatiorid = ?");
+                    $sql->bindParam(1, $coordinatorid);
+                    $sql->execute();
+                    $result = $sql->fetchAll();
+                    ?>
+                    <small class="form-text text-muted" style='color:red;' id='mmmmm'></small>
+                    <span style="display: block;
+    text-align: center;"><label for='select_batch_id1'>Chosen a batch</label></span>
+                    <select class="form-control select_batch_id" id="select_batch_id1" name='select_batch_id'>
+
+                        <?php
+                        foreach ($result as $row) {
                         ?>
-                        <option style='color:red;' data-permission="<?php echo $row['updatepermission']; ?>"
-                            data-city="<?php echo $row['semesterid']; ?>"
-                            value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
-                            <?php echo $string . ' Semester No ' . $row['semesterno']; ?></option>
-
+                        <option value='<?php echo $row['batchid'] ?>'>
+                            <?php echo $row['branchname'] . $row['batchyear']; ?></option>
                         <?php
-                            $string = "";
+
                         }
                         ?>
+                    </select>
+                    <span style="display: block;
+    text-align: center;"><label for='select_batch_id1'>Chosen a Semester</label></span>
+                    <select class="form-control selectsemesterno" id='selectsemesterno1' name='selectsemesterno'>
 
-
-                        ?>
-
+                    </select>
+                    <span style="display: block;
+    text-align: center;"><label for='select_batch_id1'>Chosen a Subject</label></span>
+                    <select class="form-control" id='selectsemestersubject1' name='pdf_generator_free'>
 
                     </select>
                     <input type="submit" name="pdf_button" class='btn btn-secondary' style='margin:5px'
@@ -881,10 +887,11 @@ require_once('dbcon.php');
                         }
                         ?>
                     </select>
-                    <label for='subjectlevel'>Chosen Semester No</label>
+                    <label for='selectsemesterno'>Chosen Semester No</label>
                     <select class="form-control selectsemesterno" id='selectsemesterno' name='selectsemesterno'>
 
                     </select>
+                    <label for='selectsemesterno'>Chosen Subject</label>
                     <select class="form-control" id='selectsemestersubject' name='subjectlecture'>
 
                     </select>
@@ -1586,6 +1593,32 @@ $(document).ready(function() {
                 success: function(data) {
 
                     $("#selectsemestersubject").html(data);
+
+                }
+
+
+            });
+
+        }
+
+
+    });
+    $("#selectsemesterno1").on("change", function() {
+        var semesterid = $(this).val();
+        if (semesterid == "" || semesterid == 0) {
+
+        } else {
+            $.ajax({
+                url: "../coordinator/loadData/loadsubjectsem1.php",
+                type: "POST",
+                data: {
+                    semesterid: semesterid,
+                    connection: true
+                },
+                success: function(data) {
+
+                    $("#selectsemestersubject1").html(data);
+
                 }
 
 

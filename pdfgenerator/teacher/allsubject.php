@@ -105,56 +105,116 @@ if (isset($_POST['subjectlecturepdf']) &&  $_POST['selectsemesterno'] != 0 && $_
             $pdf->createHeader($subjects_row['subjectname']);
         }
         $pdf->createline();
-        $sql1 = $conn->prepare("SELECT * FROM student where batchid = ?");
-        $sql1->bindParam(1, $batchid);
-        $sql1->execute();
-        $student_rollno = $sql1->fetchAll();
-        foreach ($student_rollno as $rollno) {
-            $pdf->viewTable($rollno['studentemail']);
-            foreach ($subjects as $subjects_row) {
+        if ($subjectLevel == "T") {
+            $sql1 = $conn->prepare("SELECT * FROM student where batchid = ?");
+            $sql1->bindParam(1, $batchid);
+            $sql1->execute();
+            $student_rollno = $sql1->fetchAll();
+            foreach ($student_rollno as $rollno) {
+                $pdf->viewTable($rollno['studentemail']);
+                foreach ($subjects as $subjects_row) {
 
 
-                $totalclasssql = $conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ?");
-                $totalclasssql->bindParam(1, $subjects_row['subjectid']);
-                $totalclasssql->bindParam(2, $semesterid);
-                $totalclasssql->execute();
-                $fetchclass = $totalclasssql->fetchAll(PDO::FETCH_ASSOC);
-                $totalclass = 0;
+                    $totalclasssql = $conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ?");
+                    $totalclasssql->bindParam(1, $subjects_row['subjectid']);
+                    $totalclasssql->bindParam(2, $semesterid);
+                    $totalclasssql->execute();
+                    $fetchclass = $totalclasssql->fetchAll(PDO::FETCH_ASSOC);
+                    $totalclass = 0;
 
 
 
-                foreach ($fetchclass as $countclass) {
+                    foreach ($fetchclass as $countclass) {
 
-                    $totalclass = $totalclass + $countclass['lecturehour'];
+                        $totalclass = $totalclass + $countclass['lecturehour'];
+                    }
+
+
+                    $findabsent = $conn->prepare("SELECT * FROM `studentabsent` WHERE `studentid`= ? && `subjectid` = ?  && `semesterid` = ?");
+                    $findabsent->bindParam(1,  $rollno['studentid']);
+                    $findabsent->bindParam(2,  $subjects_row['subjectid']);
+                    $findabsent->bindParam(3, $semesterid);
+                    $findabsent->execute();
+                    $fetchasbsentcount = $findabsent->fetchAll(PDO::FETCH_ASSOC);
+                    $absentcount = 0;
+                    foreach ($fetchasbsentcount  as $somecount) {
+                        $absentcount = $absentcount + $somecount['lecturehour'];
+                    }
+
+
+
+
+
+                    $presentcount = $totalclass - $absentcount;
+                    if ($totalclass == 0) {
+                        $percentage = 0;
+                    } else {
+                        $percentage = ceil($presentcount / $totalclass * 100);
+                    }
+                    $pdf->viewSubject($percentage);
                 }
-
-
-                $findabsent = $conn->prepare("SELECT * FROM `studentabsent` WHERE `studentid`= ? && `subjectid` = ?  && `semesterid` = ?");
-                $findabsent->bindParam(1,  $rollno['studentid']);
-                $findabsent->bindParam(2,  $subjects_row['subjectid']);
-                $findabsent->bindParam(3, $semesterid);
-                $findabsent->execute();
-                $fetchasbsentcount = $findabsent->fetchAll(PDO::FETCH_ASSOC);
-                $absentcount = 0;
-                foreach ($fetchasbsentcount  as $somecount) {
-                    $absentcount = $absentcount + $somecount['lecturehour'];
-                }
-
-
-
-
-
-                $presentcount = $totalclass - $absentcount;
-                if ($totalclass == 0) {
-                    $percentage = 0;
-                } else {
-                    $percentage = ceil($presentcount / $totalclass * 100);
-                }
-                $pdf->viewSubject($percentage);
+                $pdf->createline();
             }
-            $pdf->createline();
-        }
+        } else {
+            $group = array("G1", "G2");
+            $groups = "BOTH";
+            for ($i = 0; $i <= 1; $i++) {
+                $sql1 = $conn->prepare("SELECT * FROM student where batchid = ? && group_id = ?");
+                $sql1->bindParam(1, $batchid);
+                $sql1->bindParam(2, $group[$i]);
+                $sql1->execute();
+                $student_rollno = $sql1->fetchAll();
+                foreach ($student_rollno as $rollno) {
+                    $pdf->viewTable($rollno['studentemail']);
+                    foreach ($subjects as $subjects_row) {
 
+
+                        $totalclasssql = $conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ? && groups = ? UNION SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ? && groups = ?");
+                        $totalclasssql->bindParam(1, $subjects_row['subjectid']);
+                        $totalclasssql->bindParam(2, $semesterid);
+                        $totalclasssql->bindParam(3, $group[$i]);
+                        $totalclasssql->bindParam(4, $subjects_row['subjectid']);
+                        $totalclasssql->bindParam(5, $semesterid);
+                        $totalclasssql->bindParam(6, $groups);
+                        $totalclasssql->execute();
+                        $fetchclass = $totalclasssql->fetchAll(PDO::FETCH_ASSOC);
+                        $totalclass = 0;
+
+
+
+                        foreach ($fetchclass as $countclass) {
+
+                            $totalclass = $totalclass + $countclass['lecturehour'];
+                        }
+
+
+                        $findabsent = $conn->prepare("SELECT * FROM `studentabsent` WHERE `studentid`= ? && `subjectid` = ?  && `semesterid` = ?");
+                        $findabsent->bindParam(1,  $rollno['studentid']);
+                        $findabsent->bindParam(2,  $subjects_row['subjectid']);
+                        $findabsent->bindParam(3, $semesterid);
+                        $findabsent->execute();
+                        $fetchasbsentcount = $findabsent->fetchAll(PDO::FETCH_ASSOC);
+                        $absentcount = 0;
+                        foreach ($fetchasbsentcount  as $somecount) {
+                            $absentcount = $absentcount + $somecount['lecturehour'];
+                        }
+
+
+
+
+
+                        $presentcount = $totalclass - $absentcount;
+                        if ($totalclass == 0) {
+                            $percentage = 0;
+                        } else {
+                            $percentage = ceil($presentcount / $totalclass * 100);
+                        }
+                        $pdf->viewSubject($percentage);
+                    }
+                    $pdf->createline();
+                }
+            }
+        }
         $pdf->Output();
     } else {
         header("Location:../../coordinator/dashboard.php");

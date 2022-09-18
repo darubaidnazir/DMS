@@ -154,6 +154,7 @@ $("#lecturedate").on("change", function() {
                 swal("ohoho!",
                     "Attendance Should be Performed Within 3 Days",
                     "error");
+                $("#sendattendance").prop("disabled", true);
             }
             $("#timeslot").html(data);
 
@@ -189,10 +190,12 @@ $("#timeslot").on("change", function() {
                 swal("ohoho!",
                     "Change the Time Slot! This Slot is Already Taken for this day",
                     "error");
+                $("#sendattendance").prop("disabled", true);
             } else {
                 swal("ohoho!",
                     "Something went wrong ! try again ",
                     "error");
+                $("#sendattendance").prop("disabled", true);
             }
 
         }

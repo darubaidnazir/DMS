@@ -109,6 +109,15 @@ if (isset($_POST['pdf_button']) && $_POST['pdf_generator_free'] != 0) {
 
         break;
     }
+    $getbatchid = $conn->prepare("SELECT * FROM `subject` WHERE `subjectid` = ?");
+    $getbatchid->bindParam(1, $getsubjectid);
+    $getbatchid->execute();
+    $fetch = $getbatchid->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($fetch as $some) {
+        $subjectlevel = $some["subjectlevel"];
+        break;
+    }
     $sometry = $conn->prepare("SELECT * FROM `batch` where `batchid` = ?");
     $sometry->bindParam(1, $batchid);
     $sometry->execute();
@@ -127,63 +136,122 @@ if (isset($_POST['pdf_button']) && $_POST['pdf_generator_free'] != 0) {
     } else {
         $semno .= "th";
     }
-    $getallstudent = $conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
-    $getallstudent->bindParam(1, $batchid);
-    $getallstudent->execute();
-    if ($getallstudent->rowCount() == 0) {
-        $output = "";
+    if ($subjectlevel == "L") {
+        $group = array("G1", "G2");
+        $groups = "BOTH";
+
+
+        $pdf = new myPDF();
+        $pdf->AliasNbPages();
+        $pdf->AddPage('L', 'A4', 0);
+        $pdf->headerTable($title, $coursecode, $year, $semno);
+        for ($i = 0; $i <= 1; $i++) {
+            $getallstudent = $conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? && group_id = ?");
+            $getallstudent->bindParam(1, $batchid);
+            $getallstudent->bindParam(2, $group[$i]);
+            $getallstudent->execute();
+
+            $fetchallstudent = $getallstudent->fetchAll(PDO::FETCH_ASSOC);
+            $totalclasssql = $conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ? && groups = ? UNION SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ? && groups = ?");
+            $totalclasssql->bindParam(1, $getsubjectid);
+            $totalclasssql->bindParam(2, $getsemeterid);
+            $totalclasssql->bindParam(3, $group[$i]);
+            $totalclasssql->bindParam(4, $getsubjectid);
+            $totalclasssql->bindParam(5, $getsemeterid);
+            $totalclasssql->bindParam(6, $groups);
+            $totalclasssql->execute();
+            $fetchclass = $totalclasssql->fetchAll(PDO::FETCH_ASSOC);
+            $totalclass = 0;
+
+            foreach ($fetchclass as $countclass) {
+
+                $totalclass = $totalclass + $countclass['lecturehour'];
+            }
+
+
+            foreach ($fetchallstudent as $row) {
+                $findabsent = $conn->prepare("SELECT * FROM `studentabsent` WHERE `studentid`= ? && `subjectid` = ?  && `semesterid` = ?");
+                $findabsent->bindParam(1, $row['studentid']);
+                $findabsent->bindParam(2, $getsubjectid);
+                $findabsent->bindParam(3, $getsemeterid);
+                $findabsent->execute();
+                $fetchasbsentcount = $findabsent->fetchAll(PDO::FETCH_ASSOC);
+                $absentcount = 0;
+                foreach ($fetchasbsentcount  as $somecount) {
+                    $absentcount = $absentcount + $somecount['lecturehour'];
+                }
+                $presentcount = $totalclass - $absentcount;
+                if ($totalclass == 0) {
+                    $percentage = 0;
+                } else {
+                    $percentage = ceil($presentcount / $totalclass * 100);
+                }
+                $pdf->viewTable($row, $totalclass, $presentcount, $absentcount, $percentage);
+            }
+        }
+        $pdf->Output();
+        $conn = null;
     } else {
 
-        $output = "";
-    }
-    $fetchallstudent = $getallstudent->fetchAll(PDO::FETCH_ASSOC);
-    $totalclasssql = $conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ?");
-    $totalclasssql->bindParam(1, $getsubjectid);
-    $totalclasssql->bindParam(2, $getsemeterid);
-    $totalclasssql->execute();
-    $fetchclass = $totalclasssql->fetchAll(PDO::FETCH_ASSOC);
-    $totalclass = 0;
 
-
-
-    foreach ($fetchclass as $countclass) {
-
-        $totalclass = $totalclass + $countclass['lecturehour'];
-    }
-
-
-    $pdf = new myPDF();
-    $pdf->AliasNbPages();
-    $pdf->AddPage('L', 'A4', 0);
-    $pdf->headerTable($title, $coursecode, $year, $semno);
-
-    foreach ($fetchallstudent as $row) {
-        $findabsent = $conn->prepare("SELECT * FROM `studentabsent` WHERE `studentid`= ? && `subjectid` = ?  && `semesterid` = ?");
-        $findabsent->bindParam(1, $row['studentid']);
-        $findabsent->bindParam(2, $getsubjectid);
-        $findabsent->bindParam(3, $getsemeterid);
-        $findabsent->execute();
-        $fetchasbsentcount = $findabsent->fetchAll(PDO::FETCH_ASSOC);
-        $absentcount = 0;
-        foreach ($fetchasbsentcount  as $somecount) {
-            $absentcount = $absentcount + $somecount['lecturehour'];
-        }
-
-
-
-
-
-        $presentcount = $totalclass - $absentcount;
-        if ($totalclass == 0) {
-            $percentage = 0;
+        $getallstudent = $conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
+        $getallstudent->bindParam(1, $batchid);
+        $getallstudent->execute();
+        if ($getallstudent->rowCount() == 0) {
+            $output = "";
         } else {
-            $percentage = ceil($presentcount / $totalclass * 100);
-        }
-        $pdf->viewTable($row, $totalclass, $presentcount, $absentcount, $percentage);
-    }
 
-    $pdf->Output();
-    $conn = null;
+            $output = "";
+        }
+        $fetchallstudent = $getallstudent->fetchAll(PDO::FETCH_ASSOC);
+        $totalclasssql = $conn->prepare("SELECT * FROM `lectureplan` WHERE  `subjectid` = ? && `semesterid` = ?");
+        $totalclasssql->bindParam(1, $getsubjectid);
+        $totalclasssql->bindParam(2, $getsemeterid);
+        $totalclasssql->execute();
+        $fetchclass = $totalclasssql->fetchAll(PDO::FETCH_ASSOC);
+        $totalclass = 0;
+
+
+
+        foreach ($fetchclass as $countclass) {
+
+            $totalclass = $totalclass + $countclass['lecturehour'];
+        }
+
+
+        $pdf = new myPDF();
+        $pdf->AliasNbPages();
+        $pdf->AddPage('L', 'A4', 0);
+        $pdf->headerTable($title, $coursecode, $year, $semno);
+
+        foreach ($fetchallstudent as $row) {
+            $findabsent = $conn->prepare("SELECT * FROM `studentabsent` WHERE `studentid`= ? && `subjectid` = ?  && `semesterid` = ?");
+            $findabsent->bindParam(1, $row['studentid']);
+            $findabsent->bindParam(2, $getsubjectid);
+            $findabsent->bindParam(3, $getsemeterid);
+            $findabsent->execute();
+            $fetchasbsentcount = $findabsent->fetchAll(PDO::FETCH_ASSOC);
+            $absentcount = 0;
+            foreach ($fetchasbsentcount  as $somecount) {
+                $absentcount = $absentcount + $somecount['lecturehour'];
+            }
+
+
+
+
+
+            $presentcount = $totalclass - $absentcount;
+            if ($totalclass == 0) {
+                $percentage = 0;
+            } else {
+                $percentage = ceil($presentcount / $totalclass * 100);
+            }
+            $pdf->viewTable($row, $totalclass, $presentcount, $absentcount, $percentage);
+        }
+
+        $pdf->Output();
+        $conn = null;
+    }
 } else {
     header("location:../../teacher/teacherlogin.html");
     die();

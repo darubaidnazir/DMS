@@ -20,6 +20,8 @@ class checktimeslot extends db_connection
                 if ($gettime  >= $row['timeslotstart'] && $gettime < $row['timeslotend']) {
                     $status = 1;
                     break;
+                } else if ($gettime <= $row['timeslotstart'] || $endtime <= $row['timeslotend']) {
+                    $status = 1;
                 } else {
                     $status = 3;
                 }
