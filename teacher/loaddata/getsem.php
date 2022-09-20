@@ -23,21 +23,25 @@ class loadStudentLab extends db_connection
             $sql->bindParam(1, $newbatchid);
             $sql->bindParam(2, $group);
             $sql->execute();
-            $resultnew = $sql->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($resultnew as $row) {
-                $my_array1 = str_split($row['studentid']);
-                $length = count($my_array1);
-                $name = $my_array1[$length - 2];
-                $name .= $my_array1[$length - 1];
+            if ($sql->rowCount() > 0) {
+                $resultnew = $sql->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($resultnew as $row) {
+                    $my_array1 = str_split($row['studentid']);
+                    $length = count($my_array1);
+                    $name = $my_array1[$length - 2];
+                    $name .= $my_array1[$length - 1];
 
-                $output .= "
+                    $output .= "
 
 <label class='attendancebutton'>{$name}
     <input type='checkbox' id='checkbox1' value='{$row['studentid']}'>
 
 </label>";
 
-                unset($my_array1);
+                    unset($my_array1);
+                }
+            } else {
+                echo 1;
             }
         } else if ($group == 'BOTH') {
             $sql = $this->conn->prepare("SELECT * FROM `semester` WHERE `semesterid` = ? ");

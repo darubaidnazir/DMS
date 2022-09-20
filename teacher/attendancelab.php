@@ -135,8 +135,14 @@ if ($checkcountsemestercoo != 1) {
 
 
 <script type="text/javascript">
+$("#lectureno").on('change', function() {
+    $('#timeslot').prop('selectedIndex', 0);
+
+});
 $("#group_batch").prop("disabled", true);
 $("#lecturedate").on("change", function() {
+    $('#timeslot').prop('selectedIndex', 0);
+    $('#group_batch').prop('selectedIndex', 0);
     $("#sendattendance").prop("disabled", true);
     $("#timeslot").prop("disabled", false);
     var date = $(this).val();
@@ -164,7 +170,7 @@ $("#lecturedate").on("change", function() {
     });
 });
 $("#timeslot").on("change", function() {
-
+    $('#group_batch').prop('selectedIndex', 0);
     var time = $(this).val();
     var hour = $("#lectureno").val();
     var date = $("#lecturedate").val();
@@ -227,9 +233,13 @@ $("#timeslot").on("change", function() {
                 semesterid: semesterid
             },
             success: function(data) {
+                if (data == 1) {
+                    $("#sendattendance").prop("disabled", true);
+                } else {
+                    $("#modalattendance1").html(data);
+                    $("#sendattendance").prop("disabled", false);
+                }
 
-                $("#modalattendance1").html(data);
-                $("#sendattendance").prop("disabled", false);
 
             }
 
@@ -374,7 +384,7 @@ $(document).ready(function() {
                 group: group
             },
             success: function(data) {
-                alert(data);
+
                 if (data == 3) {
                     swal("Good job!", "Attendance Recored Sucessfully! ", "success");
                     $("#sendattendance").html("Submited");
