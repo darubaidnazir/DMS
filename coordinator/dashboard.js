@@ -19,6 +19,8 @@ $(document).ready(function () {
             getId = "addbatchsection";
             bodyofbatch();
             bodyofbranch();
+
+            loadstudentbatchinfo();
         } else if (getId == "addstudent") {
             getId = "addstudentsection";
 
@@ -79,6 +81,7 @@ $(document).ready(function () {
             success: function (data) {
 
                 $(".addStudentData_batch_Select").html(data);
+                $("#formimport").html(data);
 
 
 
@@ -126,10 +129,6 @@ function loadDataStudent(get_batchid, pageno) {
 
     var getBatchid = get_batchid;
     var page_no = pageno;
-
-    // var getBranchid = get_branchid;
-    //alert(getBatchid);
-    // alert(getBranchid);
 
     $.ajax({
         url: "loadData/loadDataStudent.php",

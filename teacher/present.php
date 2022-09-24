@@ -1,22 +1,25 @@
 <?php
-if (!isset($_GET['lecturetopic']) || !isset($_GET['dateoflecture']) || !isset($_GET['semesterid']) || !isset($_GET['subjectid'])) {
+session_start();
+if (!isset($_SESSION['active']) || !isset($_SESSION['teacheruserid'])) {
     header("Location:../teacher/teacherlogin.html");
     exit();
+}
+if (!isset($_POST['lecturetopic']) || !isset($_POST['dateoflecture']) || !isset($_POST['semesterid']) || !isset($_POST['subjectid'])) {
 }
 require_once("../coordinator/dbcon.php");
 
 $check = $conn->prepare("SELECT * FROM `subject` WHERE `subjectid` = ?");
-$check->bindParam(1, $_GET['subjectid']);
+$check->bindParam(1, $_POST['subjectid']);
 $check->execute();
 $countsubject  = $check->rowCount();
 $check = $conn->prepare("SELECT * FROM `lectureplan` WHERE `subjectid` = ? && `semesterid` = ? && `lecturedate` = ?");
-$check->bindParam(1, $_GET['subjectid']);
-$check->bindParam(2, $_GET['semesterid']);
-$check->bindParam(3, $_GET['dateoflecture']);
+$check->bindParam(1, $_POST['subjectid']);
+$check->bindParam(2, $_POST['semesterid']);
+$check->bindParam(3, $_POST['dateoflecture']);
 $check->execute();
 $countdate  = $check->rowCount();
 $check = $conn->prepare("SELECT * FROM `semester` WHERE `semesterid` = ?");
-$check->bindParam(1, $_GET['semesterid']);
+$check->bindParam(1, $_POST['semesterid']);
 $check->execute();
 $countsemester  = $check->rowCount();
 $result = $check->fetchAll(PDO::FETCH_ASSOC);
@@ -42,6 +45,8 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
     <title>Present Students</title>
     <link rel="stylesheet" href="../coordinator/table.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
     <style>
     p {
         font: 1.4rem molot;
@@ -65,11 +70,13 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
 </head>
 
 <body>
+    <div><button id='godashboard' class='btn btn-dark' type="button">Dashboard</button></div>
     <div class="text-center">
+
         <h1>Present Student's</h1>
-        <p class="caption">Topic: <?php echo $_GET['lecturetopic']; ?><br>
+        <p class="caption">Topic: <?php echo $_POST['lecturetopic']; ?><br>
             Date:
-            <?php echo $_GET['dateoflecture']; ?></p>
+            <?php echo $_POST['dateoflecture']; ?></p>
         <div class="text-center" style="margin:5px;">
 
             <input type="text" id="seachstudent" class="form-control form-input" placeholder="Search anything...">
@@ -99,9 +106,9 @@ if ($countsemester == 0 ||  $countsubject == 0 || $countdate == 0) {
                     $Sno = 1;
                     foreach ($result as $row) {
                         $getbatch = $conn->prepare("SELECT * FROM `studentabsent` WHERE `subjectid` = ? && `semesterid` = ?  && `markdate` = ? && `studentid`  =?");
-                        $getbatch->bindParam(1, $_GET['subjectid']);
-                        $getbatch->bindParam(2,  $_GET['semesterid']);
-                        $getbatch->bindParam(3,  $_GET['dateoflecture']);
+                        $getbatch->bindParam(1, $_POST['subjectid']);
+                        $getbatch->bindParam(2,  $_POST['semesterid']);
+                        $getbatch->bindParam(3,  $_POST['dateoflecture']);
                         $getbatch->bindParam(4,  $row['studentid']);
                         $getbatch->execute();
                         if ($getbatch->rowCount() > 0) {
@@ -139,5 +146,12 @@ $(document).ready(function() {
                 .toLowerCase().indexOf(value) > -1)
         });
     });
+    $("#godashboard").on("click", function() {
+        $("body").load("dashboard.php", {
+            reload_the_dashboard: true
+        });
+
+    });
+
 });
 </script>

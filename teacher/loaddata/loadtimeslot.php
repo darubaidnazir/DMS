@@ -50,7 +50,7 @@ class loadtimeslot extends db_connection
             break;
         }
 
-        $slots = $this->getTimeSlot(30, $start, $end);
+        $slots = $this->getTimeSlot(5, $start, $end);
         $length = count($slots);
 
         for ($i = 1; $i <= $length; $i++) {

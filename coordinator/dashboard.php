@@ -16,6 +16,8 @@ require_once('dbcon.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS only -->
+
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
@@ -25,6 +27,8 @@ require_once('dbcon.php');
     <link rel="stylesheet" href="mainboard.css" />
     <link rel="stylesheet" href="spin.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> -->
 
 
 
@@ -190,6 +194,7 @@ require_once('dbcon.php');
             </ul>
         </nav>
     </header>
+
     <section class="page-content">
         <section class="search-and-user">
 
@@ -239,9 +244,9 @@ require_once('dbcon.php');
                             <tr>
                                 <th>Batch Year</th>
                                 <th>Branch Name</th>
-
                                 <th>Current Semster</th>
                                 <th>Total Student's</th>
+                                <th>Add Student</th>
                                 <th>Status</th>
                                 <th>Open/Close Semester</th>
                                 <th>Action</th>
@@ -328,69 +333,6 @@ require_once('dbcon.php');
             font-weight: bolder;
             text-align: center;
         }
-
-
-
-
-        .search-box {
-            width: fit-content;
-            height: fit-content;
-            position: relative;
-        }
-
-        .input-search {
-            height: 50px;
-            width: 50px;
-            border-style: none;
-            padding: 10px;
-            font-size: 18px;
-            letter-spacing: 2px;
-            outline: none;
-            border-radius: 25px;
-            transition: all .5s ease-in-out;
-            background-color: #22a6b3;
-            padding-right: 40px;
-            color: #fff;
-        }
-
-        .input-search::placeholder {
-            color: rgba(255, 255, 255, .5);
-            font-size: 18px;
-            letter-spacing: 2px;
-            font-weight: 100;
-        }
-
-        .btn-search {
-            width: 50px;
-            height: 50px;
-            border-style: none;
-            font-size: 20px;
-            font-weight: bold;
-            outline: none;
-            cursor: pointer;
-            border-radius: 50%;
-            position: absolute;
-            right: 0px;
-            color: #ffffff;
-            background-color: transparent;
-            pointer-events: painted;
-        }
-
-        .btn-search:focus~.input-search {
-            width: 300px;
-            border-radius: 0px;
-
-            border-bottom: 1px solid rgba(255, 255, 255, .5);
-            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-        }
-
-        .input-search:focus {
-            width: 300px;
-            border-radius: 0px;
-
-            border-bottom: 1px solid rgba(255, 255, 255, .5);
-            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-        }
         </style>
         <section class="grid" id="addteachersection">
 
@@ -430,31 +372,22 @@ require_once('dbcon.php');
             </section>
         </section>
         <section class="grid" id="addstudentsection">
-            <p class="text-center" style="margin:5px;">
 
-                <span class="search-box">
-                    <button class="btn-search"><i class="fas fa-search"></i></button>
-                    <input type="text" class="input-search seachstudent" placeholder="Type to Search...">
-                </span>
-
-            </p>
             <section>
                 <button class="min_max" id="plusstudent1"><i class="fa-solid fa-arrow-right"></i><small
                         style="color:red;  ">
-                        Add Student </small></button>
+                        View Student </small></button>
                 <button class="min_max" id="minusstudent1"><i class="fa-solid fa-arrow-down"></i><small
                         style="color:green; ">
-                        Add Student
+                        View Student
                     </small></button>
                 <div class="text-center" id="divstudent1">
 
-                    <button class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#student-to-batch-add"
-                        id="addstudentbutton">Add
-                        Student</button>
+
 
                     <br>
                     <small class="form-text text-muted">Select the Batch to Show Student's Enrolled</small>
-                    <select class="addStudentData_batch_Select form-select" aria-label="Default select example">
+                    <select class="addStudentData_batch_Select form-control" aria-label="Default select example">
 
 
                     </select>
@@ -665,23 +598,42 @@ require_once('dbcon.php');
                     Time slot
 
                 </small></button>
+            <style>
+            .attendancebutton {
+                background-color: grey;
+                display: inline-block;
+                margin: 2px;
+                padding: 10px;
+                border: 1px black solid;
+                border-radius: 2px;
+                color: white;
+                font-weight: bolder;
+
+
+
+            }
+
+            .attendancebutton.toggled {
+                background-color: red;
+            }
+            </style>
 
             <div class='text-center' id='some1'>
 
-                <div class="group_assign_modal_body text-center ">
-                    <form method="post" action="../coordinator/loadData/loadgroupstudent.php">
-                        <h4>Select a Batch to assign group's</h4>
-                        <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id'
-                            name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
+                <span class="group_assign_modal_body text-center ">
+                    <h4>Select a Batch to assign group's</h4>
+                    <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id'
+                        name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
 
 
-                        </select>
-                        <input class='btn btn-primary' style='margin:5px' type="submit" name="load_group"
-                            value="Submit">
+                    </select>
 
-                    </form>
 
-                </div>
+
+
+
+                </span>
+                <p id="load_goups_of_batch"></p>
             </div>
 
 
@@ -760,8 +712,8 @@ require_once('dbcon.php');
                         return $time;
                     }
                     $start = "9:00";
-                    $end =  "18:00";
-                    $slots = getTimeSlot(30, $start, $end);
+                    $end =  "19:30";
+                    $slots = getTimeSlot(5, $start, $end);
                     $length = count($slots);
                     echo '<select id="menutimeslotstart" class="form-control">
                 <option selected value="0">Select a Start Time</option>';
@@ -791,18 +743,19 @@ require_once('dbcon.php');
         <section>
 
             <button class="min_max" id="pluspdf1"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">PDF
-                    Student Record
+                    Subject Record
                 </small></button>
             <button class="min_max" id="minuspdf1"><i class="fa-solid fa-arrow-down"></i><small
                     style="color:green; ">PDF
-                    Student Record
+                    Subject Record
 
                 </small></button>
 
             <div id='pdf1'>
 
                 <p>
-                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to Generate PDF
+                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to Generate
+                        PDF
                         for Student
                         Attendnace
                         Record.</lable><br>
@@ -821,6 +774,7 @@ require_once('dbcon.php');
                     <span style="display: block;
     text-align: center;"><label for='select_batch_id1'>Chosen a batch</label></span>
                     <select class="form-control select_batch_id" id="select_batch_id1" name='select_batch_id'>
+                        <option value="0">Select a batch</option>
 
                         <?php
                         foreach ($result as $row) {
@@ -860,7 +814,8 @@ require_once('dbcon.php');
                 </small></button>
             <div class="text-center" id='pdf2'>
                 <p>
-                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to Generate PDF
+                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Subject to Generate
+                        PDF
                         Lecture
                     </lable>
                 </p>
@@ -912,7 +867,8 @@ require_once('dbcon.php');
                 </small></button>
             <div class="text-center" id='pdf3'>
                 <p>
-                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Semester to Generate PDF
+                    <lable class="text-uppercase" style="color:blue;font-weight:bold">Select a Semester to Generate
+                        PDF
 
                     </lable>
                 </p>
@@ -956,6 +912,7 @@ require_once('dbcon.php');
     </section>
     <footer class="page-footer">
         <span>Department Management System North Campus</span>
+
     </footer>
     </section>
 
@@ -974,18 +931,24 @@ require_once('dbcon.php');
                 <div class="modal-body">
                     <div class="row py-5 m-3 forms" id="form">
                         <div class="col-md-10">
+                            <small class="form-text text-muted">
+                                Enter Batch Year
+                            </small>
                             <div class="form-group">
-                                <lable>Enter Batch Year</lable>
+                                <lable class="text-center"></lable>
                                 <input type="number" class="form-control" id="batch-year" placeholder="eg: 2018"
                                     required />
                             </div>
-                            <small class="form-text text-muted"> Enter a Valid Year </small>
+                            <small class="form-text text-muted">
+                                Select a Program
+                            </small>
+                            <div class="form-group">
 
-                            <div class="form-group mt-5">
                                 <select class="form-select" aria-label="Default select example" id="branch_info"
                                     required>
 
                                 </select>
+
                             </div>
 
                             <div class="form-group pt-3">
@@ -1020,21 +983,21 @@ require_once('dbcon.php');
                         <div class="col-md-10">
                             <div class="form-group">
 
-                                <lable>Enter Branch name</lable>
+                                <lable></lable>
                                 <input type="text" class="form-control" id="branch-name" placeholder="eg: MTech" />
                                 <input type="hidden" id="coordinator_hidden" value="<?php echo $coordinatorid; ?>" />
                             </div>
                             <small class="form-text text-muted">
-                                Enter a valid branch name
+                                Enter Branch name
                             </small>
                             <div class="form-group">
-                                <lable>Enter Total Semester in the Branch</lable>
+
                                 <input type="number" class="form-control" id="branch-semester" placeholder="eg: 8" />
 
 
                             </div>
                             <small class="form-text text-muted">
-                                Enter a valid Semester Number
+                                Enter Semester Number
                             </small>
 
                             <div class="form-group pt-3">
@@ -1443,6 +1406,7 @@ require_once('dbcon.php');
     include_once('modal/addteachermodal.php');
     ?>
     <!-- Add Student  informationModal End-->
+
 </body>
 
 <script src="dash.js"></script>
@@ -1455,6 +1419,10 @@ require_once('dbcon.php');
 </script>
 <script>
 $(document).ready(function() {
+    $(".page-content").on("click", function() {
+        $('body').removeClass('mob-menu-opened');
+    });
+
     $("#minuspdf1").hide();
     $("#pdf1").hide();
     $("#pluspdf1").on('click', function() {
@@ -1606,7 +1574,7 @@ $(document).ready(function() {
     $("#selectsemesterno1").on("change", function() {
         var semesterid = $(this).val();
         if (semesterid == "" || semesterid == 0) {
-
+            $("#selectsemestersubject1").html("");
         } else {
             $.ajax({
                 url: "../coordinator/loadData/loadsubjectsem1.php",
@@ -1629,6 +1597,84 @@ $(document).ready(function() {
 
     });
 
+    $("#addStudentData_batch_Select_id").on("change", function() {
+        var batchid = $(this).val();
+        if (batchid == "" || batchid == 0 || batchid == null || batchid == undefined) {
+            $("#load_goups_of_batch").html("");
+        } else {
+            load_Groups(batchid);
+
+        }
+    });
+
+    $(document).on("click", "#send_group", function() {
+
+        var group = $("#group_id").val();
+        var id = [null];
+        var batchid = $("#addStudentData_batch_Select_id").val();
+
+
+        if (group == "G1" || group == "G2") {
+            $(":checkbox:checked").each(function(key) {
+                id[key] = $(this).val();
+            });
+            id.shift();
+            console.log(id);
+            if (id[0] == null) {
+                $("#mess").html("* Select Student's ");
+
+            } else {
+                $("#mess").html("");
+                $.ajax({
+                    url: "../coordinator/modal/sendmodaldata/sendgroup.php",
+                    type: "POST",
+                    data: {
+                        group: group,
+                        id: id,
+                        connection: true
+                    },
+                    success: function(data) {
+                        if (data == 3) {
+                            swal("Good job!", " Student's  Added to Group!! ", "success");
+                            load_Groups(batchid)
+
+                        } else if (data == 1) {
+                            swal("ohoho!", " Failed!! ", "error");
+
+                        } else {
+                            swal("ohoho!", " Failed!! ", "error");
+                        }
+                    }
+
+
+
+                });
+            }
+
+
+        } else {
+            $("#mess").html("* Select  a group");
+
+        }
+
+    });
+
+    function load_Groups(batchid) {
+        $.ajax({
+            url: "../coordinator/loadData/loadgroup.php",
+            type: "post",
+            data: {
+                batchid: batchid
+            },
+            success: function(data) {
+
+                $("#load_goups_of_batch").html(data);
+            }
+
+
+        });
+
+    }
 
     $(document).on("click", "#clickonupdate", function() {
 

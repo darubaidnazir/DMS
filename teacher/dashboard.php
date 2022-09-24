@@ -5,6 +5,10 @@ if (!isset($_SESSION['active']) || !isset($_SESSION['teacheruserid'])) {
     header("Location:../teacher/teacherlogin.html");
     exit();
 }
+if (isset($_POST['reload_the_dashboard']) && $_POST['reload_the_dashboard'] == true) {
+    unset($_POST['reload_the_dashboard']);
+    echo '<script>location.reload();</script>';
+}
 $teacherid = $_SESSION['teacheruserid'];
 require_once("../coordinator/dbcon.php");
 
@@ -208,7 +212,12 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                 </form>
                 <small id="mm" style="color:red;"></small>
                 </p>
+                <div class="text-center" style="margin:5px;">
 
+                    <input type="text" id="seachlecture" class="form-control form-input"
+                        placeholder="Search anything...">
+
+                </div>
                 <main>
                     <table>
                         <thead>
@@ -504,7 +513,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                     </div>
                 </div>
             </div>
-        </div>
+        </div>s
 
 </body>
 
@@ -524,13 +533,20 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 <script>
 $(document).ready(function() {
 
-
-
-
-
+    $(".page-content").on("click", function() {
+        $('body').removeClass('mob-menu-opened');
+    });
     $("#seachstudent").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#addstudenttable tr").filter(function() {
+            $(this).toggle($(this).text()
+                .toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#seachlecture").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#addlecturetable tr").filter(function() {
             $(this).toggle($(this).text()
                 .toLowerCase().indexOf(value) > -1)
         });
@@ -575,6 +591,32 @@ $("#subjectlecture1").on("change", function() {
 
     }
 
+
+});
+$(document).on('click', "#loadpresent", function() {
+    var semesterid = $(this).data("semesterid");
+    var subjectid = $(this).data("subjectid");
+    var lecturedate = $(this).data("dateoflecture");
+    var lecturetopic = $(this).data("lecturetopic");
+    $("body").load("../teacher/present.php", {
+        semesterid: semesterid,
+        subjectid: subjectid,
+        dateoflecture: lecturedate,
+        lecturetopic: lecturetopic
+    });
+
+});
+$(document).on('click', "#loadabsent", function() {
+    var semesterid = $(this).data("semesterid");
+    var subjectid = $(this).data("subjectid");
+    var lecturedate = $(this).data("dateoflecture");
+    var lecturetopic = $(this).data("lecturetopic");
+    $("body").load("../teacher/absent.php", {
+        semesterid: semesterid,
+        subjectid: subjectid,
+        dateoflecture: lecturedate,
+        lecturetopic: lecturetopic
+    });
 
 });
 

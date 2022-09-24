@@ -23,6 +23,7 @@
                                 ?>
                                 <select class="form-select" name="batchid" id="formimport"
                                     aria-label="Default select example">
+                                    <option value="0">Select a Batch</option>
                                     <?php
                                     $string = "";
                                     foreach ($results as $rows) {
@@ -82,7 +83,7 @@
         $("#formexecel").on('submit', (function(e) {
 
             e.preventDefault();
-            if ($("#formimport").val() == "") {
+            if ($("#formimport").val() == "" || $("#formimport").val() == 0) {
                 swal("ohoho!", "Select a Batch",
                     "error");
             } else {
@@ -136,7 +137,7 @@
         $("#addstudentData").on("click", function() {
             var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             var email = $("#enter-student-email").val().trim();
-            var batchid = $(".addStudentData_batch_Select").val();
+            var batchid = $("#formimport").val();
             if (batchid == 0) {
                 swal("ohoho!", " Select a  Batch/Branch", "error");
 

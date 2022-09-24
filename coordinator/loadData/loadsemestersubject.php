@@ -13,7 +13,7 @@ class loadsemestersubject extends db_connection
         
         <div class='m-5'>
         <span id='messagesubjects' style='color:red;'></span>
-        <select id='assignedselect' class='form-select' aria-label='Default select example'><option selected value='0'>Open this to Select a Subject</option>";
+        <select id='assignedselect' placeholder='Pick a Subject...' class='form-select' aria-label='Default select example'><option value='0'>Open this to Select a Subject</option>";
 
         $sql = $this->conn->prepare("SELECT * FROM `subject` WHERE `coordinatorid` = ?");
         $sql->bindParam(1, $getcoodinatorid);
@@ -28,7 +28,7 @@ class loadsemestersubject extends db_connection
             <option value='{$row["subjectid"]}'>{$addstring}</option>";
         }
         $output .= "</select>   
-        <select id='assignedselectteacher' class='form-select' aria-label='Default select example'><option selected value='0'>Open this to Select a Teacher</option>";
+        <select id='assignedselectteacher' class='form-select' aria-label='Default select example'><option value='0'>Open this to Select a Teacher</option>";
         $status = "disabled";
         $sql0 =  $this->conn->prepare("SELECT * FROM `teacher` WHERE `coordinatorid` = ? &&  `teacherstatus` != ?");
         $sql0->bindParam(1, $getcoodinatorid);

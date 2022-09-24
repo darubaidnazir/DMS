@@ -40,33 +40,33 @@ class loadTeacherData extends db_connection
 
           
             <td class='select'>
-                <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                    <button type='button' class='btn btn-danger'>
+                <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
+                    <button type='button' class='btn btn-danger btn-sm'>
                         Edit
                     </button>";
             if ($button == "disabled") {
 
-                $this->output .= "<button type='button' disabled class='btn btn-warning' data-id='{$row["teacherid"]}'>
+                $this->output .= "<button type='button' disabled class='btn btn-warning btn-sm' data-id='{$row["teacherid"]}'>
             {$button}
         </button>";
             } else {
 
-                $this->output .= "<button style='background-color:white;' type='button' id='removeteacher'class='btn btn-warning' data-id='{$row["teacherid"]}'>
+                $this->output .= "<button style='background-color:white;' type='button' id='removeteacher'class='btn btn-warning btn-sm' data-id='{$row["teacherid"]}'>
             {$button}
                </button>";
             }
 
-            $this->output .= "<button type='button' class='btn btn-success clickbutton'
+            $this->output .= "<button type='button' class='btn btn-success btn-sm clickbutton'
                         data-bs-toggle='modal' data-bs-target='#teacher-information'>
                         More Information
                     </button>
-                </div>
-                <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                    <button type='button' class='btn btn-warning' id='subjectassignedtoteacher' data-bs-toggle='modal' data-id='{$row["teacherid"]}'
+                </span>
+                <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
+                    <button type='button' class='btn btn-warning btn-sm' id='subjectassignedtoteacher' data-bs-toggle='modal' data-id='{$row["teacherid"]}'
                         data-bs-target='#subject-assigned-to-teacher'>
                         Subject assigned
                     </button>
-                </div>
+                </span>
             </td>
         </tr>
         <tr>

@@ -124,6 +124,7 @@ $(document).ready(function () {
                               swal("Good job ", "Batch added Sucessfully! wait we are reloading batch table", "success");
                               $("#sendBatch").html("Created");
                               bodyofbatch();
+
                               document.getElementById("batch-year").value = "";
                               document.getElementById("branch_info").value = "";
                               $("#sendBatch").html("Add Batch");

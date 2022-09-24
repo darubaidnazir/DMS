@@ -12,7 +12,7 @@ class loadStudentData extends db_connection
         $offset = ($page - 1) * $limitpage;
 
         $this->getBatchid = $getBatchid;
-        $sql = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? LIMIT {$offset} ,{$limitpage}");
+        $sql = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? ORDER BY `studentrollno` ASC LIMIT {$offset} ,{$limitpage}");
         $sql->bindParam(1, $getBatchid);
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -31,16 +31,17 @@ class loadStudentData extends db_connection
               <td data-title='Student Status'>{$row["studentstatus"]}</td>
              
               <td class='select'>
-                  <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                     
-                      <button type='button' class='btn btn-warning' data-id='{$row["studentid"]}' id='removestudent' >
+                 
+                      <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
+                      <button type='button' class='btn btn-warning btn-sm' data-id='{$row["studentid"]}' id='removestudent' >
                           Remove
                       </button>
-                      <button type='button' class='btn btn-success clickbutton' data-bs-toggle='modal'
+                      <button type='button' class='btn btn-success btn-sm clickbutton' data-bs-toggle='modal'
                           data-bs-target='#student-information'>
                           More Information
                       </button>
-                  </div>
+                      </span>
+                
               </td>
           </tr>";
             $Sno++;

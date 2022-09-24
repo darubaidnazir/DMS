@@ -36,7 +36,7 @@ class loadstudent extends db_connection
                 break;
             }
             if ($subjectlevel == "T") {
-                $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
+                $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? ORDER BY `studentrollno` ASC");
                 $getallstudent->bindParam(1, $batchid);
                 $getallstudent->execute();
                 if ($getallstudent->rowCount() == 0) {
@@ -93,7 +93,7 @@ class loadstudent extends db_connection
            <td data-title='Present'>{$presentcount}</td>
            <td data-title='Absent'>{$absentcount}</td><td data-title='Percentage'>{$percentage}%</td>";
 
-                    $output .= "  <td data-title='Update Attendance'> <button type='button' class='btn btn-success clickbutton'
+                    $output .= "  <td data-title='Update Attendance'> <button type='button' class='btn btn-success btn-sm  clickbutton'
                 data-bs-toggle='modal' data-bs-target='#updateattendnce' id='clickonupdate' data-studentid='{$row['studentid']}' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>
                 Update
             </button></td>

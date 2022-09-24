@@ -25,21 +25,18 @@ class loadBranch extends db_connection
 
             </td>
             <td class='select'>
-                <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                    <button type='button' class='btn btn-danger'>Edit</button>
-                    <button type='button' class='btn btn-warning' id='deleteBranch'
+                <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
+                  
+                    <button type='button' class='btn btn-warning btn-sm' id='deleteBranch'
                         data-id='{$row['branchid']}'>
-                        Delete
+                        Remove Branch
                     </button>
 
-                </div>
+                </span>
             </td>
            </tr>";
             }
         } else {
-            $output .= "<tr>
-            <td data-title='Branch Id'>No Branch Found  </td>
-         </tr>";
         }
 
         echo $output;

@@ -26,19 +26,19 @@ class loadSubject extends db_connection
                    <td data-title='Subject Code'>{$row["subjectcode"]}</td> 
                    <td data-title='Subject Level'>{$marked}</td> 
                    <td class='select'>
-                   <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                                            <button type='button' class='btn btn-danger'>
+                   <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
+                                            <button type='button' class='btn btn-danger btn-sm'>
                                                 Edit
                                             </button>
-                                            <button type='button' class='btn btn-warning' id='removesubject'
+                                            <button type='button' class='btn btn-warning btn-sm' id='removesubject'
                                                 data-id='{$row["subjectid"]}'>
                                                 Remove
                                             </button>
-                                            <button type='button' class='btn btn-success clickbutton'
+                                            <button type='button' class='btn btn-success btn-sm clickbutton'
                                                 data-bs-toggle='modal' data-bs-target='#subject-information'>
                                                 More Information
                                             </button>
-                                        </div>
+                                        </span>
 
                                     </td>
                                 </tr>";

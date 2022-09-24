@@ -19,6 +19,7 @@ if ($checkcountsemestercoo != 1) {
     header("../teacher/teacherlogin.html");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +75,30 @@ if ($checkcountsemestercoo != 1) {
     }
     </style>
 </head>
+<?php
+$check = $conn->prepare("SELECT * FROM `semester` WHERE semesterid = ?");
+$check->bindParam(1, $getsemesterid);
+$check->execute();
+$result = $check->fetchAll(PDO::FETCH_ASSOC);
+foreach ($result as $batch_id) {
+    $batchid = $batch_id['batchid'];
+    break;
+}
+$check = $conn->prepare("SELECT * FROM `student` WHERE batchid = ? && group_id = 'NA'");
+$check->bindParam(1, $batchid);
+$check->execute();
+if ($check->rowCount() > 0) {
+
+    echo '<div class="alert alert-primary" role="alert">
+   All Students in this batch has not been added to groups! Contact your Coordinator.<a href="../teacher/dashboard.php" class="alert-link">Go Back</a>.
+  </div>';
+
+    die();
+}
+
+
+
+?>
 
 <body>
 

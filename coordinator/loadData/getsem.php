@@ -46,12 +46,12 @@ foreach ($resultall as $row) {
 <td data-title='Closing Date'>{$row['closedate']}</td>
 
 <td class='select'>
-    <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
+    <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
         <button id='assignsubjectbox' data-id='{$row['semesterid']}' type='button'
-            class='btn btn-success clickbutton' data-bs-toggle='modal' data-bs-target='#active-information-box'>
+            class='btn btn-success btn-sm clickbutton' data-bs-toggle='modal' data-bs-target='#active-information-box'>
             Subject assign
         </button>
-    </div>
+    </span>
 </td>
 </tr>";
     }
@@ -100,12 +100,12 @@ foreach ($resultall as $row) {
 <td data-title='Closing Date'>{$row['closedate']}</td>
 
 <td class='select'>
-    <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-        <button type='button' class='btn btn-success clickbutton' data-bs-toggle='modal'
+    <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
+        <button type='button' class='btn btn-success btn-sm clickbutton' data-bs-toggle='modal'
             data-bs-target='#active-informatison-box'>
             More Information
         </button>
-    </div>
+    </span>
 </td>
 </tr>";
     }
