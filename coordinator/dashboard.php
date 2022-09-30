@@ -27,8 +27,7 @@ require_once('dbcon.php');
     <link rel="stylesheet" href="mainboard.css" />
     <link rel="stylesheet" href="spin.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> -->
+
 
 
 
@@ -419,6 +418,72 @@ require_once('dbcon.php');
                         </table>
                     </main>
                 </div>
+            </section>
+            <section>
+                <button class="min_max" id="plusstudent3"><i class="fa-solid fa-arrow-right"></i><small
+                        style="color:red;  ">
+                        Extra Attendance </small></button>
+                <button class="min_max" id="minusstudent3"><i class="fa-solid fa-arrow-down"></i><small
+                        style="color:green; ">
+                        Extra Attendance
+                    </small></button>
+                <div class="text-center maintable" id="divstudent3">
+                    <p>
+                    <p style="all:unset;display:block"> <small id="message_sem" style="color:red;"></small></p>
+                    <label for="get_active_semester_no">Select a Semester</label>
+                    <select class="form-control" id="get_active_semester_no">
+                        <option selected value="0">Select a Semester</option>
+                        <?php
+                        $getsem = $conn->prepare("SELECT * FROM `branch` INNER JOIN batch on branch.branchid = batch.branchid INNER JOIN semester on batch.batchid = semester.batchid WHERE branch.coordinatorid = ? and semester.semesterstatus ='1'");
+                        $getsem->bindParam(1, $coordinatorid);
+                        $getsem->execute();
+                        $result_sem = $getsem->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result_sem as $row) {
+
+                        ?>
+                        <option value="<?php echo $row['semesterid'] ?>">
+                            <?php echo "Batch: " . $row['batchyear'] . "-Semester No: " . $row['semesterno'] ?>
+                        </option>
+                        <?php
+                        }
+
+
+
+
+                        ?>
+
+                    </select>
+                    <select style="display:none" class="form-control" id="get_active_semester_no_copy">
+                        <option selected value="0">Select a Semester</option>
+                        <?php
+                        $getsem = $conn->prepare("SELECT * FROM `branch` INNER JOIN batch on branch.branchid = batch.branchid INNER JOIN semester on batch.batchid = semester.batchid WHERE branch.coordinatorid = ? and semester.semesterstatus ='1'");
+                        $getsem->bindParam(1, $coordinatorid);
+                        $getsem->execute();
+                        $result_sem = $getsem->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result_sem as $row) {
+
+                        ?>
+                        <option value="<?php echo $row['semesterid'] ?>">
+                            <?php echo "Batch: " . $row['batchyear'] . "-Semester No: " . $row['semesterno'] ?>
+                        </option>
+                        <?php
+                        }
+
+
+
+
+                        ?>
+
+                    </select>
+                    <label for=" get_student">Search for a Student</label>
+                    <input id='get_student' class="form-control" type="number" min="0" placeholder="Enter Roll No">
+                    <button id="get_student_button" class="btn btn-primary" style='margin:3px'>Find Student</button>
+                    </p>
+                    <p id="get_in_this_student">
+
+                    </p>
+                </div>
+
             </section>
             <section>
                 <button class="min_max" id="plusstudent2"><i class="fa-solid fa-arrow-right"></i><small
@@ -1419,6 +1484,10 @@ require_once('dbcon.php');
 </script>
 <script>
 $(document).ready(function() {
+
+
+
+
     $(".page-content").on("click", function() {
         $('body').removeClass('mob-menu-opened');
     });
@@ -1468,13 +1537,21 @@ $(document).ready(function() {
 
 
     $("#minusstudent1").hide();
+    $("#minusstudent3").hide();
     $("#divstudent1").hide();
     $("#divstudent2").hide();
+    $("#divstudent3").hide();
     $("#minusstudent2").hide();
     $("#plusstudent1").on("click", function() {
         $("#divstudent1").show();
         $("#plusstudent1").hide();
         $("#minusstudent1").show();
+
+    });
+    $("#plusstudent3").on("click", function() {
+        $("#divstudent3").show();
+        $("#plusstudent3").hide();
+        $("#minusstudent3").show();
 
     });
     $("#plusstudent2").on("click", function() {
@@ -1492,6 +1569,12 @@ $(document).ready(function() {
         $("#divstudent2").hide();
         $("#minusstudent2").hide();
         $("#plusstudent2").show();
+
+    });
+    $("#minusstudent3").on("click", function() {
+        $("#divstudent3").hide();
+        $("#minusstudent3").hide();
+        $("#plusstudent3").show();
 
     });
     $(".select_batch_id").on("change", function() {
@@ -2317,6 +2400,66 @@ function sendrequestresponse(teacherid, semesterid, subjectid, value) {
     });
 
 }
+
+$("#get_student").attr("disabled", true);
+$("#get_active_semester_no").on("change", function() {
+    $("#get_in_this_student").html("");
+    var sem = $(this).val();
+    if (sem == "" || sem == 0 || sem == undefined || sem == null) {
+        $("#get_student").attr("disabled", true);
+    } else {
+        $("#get_student").attr("disabled", false);
+    }
+});
+$("#get_student_button").on("click", function() {
+    var ids = $("option:not(:selected)", '#get_active_semester_no_copy').map(function() {
+        return this.value
+    }).get();
+    var semesterid = $("#get_active_semester_no").val();
+    var rollno = $("#get_student").val();
+    if (semesterid == "" || semesterid == 0 || semesterid == undefined || semesterid == null || rollno == "" ||
+        !ids.includes(semesterid)) {
+        $("#message_sem").html("*Please select a semester and Enter a Valid Roll No");
+    } else {
+        $("#message_sem").html("");
+        $.ajax({
+            url: "../coordinator/loadData/get_student.php",
+            type: "POST",
+            data: {
+                semesterid: semesterid,
+                rollno: rollno,
+                connection: true
+            },
+            success: function(data) {
+                if (data == 2) {
+                    $("#message_sem").html("*Something went wrong! try again");
+                } else {
+                    $("#get_in_this_student").html(data);
+                }
+            }
+
+
+        });
+
+    }
+
+
+
+});
+
+$(document).on('click', "#send_extra", function() {
+    var semesterid = $(this).data('semesterid');
+    var studentid = $(this).data('studentid');
+    var percentage = $("#percentage_student").val();
+    if (percentage == "" || semesterid == "" || studentid == "") {
+        $("#inp_message").html("* Enter a Valid Percentage");
+    } else {
+        $("#inp_message").html("");
+        alert(percentage);
+    }
+
+
+});
 </script>
 
 </html>

@@ -9,6 +9,7 @@
 <script>
 $(document).on("click", "#assignsubjectbox", function() {
     var semesterid = $(this).data("id");
+
     var coordinate = $("#coordinator_hidden").val().trim();
     assignsubjectbox(semesterid, coordinate);
 
@@ -27,10 +28,13 @@ function assignsubjectbox(semesterid, coordinator) {
         success: function(data) {
 
             $(".modal-body-active").html(data);
+
+
         }
 
 
     });
+
 
 }
 </script>
