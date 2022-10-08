@@ -46,7 +46,7 @@ $(document).ready(function () {
                     else if(data == 4){
                       alert("active student");
 
-                      
+
                     }
                     $('#login').html("logged in Sucessfully");
                   }
@@ -83,7 +83,6 @@ $(document).ready(function () {
   });
   $(document).on("click","#create_password",function(e){
     e.preventDefault();
-    alert(email);
     var password=$("#password").val().trim();
     var confirm_password=$("#confirm_password").val().trim();
     if(password == confirm_password){
