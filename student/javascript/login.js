@@ -169,9 +169,30 @@ $(document).on("click","#verify_password",function(e){
      $.ajax({
      url:"inner/loginaccount.php",
      type:"POST",
+     beforeSend : function(){
+   $("#verify_password").html("verifying...");
+     },
      data:{email_login:email,password_login:password,connection:true},
      success: function(data){
-      alert(data);
+      if (data == 0) {
+        swal("ohoho!", "Something went wrong! try again later", "error");
+        $("#verify_password").html("verify");
+    
+
+      } else if (data == 1) {
+        swal("ohoho!", "Email or password is incorrect!", "error");
+        $("#verify_password").html("verify");
+
+      } else if (data == 3) {
+        $("#login").html("Logined...");
+        location.replace('dashboard');
+        $("#verify_password").html("verified");
+
+      } else {
+        swal("ohoho!", "Something went wrong! try again later", "error");
+        $("#verify_password").html("verify");
+
+      }
      }
 
      });
