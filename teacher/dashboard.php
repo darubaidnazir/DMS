@@ -311,7 +311,8 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                                 <th>Total Class</th>
                                 <th>Present </th>
                                 <th>Absent</th>
-                                <th>Percentage</th>
+                                <th>Extra Percentage</th>
+                                <th>Total Percentage</th>
                                 <th>Update Attendance</th>
 
 

@@ -24,7 +24,9 @@ class loadStudent_Extra extends db_connection
                 if ($sql->rowCount() > 0) {
                     $result =  $sql->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($result as $row) {
-                        $output .= "<input class='form-control' value='{$row['studentname']}'disabled style='margin:2px'> <span style='color:red' id='inp_message'></span><input class='form-control' type='number' min='0' max='99' id='percentage_student' placeholder='Enter extra percentage'> <button style='margin:5px'id='send_extra' data-semesterid='{$semesterid}' data-studentid='{$row['studentid']}' class='btn btn-primary'>Add Extra</button>";
+                        $output .= "<input class='form-control' value='{$row['studentname']}'disabled style='margin:2px'> <span style='color:red' id='inp_message'></span><input class='form-control' type='number' min='0' max='99' id='percentage_student' placeholder='Enter extra percentage'>
+                        <input style='margin:2px;'class='form-control' type='text' id='remarkofextra' placeholder='Enter a remark'>
+                        <button style='margin:5px'id='send_extra' data-semesterid='{$semesterid}' data-studentid='{$row['studentid']}' class='btn btn-primary'>Add Extra</button>";
                     }
                 } else {
                     $output .= "No Student Data Available! Please try again";

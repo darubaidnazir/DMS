@@ -83,6 +83,21 @@ class loadstudent extends db_connection
                     } else {
                         $percentage = ceil($presentcount / $totalclass * 100);
                     }
+                    $newsql = $this->conn->prepare("SELECT * FROM `extraattendance` WHERE studentid = ? and semesterid = ?");
+                    $newsql->bindParam(1, $row['studentid']);
+                    $newsql->bindParam(2, $getsemeterid);
+                    $newsql->execute();
+                    $getpercentage = $newsql->fetchAll(PDO::FETCH_ASSOC);
+                    $Extrapercentage = 0;
+                    foreach ($getpercentage as $marks) {
+                        $Extrapercentage = $marks['percentage'];
+                        break;
+                    }
+                    $percentage = $percentage +  (int) $Extrapercentage;
+                    if ($percentage > 100) {
+                        $percentage = 100;
+                    }
+
 
                     $output .= "<tr>
             <td data-title='Sno'>{$Sno}
@@ -91,7 +106,7 @@ class loadstudent extends db_connection
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
-           <td data-title='Absent'>{$absentcount}</td><td data-title='Percentage'>{$percentage}%</td>";
+           <td data-title='Absent'>{$absentcount}</td><td data-title='Extra Percentage'>{$Extrapercentage}%</td><td data-title=' Total Percentage'>{$percentage}%</td>";
 
                     $output .= "  <td data-title='Update Attendance'> <button type='button' class='btn btn-success btn-sm  clickbutton'
                 data-bs-toggle='modal' data-bs-target='#updateattendnce' id='clickonupdate' data-studentid='{$row['studentid']}' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>
@@ -163,6 +178,22 @@ class loadstudent extends db_connection
                         } else {
                             $percentage = ceil($presentcount / $totalclass * 100);
                         }
+                        $newsql = $this->conn->prepare("SELECT * FROM `extraattendance` WHERE studentid = ? and semesterid = ?");
+                        $newsql->bindParam(1, $row['studentid']);
+                        $newsql->bindParam(2, $getsemeterid);
+                        $newsql->execute();
+                        $getpercentage = $newsql->fetchAll(PDO::FETCH_ASSOC);
+                        $Extrapercentage = 0;
+                        foreach ($getpercentage as $marks) {
+                            $Extrapercentage = $marks['percentage'];
+                            break;
+                        }
+                        $percentage = $percentage +  (int) $Extrapercentage;
+                        if ($percentage > 100) {
+                            $percentage = 100;
+                        }
+
+
 
                         $output .= "<tr>
             <td data-title='Sno'>{$Sno}
@@ -171,7 +202,8 @@ class loadstudent extends db_connection
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
-           <td data-title='Absent'>{$absentcount}</td><td data-title='Percentage'>{$percentage}%</td>";
+           <td data-title='Absent'>{$absentcount}</td><td data-title='Extra Percentage'>{$Extrapercentage}%</td><td data-title='Total Percentage'>{$percentage}%</td>
+          ";
 
                         $output .= "  <td data-title='Update Attendance'> <button type='button' class='btn btn-success clickbutton'
                 data-bs-toggle='modal' data-bs-target='#updateattendnce' id='clickonupdate' data-studentid='{$row['studentid']}' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>
@@ -267,6 +299,21 @@ class loadstudent extends db_connection
                         } else {
                             $percentage = ceil($presentcount / $totalclass * 100);
                         }
+                        $newsql = $this->conn->prepare("SELECT * FROM `extraattendance` WHERE studentid = ? and semesterid = ?");
+                        $newsql->bindParam(1, $row['studentid']);
+                        $newsql->bindParam(2, $getsemeterid);
+                        $newsql->execute();
+                        $getpercentage = $newsql->fetchAll(PDO::FETCH_ASSOC);
+                        $Extrapercentage = 0;
+                        foreach ($getpercentage as $marks) {
+                            $Extrapercentage = $marks['percentage'];
+                            break;
+                        }
+                        $percentage = $percentage +  (int) $Extrapercentage;
+                        if ($percentage > 100) {
+                            $percentage = 100;
+                        }
+
 
                         $output .= "
             <td data-title='Sno'>{$Sno}
@@ -275,7 +322,7 @@ class loadstudent extends db_connection
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
-           <td data-title='Absent'>{$absentcount}</td><td data-title='Percentage'>{$percentage}%</td>";
+           <td data-title='Absent'>{$absentcount}</td> <td data-title='Extra Percentage'>{$Extrapercentage}%</td><td data-title='Total Percentage'>{$percentage}%</td>";
                         if ($getper == 1) {
                             $output .= "  <td data-title='Update Attendance'> <button type='button' class='btn btn-success clickbutton'
                 data-bs-toggle='modal' data-bs-target='#updateattendnce' id='clickonupdate' data-studentid='{$row['studentid']}' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>
@@ -354,6 +401,20 @@ class loadstudent extends db_connection
                     } else {
                         $percentage = ceil($presentcount / $totalclass * 100);
                     }
+                    $newsql = $this->conn->prepare("SELECT * FROM `extraattendance` WHERE studentid = ? and semesterid = ?");
+                    $newsql->bindParam(1, $row['studentid']);
+                    $newsql->bindParam(2, $getsemeterid);
+                    $newsql->execute();
+                    $getpercentage = $newsql->fetchAll(PDO::FETCH_ASSOC);
+                    $Extrapercentage = 0;
+                    foreach ($getpercentage as $marks) {
+                        $Extrapercentage = $marks['percentage'];
+                        break;
+                    }
+                    $percentage = $percentage +  (int) $Extrapercentage;
+                    if ($percentage > 100) {
+                        $percentage = 100;
+                    }
 
                     $output .= "
             <td data-title='Sno'>{$Sno}
@@ -362,7 +423,7 @@ class loadstudent extends db_connection
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
-           <td data-title='Absent'>{$absentcount}</td><td data-title='Percentage'>{$percentage}%</td>";
+           <td data-title='Absent'>{$absentcount}</td><td data-title='Extra Percentage'>{$Extrapercentage}%</td><td data-title=' Total Percentage'>{$percentage}%</td>";
                     if ($getper == 1) {
                         $output .= "  <td data-title='Update Attendance'> <button type='button' class='btn btn-success clickbutton'
                 data-bs-toggle='modal' data-bs-target='#updateattendnce' id='clickonupdate' data-studentid='{$row['studentid']}' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>

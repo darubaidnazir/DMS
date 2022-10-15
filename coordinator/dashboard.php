@@ -553,7 +553,8 @@ require_once('dbcon.php');
                                     <th>Total Class</th>
                                     <th>Present </th>
                                     <th>Absent</th>
-                                    <th>Percentage</th>
+                                    <th>Extra Percentage</th>
+                                    <th>Total Percentage</th>
                                     <th>Update Attendance</th>
 
 
@@ -2450,12 +2451,44 @@ $("#get_student_button").on("click", function() {
 $(document).on('click', "#send_extra", function() {
     var semesterid = $(this).data('semesterid');
     var studentid = $(this).data('studentid');
-    var percentage = $("#percentage_student").val();
-    if (percentage == "" || semesterid == "" || studentid == "") {
-        $("#inp_message").html("* Enter a Valid Percentage");
+    var percentage = $("#percentage_student").val().trim();
+    var remarkmessage = $("#remarkofextra").val().trim();
+    if (percentage == "" || semesterid == "" || studentid == "" || remarkmessage == "" || percentage > 99) {
+        $("#inp_message").html("* Enter a Valid Percentage or Remark");
     } else {
         $("#inp_message").html("");
-        alert(percentage);
+        $.ajax({
+            url: "../coordinator/modal/sendmodaldata/sendextra.php",
+            type: 'POST',
+            data: {
+                percentage: percentage,
+                remark: remarkmessage,
+                studentid: studentid,
+                semesterid: semesterid,
+                connection: true
+            },
+            success: function(data) {
+                if (data == 3) {
+                    swal("Good Job!", "Extra Attendance added successfully", "success");
+
+                } else if (data == 2) {
+                    swal("Good Job!",
+                        "Extra Attendance was aleady assigned to this student! We have Updated new extra attendance ",
+                        "success");
+
+                } else {
+                    swal("ohoho!", "Something went wrong! try again later", "error");
+
+                }
+
+            }
+
+
+
+
+        });
+
+
     }
 
 
