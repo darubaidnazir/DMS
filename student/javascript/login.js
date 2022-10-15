@@ -2,9 +2,9 @@ $(document).ready(function () {
   $("#login").click(function (event) {
       event.preventDefault();
       var email = $("#loginemail").val().trim();
-      
-      if (email === "") {
-        $("#messageemail").text("Email is required");
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (email === "" || !mailformat.test(email) ) {
+        $("#messageemail").text("Enter a Valid Email!");
         $("#messageemail").css("color", "red");
       } else {
         $("#messageemail").text("");
@@ -13,42 +13,64 @@ $(document).ready(function () {
                   url: "inner/loginstudent.php",
                   type: "POST",
                   beforeSend: function () {
-                    $('#login').html("logiining");
+                    $('#login').html("Checking...");
                   },
-                  data: {email_:email},
+                  data: {email_:email,connection:true},
                   success: function (data){
+                  
                     if(data == 1){
-                      alert("student not registered");
+                      swal("ohoho!",
+                                        "Student does not exist! Get registered by HOD/Coordinator.",
+                                        "error");
+                      $('#login').html("Next");
+
                     }
                     else if(data == 2){
-                      alert("registered but inactive");
-                     
+                      
                       $.ajax({
                         url: "inner/otp.php",
                         type: "POST",
-                        data:{email_otp:email},
+                        beforeSend: function(){
+                          $('#login').html("Sending OTP...");
+                        },
+                        data:{email_otp:email,connection:true},
                         success: function (data){
-                          alert(data);
+                          
                           if(data == 1){
-
-                            $("#loginform").html("<label for='otp'>Enter OTP</label> <input type='text' inputmode='numeric'  placeholder='Enter 5 digit otp' id='otp'/> <button id='verify_otp' class='inner_button'>Verify OTP</button>");
-                          }
+                            swal("Good Job!",
+                                        "OTP sent to your registered email! Check your mail box.",
+                                        "success");
+                            $("#login").css("display","none");
+                            $("#loginemail").attr("disabled",true);
+                            $("#loginform").append("<span id='messageemail'></span><div class='form-control'><label for='OTP' id='labelotp'>Enter OTP</label> <input type='number' inputmode='numeric' minlength='5' maxlength='5' placeholder='Enter 5 digit OTP' id='otp'/> <i class='fas fa-check-circle'></i> <i class='fas fa-exclamation-circle'></i> </div> <button id='verify_otp' class='inner_button'>Verify</button>");
+            
+            
+                        }
                           else if(data == 2){
-                            alert("mail not send");
+                            swal("ohoho!",
+                            "OTP Could not be Sent! try again later.",
+                            "error");
+                            $('#login').html("Next");
 
                           }
                         }
                       });
                     }
                     else if(data == 3){
-                      alert("disabled");
+                      swal("ohoho!",
+                      "Your account has been disabled by Coordinator/HOD.",
+                      "error");
+                      $('#login').html("Next");
                     }
                     else if(data == 4){
-                      alert("active student");
+                      $("#login").css("display","none");
+                      $("#loginemail").attr("disabled",true);
+                      $("#loginform").append("<span id='messageemail'></span><div class='form-control'><label for='Password'>Enter Your Password</label> <input type='password'  placeholder='Password' id='email_password'/> <i class='fas fa-check-circle'></i> <i class='fas fa-exclamation-circle'></i> </div> <button id='verify_password' class='inner_button'>Login</button>");
+                    
 
 
                     }
-                    $('#login').html("logged in Sucessfully");
+                   
                   }
     
             });
@@ -59,23 +81,33 @@ $(document).ready(function () {
   $(document).on("click","#verify_otp",function(e){
     e.preventDefault();
     var email_otp = $("#otp").val().trim();
-    alert(email_otp);
-
     $.ajax({
       url: "inner/verify_otp.php",
       type: "POST",
-      data:{verify_otp:email_otp},
+      data:{verify_otp:email_otp,connection:true},
       success: function (data){
 
         if(data == 1){
-          alert("User verified");
-
-          $("#loginform").html("<label for='password'>Enter Login Password</label> <input type='text'  placeholder='Enter Password' id='password'/> <br> <label for='confirm_password'>Confirm Login Password</label> <input type='text'  placeholder='Confirm Password' id='confirm_password'/> <button id='create_password' class='inner_button'>Create Password</button>");
+          swal("Good Job!",
+          "OTP Verified! ",
+          "success");
+          $("#verify_otp").css("display","none");
+          $("#otp").css("display","none");
+          $("#labelotp").css("display",'none');
+          $("#loginemail").attr("disabled",true);
+          $("#loginform").append(" <div class='form-control'> <label for='password'>Enter New Login Password</label> <input type='text'  placeholder='Enter Password' id='password'/> <br> <label for='confirm_password'>Confirm Login Password</label> <input type='text'  placeholder='Confirm Password' id='confirm_password'/> </div> <button id='create_password' class='inner_button'>Create Password</button>");
 
          
         }
         else if (data == 2){
-          alert("Wrong OTP");
+          swal("ohoho!",
+                                        "Incorrect OTP! try again.",
+                                        "error");
+                                        $('#loginform').html("<h3>Redirecting to Main Page in");
+                                       
+                                       
+                                        var time = 6000;
+                                        setTimeout("location.reload(true);", time);
         }
       }
     });
@@ -85,25 +117,65 @@ $(document).ready(function () {
     e.preventDefault();
     var password=$("#password").val().trim();
     var confirm_password=$("#confirm_password").val().trim();
-    if(password == confirm_password){
-      alert(password);
+    var email = $("#loginemail").val().trim();
+    
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(password === confirm_password && mailformat.test(email)){
       $.ajax({
         url:"inner/set_password.php",
         type:"POST",
-        data:{login_password:password},
+        data:{login_password:password,email_login:email,connection:true,confirmpassword:confirm_password},
         success: function(data){
-          alert(data);
+
           if(data == 1){
-            alert("password set successfully");
+            swal("Good Job!",
+                      "Password Set Successfully! Login to access your account!",
+                      "success");
+                      $("#create_password").css("display","none");
+
           }
           else{
-            alert("password not set");
+            swal("ohoho!",
+                      "Failed to Set Password! try again.",
+                      "error");
+                     
           }
+          var time = 5000;
+          setTimeout("location.reload(true);", time);
         }
+        
       });
     }
     else{
-      alert("Password not matching");
+      swal("ohoho!",
+                      "Password does not match! enter correct password in both field's!",
+                      "error");
+    }
+});
+
+
+$(document).on("click","#verify_password",function(e){
+    e.preventDefault();
+    var email = $("#loginemail").val().trim();
+    var password = $("#email_password").val().trim();
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if( password == "" || email == "" || !mailformat.test(email)){
+      swal("ohoho!",
+      "Enter Valid Details",
+      "error");
+     
+    }else{
+     $.ajax({
+     url:"inner/loginaccount.php",
+     type:"POST",
+     data:{email_login:email,password_login:password,connection:true},
+     success: function(data){
+      alert(data);
+     }
+
+     });
+
     }
 });
 });

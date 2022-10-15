@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Access System</title>
     <link rel="stylesheet" href="../coordinator/signup.css" type="text/css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -14,7 +15,7 @@
       </div>
       <form id="loginform" class="form">
         <span id="messageemail"></span>
-        <div class="form-control">
+        <div class="form-control" >
           <label for="username">Email</label>
           <input
             type="email"
@@ -22,11 +23,9 @@
             id="loginemail"
             name="loginemail"
           />
-          <i class="fas fa-check-circle"></i>
-          <i class="fas fa-exclamation-circle"></i>
+        
         </div>
-
-        <button id="login" class="inner_button">Next</button>
+         <button id="login" class="inner_button">Next</button>
       </form>
     </div>
   </body>
