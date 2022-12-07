@@ -25,6 +25,16 @@ class loadSubject extends db_connection
                    <td data-title='Subject Name'>{$row["subjectname"]}</td>
                    <td data-title='Subject Code'>{$row["subjectcode"]}</td> 
                    <td data-title='Subject Level'>{$marked}</td> 
+                   <td data-title='Syllabus'>
+                   <button type='button' class='btn btn-danger btn-sm' id='add_syllabus_modal_button' data-bs-toggle='modal' data-bs-target='#add_syllabus_modal' data-id='{$row["subjectid"]}'>
+                   Add Syllabus
+               </button>
+               <button type='button' class='btn btn-warning btn-sm'  data-bs-toggle='modal' id='view_syllabus_modal_button'
+               data-bs-target='#view_syllabus_modal' data-id='{$row["subjectid"]}'>
+                   View Syllabus
+               </button>
+                   </td>
+                  
                    <td class='select'>
                    <span class='btn-group' role='group' aria-label='Basic mixed styles example'>
                                             <button type='button' class='btn btn-danger btn-sm'>

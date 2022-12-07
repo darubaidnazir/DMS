@@ -19,8 +19,7 @@ require_once('dbcon.php');
 
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/2508821737.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="table.css" />
     <link rel="stylesheet" href="dash.css" />
@@ -33,27 +32,27 @@ require_once('dbcon.php');
 
     <title>Coordinator Dashboard</title>
     <style>
-    .min_max {
+        .min_max {
 
-        background-color: antiquewhite;
-        padding: 10px;
-        border: 2px solid;
-        width: 250px;
-        margin: 3px;
+            background-color: antiquewhite;
+            padding: 10px;
+            border: 2px solid;
+            width: 250px;
+            margin: 3px;
 
-    }
+        }
 
-    .min_max:hover {
-        background-color: white;
-        color: black;
-        border: 2px dash black;
-    }
+        .min_max:hover {
+            background-color: white;
+            color: black;
+            border: 2px dash black;
+        }
 
-    .alert {
-        background-color: red;
-        color: black;
-        border-radius: 50%;
-    }
+        .alert {
+            background-color: red;
+            color: black;
+            border-radius: 50%;
+        }
     </style>
 
 </head>
@@ -231,8 +230,7 @@ require_once('dbcon.php');
                     <button id="addbranchview" class="btn btn-outline-dark"> View Branch</button>
 
 
-                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
-                        data-bs-target="#batch-year-modal">
+                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#batch-year-modal">
                         Add Batch
                     </button>
                 </h2>
@@ -264,8 +262,7 @@ require_once('dbcon.php');
             <div id="viewbranch">
                 <h2>
                     <button id="addbatchview" class="btn btn-outline-dark"> View Batch</button>
-                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
-                        data-bs-target="#add-branch-modal">
+                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#add-branch-modal">
                         Add Branch
                     </button>
                 </h2>
@@ -296,50 +293,49 @@ require_once('dbcon.php');
             </div>
         </section>
         <style>
-        .grid div {
-            padding: 10px;
-            margin: 5px;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-                rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-                rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        }
+            .grid div {
+                padding: 10px;
+                margin: 5px;
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+                    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+                    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            }
 
-        .grid div h2 {
-            text-align: center;
-            padding: 10px;
-        }
+            .grid div h2 {
+                text-align: center;
+                padding: 10px;
+            }
 
-        select {
-            font-size: 20px;
-            width: 100%;
-            margin: 5px;
-            background-color: white;
-            color: black;
-            font-weight: bold;
+            select {
+                font-size: 20px;
+                width: 100%;
+                margin: 5px;
+                background-color: white;
+                color: black;
+                font-weight: bold;
 
-        }
+            }
 
-        select:hover {
-            background-color: white;
-            color: black;
-        }
+            select:hover {
+                background-color: white;
+                color: black;
+            }
 
-        .btnstudent {
-            margin: 10px;
-            background-color: white;
-            color: black;
-            display: block;
-            font-weight: bolder;
-            text-align: center;
-        }
+            .btnstudent {
+                margin: 10px;
+                background-color: white;
+                color: black;
+                display: block;
+                font-weight: bolder;
+                text-align: center;
+            }
         </style>
         <section class="grid" id="addteachersection">
 
 
             <section>
                 <div class="text-center">
-                    <button class="btn btn-warning m-2" data-bs-toggle="modal"
-                        data-bs-target="#teacher-to-batch-add">Add
+                    <button class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#teacher-to-batch-add">Add
                         teacher</button>
                     <main>
                         <table>
@@ -373,11 +369,9 @@ require_once('dbcon.php');
         <section class="grid" id="addstudentsection">
 
             <section>
-                <button class="min_max" id="plusstudent1"><i class="fa-solid fa-arrow-right"></i><small
-                        style="color:red;  ">
+                <button class="min_max" id="plusstudent1"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">
                         View Student </small></button>
-                <button class="min_max" id="minusstudent1"><i class="fa-solid fa-arrow-down"></i><small
-                        style="color:green; ">
+                <button class="min_max" id="minusstudent1"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">
                         View Student
                     </small></button>
                 <div class="text-center" id="divstudent1">
@@ -420,11 +414,9 @@ require_once('dbcon.php');
                 </div>
             </section>
             <section>
-                <button class="min_max" id="plusstudent3"><i class="fa-solid fa-arrow-right"></i><small
-                        style="color:red;  ">
+                <button class="min_max" id="plusstudent3"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">
                         Extra Attendance </small></button>
-                <button class="min_max" id="minusstudent3"><i class="fa-solid fa-arrow-down"></i><small
-                        style="color:green; ">
+                <button class="min_max" id="minusstudent3"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">
                         Extra Attendance
                     </small></button>
                 <div class="text-center maintable" id="divstudent3">
@@ -441,9 +433,9 @@ require_once('dbcon.php');
                         foreach ($result_sem as $row) {
 
                         ?>
-                        <option value="<?php echo $row['semesterid'] ?>">
-                            <?php echo "Batch: " . $row['batchyear'] . "-Semester No: " . $row['semesterno'] ?>
-                        </option>
+                            <option value="<?php echo $row['semesterid'] ?>">
+                                <?php echo "Batch: " . $row['batchyear'] . "-Semester No: " . $row['semesterno'] ?>
+                            </option>
                         <?php
                         }
 
@@ -463,9 +455,9 @@ require_once('dbcon.php');
                         foreach ($result_sem as $row) {
 
                         ?>
-                        <option value="<?php echo $row['semesterid'] ?>">
-                            <?php echo "Batch: " . $row['batchyear'] . "-Semester No: " . $row['semesterno'] ?>
-                        </option>
+                            <option value="<?php echo $row['semesterid'] ?>">
+                                <?php echo "Batch: " . $row['batchyear'] . "-Semester No: " . $row['semesterno'] ?>
+                            </option>
                         <?php
                         }
 
@@ -486,11 +478,9 @@ require_once('dbcon.php');
 
             </section>
             <section>
-                <button class="min_max" id="plusstudent2"><i class="fa-solid fa-arrow-right"></i><small
-                        style="color:red;  ">
+                <button class="min_max" id="plusstudent2"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">
                         Update Attendance </small></button>
-                <button class="min_max" id="minusstudent2"><i class="fa-solid fa-arrow-down"></i><small
-                        style="color:green; ">
+                <button class="min_max" id="minusstudent2"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">
                         Update Attendance
                     </small></button>
                 <div class="text-center maintable" id="divstudent2">
@@ -500,8 +490,7 @@ require_once('dbcon.php');
                             Attendnace
                             Record.</lable><br>
                     <form action="../pdfgenerator/teacher/subjectpdf.php" method="post">
-                        <select class="form-control" aria-label="Default select example" id='subjectlecture1new'
-                            name='pdf_generator_free'>
+                        <select class="form-control" aria-label="Default select example" id='subjectlecture1new' name='pdf_generator_free'>
                             <option selected value="0">Select a Subject</option>
                             <?php
                             $find = $conn->prepare("select * FROM `subject` INNER join `assignedsubject` on subject.subjectid = assignedsubject.subjectid  INNER join `semester` on assignedsubject.semesterid = semester.semesterid WHERE subject.coordinatorid = ? && semester.semesterstatus = 1 && assignedsubject.assignedstatus ='active'");
@@ -515,10 +504,8 @@ require_once('dbcon.php');
                                 $string .=  $row['subjectcode'];
 
                             ?>
-                            <option data-permission="<?php echo $row['updatepermission']; ?>"
-                                data-city="<?php echo $row['semesterid']; ?>"
-                                value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
-                                <?php echo $string; ?></option>
+                                <option data-permission="<?php echo $row['updatepermission']; ?>" data-city="<?php echo $row['semesterid']; ?>" value="<?php echo $row['semesterid'] . ',' . $row['subjectid'] . ',' . $row['subjectname'] . ',' . $row['subjectcode'] ?>">
+                                    <?php echo $string; ?></option>
 
                             <?php
                                 $string = "";
@@ -530,8 +517,7 @@ require_once('dbcon.php');
 
 
                         </select>
-                        <input type="submit" name="pdf_button" class='btn btn-secondary' id='pdf_button'
-                            style='display:none;margin:5px' value='Generate pdf'>
+                        <input type="submit" name="pdf_button" class='btn btn-secondary' id='pdf_button' style='display:none;margin:5px' value='Generate pdf'>
                     </form>
 
 
@@ -616,8 +602,7 @@ require_once('dbcon.php');
 
             <div style="  max-height: 700px;
   overflow-y: scroll;" class="text-center">
-                <button class="btn btn-warning m-2" data-bs-toggle="modal"
-                    data-bs-target="#button-subject-information">Add
+                <button class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#button-subject-information">Add
                     Subject </button>
                 <section>
                     <main>
@@ -632,6 +617,7 @@ require_once('dbcon.php');
                                     <th>Subject Name</th>
                                     <th>Subject Code</th>
                                     <th>Subject Level</th>
+                                    <th>Syllabus</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -665,31 +651,30 @@ require_once('dbcon.php');
 
                 </small></button>
             <style>
-            .attendancebutton {
-                background-color: grey;
-                display: inline-block;
-                margin: 2px;
-                padding: 10px;
-                border: 1px black solid;
-                border-radius: 2px;
-                color: white;
-                font-weight: bolder;
+                .attendancebutton {
+                    background-color: grey;
+                    display: inline-block;
+                    margin: 2px;
+                    padding: 10px;
+                    border: 1px black solid;
+                    border-radius: 2px;
+                    color: white;
+                    font-weight: bolder;
 
 
 
-            }
+                }
 
-            .attendancebutton.toggled {
-                background-color: red;
-            }
+                .attendancebutton.toggled {
+                    background-color: red;
+                }
             </style>
 
             <div class='text-center' id='some1'>
 
                 <span class="group_assign_modal_body text-center ">
                     <h4>Select a Batch to assign group's</h4>
-                    <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id'
-                        name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
+                    <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id' name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
 
 
                     </select>
@@ -717,11 +702,9 @@ require_once('dbcon.php');
 
                         foreach ($result as $days) {
                         ?>
-                        <span style="color:red;" id="daysmessage"></span>
-                        <input type="number" id="daystoupdate" min="0" class="form-control m-2" id="days"
-                            placeholder="<?php echo $days['updateattendance']; ?>"
-                            value="<?php echo $days['updateattendance']; ?>">
-                        <button class="btn btn-danger" style="    margin: 0 auto;
+                            <span style="color:red;" id="daysmessage"></span>
+                            <input type="number" id="daystoupdate" min="0" class="form-control m-2" id="days" placeholder="<?php echo $days['updateattendance']; ?>" value="<?php echo $days['updateattendance']; ?>">
+                            <button class="btn btn-danger" style="    margin: 0 auto;
                                  display: block;" id="update_days">Update Days</button>
                         <?php
                             break;
@@ -742,9 +725,9 @@ require_once('dbcon.php');
 
                             <tr>
                                 <?php foreach ($result as $row) { ?>
-                                <td class='table-primary'><?php echo $row['start']; ?></td>
-                                <td class='table-secondary'><?php echo $row['end']; ?></td>
-                                <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
+                                    <td class='table-primary'><?php echo $row['start']; ?></td>
+                                    <td class='table-secondary'><?php echo $row['end']; ?></td>
+                                    <td class='table-danger'><?php echo $row['updateattendance']; ?></td>
                                 <?php
                                     break;
                                 }
@@ -811,8 +794,7 @@ require_once('dbcon.php');
             <button class="min_max" id="pluspdf1"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">PDF
                     Subject Record
                 </small></button>
-            <button class="min_max" id="minuspdf1"><i class="fa-solid fa-arrow-down"></i><small
-                    style="color:green; ">PDF
+            <button class="min_max" id="minuspdf1"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">PDF
                     Subject Record
 
                 </small></button>
@@ -845,8 +827,8 @@ require_once('dbcon.php');
                         <?php
                         foreach ($result as $row) {
                         ?>
-                        <option value='<?php echo $row['batchid'] ?>'>
-                            <?php echo $row['branchname'] . $row['batchyear']; ?></option>
+                            <option value='<?php echo $row['batchid'] ?>'>
+                                <?php echo $row['branchname'] . $row['batchyear']; ?></option>
                         <?php
 
                         }
@@ -862,8 +844,7 @@ require_once('dbcon.php');
                     <select class="form-control" id='selectsemestersubject1' name='pdf_generator_free'>
 
                     </select>
-                    <input type="submit" name="pdf_button" class='btn btn-secondary' style='margin:5px'
-                        value='Generate pdf'>
+                    <input type="submit" name="pdf_button" class='btn btn-secondary' style='margin:5px' value='Generate pdf'>
                 </form>
 
                 </p>
@@ -873,8 +854,7 @@ require_once('dbcon.php');
             <button class="min_max" id="pluspdf2"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">PDF
                     LECTURE
                 </small></button>
-            <button class="min_max" id="minuspdf2"><i class="fa-solid fa-arrow-down"></i><small
-                    style="color:green; ">PDF
+            <button class="min_max" id="minuspdf2"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">PDF
                     LECTURE
 
                 </small></button>
@@ -901,8 +881,8 @@ require_once('dbcon.php');
                         <?php
                         foreach ($result as $row) {
                         ?>
-                        <option value='<?php echo $row['batchid'] ?>'>
-                            <?php echo $row['branchname'] . $row['batchyear']; ?></option>
+                            <option value='<?php echo $row['batchid'] ?>'>
+                                <?php echo $row['branchname'] . $row['batchyear']; ?></option>
                         <?php
 
                         }
@@ -917,8 +897,7 @@ require_once('dbcon.php');
 
                     </select>
 
-                    <input type="submit" name="subjectlecturepdf" class="btn btn-secondary" style='margin:5px;'
-                        Value='Generate pdf'>
+                    <input type="submit" name="subjectlecturepdf" class="btn btn-secondary" style='margin:5px;' Value='Generate pdf'>
                 </form>
             </div>
         </section>
@@ -926,8 +905,7 @@ require_once('dbcon.php');
             <button class="min_max" id="pluspdf3"><i class="fa-solid fa-arrow-right"></i><small style="color:red;  ">PDF
                     Semester
                 </small></button>
-            <button class="min_max" id="minuspdf3"><i class="fa-solid fa-arrow-down"></i><small
-                    style="color:green; ">PDF
+            <button class="min_max" id="minuspdf3"><i class="fa-solid fa-arrow-down"></i><small style="color:green; ">PDF
                     Semester
 
                 </small></button>
@@ -954,8 +932,8 @@ require_once('dbcon.php');
                         <?php
                         foreach ($result as $row) {
                         ?>
-                        <option value='<?php echo $row['batchid'] ?>'>
-                            <?php echo $row['branchname'] . $row['batchyear']; ?></option>
+                            <option value='<?php echo $row['batchid'] ?>'>
+                                <?php echo $row['branchname'] . $row['batchyear']; ?></option>
                         <?php
 
                         }
@@ -970,8 +948,7 @@ require_once('dbcon.php');
                         <option selected value='T'>Theory Subject's</option>
                         <option value='L'>Lab Subject's</option>
                     </select>
-                    <input type="submit" name="subjectlecturepdf" class="btn btn-secondary" style='margin:5px;'
-                        Value='Generate pdf'>
+                    <input type="submit" name="subjectlecturepdf" class="btn btn-secondary" style='margin:5px;' Value='Generate pdf'>
                 </form>
             </div>
         </section>
@@ -1002,16 +979,14 @@ require_once('dbcon.php');
                             </small>
                             <div class="form-group">
                                 <lable class="text-center"></lable>
-                                <input type="number" class="form-control" id="batch-year" placeholder="eg: 2018"
-                                    required />
+                                <input type="number" class="form-control" id="batch-year" placeholder="eg: 2018" required />
                             </div>
                             <small class="form-text text-muted">
                                 Select a Program
                             </small>
                             <div class="form-group">
 
-                                <select class="form-select" aria-label="Default select example" id="branch_info"
-                                    required>
+                                <select class="form-select" aria-label="Default select example" id="branch_info" required>
 
                                 </select>
 
@@ -1105,8 +1080,7 @@ require_once('dbcon.php');
     <!-- Batch information Modal End-->
 
     <!-- Branch Information Modal -->
-    <div class="modal fade" id="branch-information" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="branch-information" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1128,8 +1102,7 @@ require_once('dbcon.php');
     <!-- Branch  informationModal End-->
 
     <!-- Student Information Modal -->
-    <div class="modal fade" id="student-information" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="student-information" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1150,8 +1123,7 @@ require_once('dbcon.php');
     </div>
     <!-- Student  informationModal End-->
     <!-- Teacher Information Modal -->
-    <div class="modal fade" id="teacher-to-batch-add" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="teacher-to-batch-add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1168,24 +1140,21 @@ require_once('dbcon.php');
                                 <span class="message_teacher" style="color:red;"></span>
                                 <div class="form-group mt-2">
                                     <lable>Enter Username of Teacher</lable>
-                                    <input type="text" class="form-control" id="enter-teacher-username"
-                                        placeholder="eg: waseembakshi121" required>
+                                    <input type="text" class="form-control" id="enter-teacher-username" placeholder="eg: waseembakshi121" required>
                                 </div>
                                 <small class="form-text text-muted mt-1">
                                     Enter a valid username
                                 </small>
                                 <div class="form-group mt-2">
                                     <lable>Enter Employee ID of Teacher</lable>
-                                    <input type="text" class="form-control" id="enter-emp-id" placeholder="eg: Emp-121"
-                                        required>
+                                    <input type="text" class="form-control" id="enter-emp-id" placeholder="eg: Emp-121" required>
                                 </div>
                                 <small class="form-text text-muted mt-1">
                                     Enter a valid Employee ID
                                 </small>
                                 <div class="form-group mt-2">
                                     <lable>Enter Position of the Teacher</lable>
-                                    <select name="teacher-position" id="teacher-position" class="form-select"
-                                        aria-label="Default select example">
+                                    <select name="teacher-position" id="teacher-position" class="form-select" aria-label="Default select example">
                                         <option value="0">Select a Position</option>
                                         <option value="1">Assistant Professor</option>
                                         <option value="2">Contractual</option>
@@ -1193,8 +1162,7 @@ require_once('dbcon.php');
                                 </div>
                                 <div class="form-group mt-2">
                                     <lable>Enter Phone Number of the Teacher</lable>
-                                    <input type="number" class="form-control" id="enter-phonenumber"
-                                        placeholder="eg: 9622922604" required>
+                                    <input type="number" class="form-control" id="enter-phonenumber" placeholder="eg: 9622922604" required>
                                 </div>
                                 <small class="form-text text-muted mt-1">
                                     Enter a valid Phone Number
@@ -1218,9 +1186,8 @@ require_once('dbcon.php');
         </div>
     </div>
     <!-- Teacher  informationModal End-->
-    <!-- Subject Information Modal -->
-    <div class="modal fade" id="subject-information" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <!-- Subject Information Modal --> view_syllabus_modal
+    <div class="modal fade" id="subject-information" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1240,9 +1207,67 @@ require_once('dbcon.php');
         </div>
     </div>
     <!-- Subejct  informationModal End-->
+    <!-- Subject View Information Modal -->
+    <div class="modal fade" id="view_syllabus_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Syllabus View Information
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="view_syllabus_book">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Subejct  View informationModal End-->
+    <!-- Subject Add Information Modal -->
+    <div class="modal fade" id="add_syllabus_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Syllabus Add Information
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h1>Enter syllabus from this Subject</h1>
+                    <p style='color:red;font-size:bold;'>Separte topic's with comma( , )</p>
+                    <p>
+                        <label for="enter_syllabus">Enter Syllabus for this Subject</label>
+
+                        <textarea class="form-control" rows="4" cols="50" placeholder="eg...Introduction to Machine Learning, Application of Machine Learning, Intelligent Agent, Structure of Machine Learning, and other topic's.
+                        " name="enter_syllabus" id="enter_syllabus"></textarea>
+                        <input type="hidden" id="subjectid_for_syllabus" value="">
+
+                    <p><input type="button" class="btn btn-primary" placeholder="Submit" value="Submit" id="enter_syllabus_button"></p>
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Subejct  ADD informationModal End
+    <script>
+
+    </script>-->
     <!-- Subject assigned to teacherInformation Modal -->
-    <div class="modal fade" id="subject-assigned-to-teacher" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="subject-assigned-to-teacher" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1265,8 +1290,7 @@ require_once('dbcon.php');
     </div>
     <!-- Subejct assigned to teacher informationModal End-->
     <!-- Active Semester Information Modal -->
-    <div class="modal fade" id="active-information-box" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="active-information-box" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1291,8 +1315,7 @@ require_once('dbcon.php');
         </div>
     </div>
     <!-- dd -->
-    <div class="modal fade" id="group_assign_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="group_assign_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1305,13 +1328,11 @@ require_once('dbcon.php');
                 <div class="group_assign_modal_body text-center ">
                     <form method="post" action="../coordinator/loadData/loadgroupstudent.php">
                         <h4>Select a Batch to assign group's</h4>
-                        <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id'
-                            name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
+                        <select class="addStudentData_batch_Select form-select" id='addStudentData_batch_Select_id' name='batchid_group' style='width:50%;margin:0 auto;' aria-label="Default select example">
 
 
                         </select>
-                        <input class='btn btn-primary' style='margin:5px' type="submit" name="load_group"
-                            value="Submit">
+                        <input class='btn btn-primary' style='margin:5px' type="submit" name="load_group" value="Submit">
 
                     </form>
 
@@ -1363,8 +1384,7 @@ require_once('dbcon.php');
     </div>
     <!-- Assign Teacher  informationModal End-->
     <!-- Add Subject  Information Modal -->
-    <div class="modal fade" id="button-subject-information" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="button-subject-information" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1380,16 +1400,14 @@ require_once('dbcon.php');
                             <span style="color:red;" id="messagesubject"></span>
                             <div class="form-group mt-2">
                                 <lable>Enter Subject Name</lable>
-                                <input type="text" class="form-control" id="enter-subject-name"
-                                    placeholder="eg: Database">
+                                <input type="text" class="form-control" id="enter-subject-name" placeholder="eg: Database">
                             </div>
                             <small class="form-text text-muted mt-1">
                                 Enter a valid Subject Name
                             </small>
                             <div class="form-group mt-2">
                                 <lable>Enter Subject Code</lable>
-                                <input type="text" class="form-control" id="enter-subject-code"
-                                    placeholder="eg: CSE-1717">
+                                <input type="text" class="form-control" id="enter-subject-code" placeholder="eg: CSE-1717">
                             </div>
                             <small class="form-text text-muted mt-1">
                                 Enter a valid Subject Code
@@ -1471,7 +1489,7 @@ require_once('dbcon.php');
     <?php
     include_once('modal/addteachermodal.php');
     ?>
-    <!-- Add Student  informationModal End-->
+    <!-- Add Student  informatiModal End-->
 
 </body>
 
@@ -1480,496 +1498,608 @@ require_once('dbcon.php');
 <script src="dashboard.js"></script>
 
 <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
 </script>
 <script>
-$(document).ready(function() {
-
-
-
-
-    $(".page-content").on("click", function() {
-        $('body').removeClass('mob-menu-opened');
-    });
-
-    $("#minuspdf1").hide();
-    $("#pdf1").hide();
-    $("#pluspdf1").on('click', function() {
-        $("#minuspdf1").show();
-        $("#pluspdf1").hide();
-        $("#pdf1").show();
-
-    });
-    $("#minuspdf1").on('click', function() {
-        $("#minuspdf1").hide();
-        $("#pluspdf1").show();
-        $("#pdf1").hide();
-
-    });
-    $("#minuspdf2").hide();
-    $("#pdf2").hide();
-    $("#pluspdf2").on('click', function() {
-        $("#minuspdf2").show();
-        $("#pluspdf2").hide();
-        $("#pdf2").show();
-
-    });
-    $("#minuspdf2").on('click', function() {
-        $("#minuspdf2").hide();
-        $("#pluspdf2").show();
-        $("#pdf2").hide();
-
-    });
-    $("#minuspdf3").hide();
-    $("#pdf3").hide();
-    $("#pluspdf3").on('click', function() {
-        $("#minuspdf3").show();
-        $("#pluspdf3").hide();
-        $("#pdf3").show();
-
-    });
-    $("#minuspdf3").on('click', function() {
-        $("#minuspdf3").hide();
-        $("#pluspdf3").show();
-        $("#pdf3").hide();
-
-    });
-
-
-    $("#minusstudent1").hide();
-    $("#minusstudent3").hide();
-    $("#divstudent1").hide();
-    $("#divstudent2").hide();
-    $("#divstudent3").hide();
-    $("#minusstudent2").hide();
-    $("#plusstudent1").on("click", function() {
-        $("#divstudent1").show();
-        $("#plusstudent1").hide();
-        $("#minusstudent1").show();
-
-    });
-    $("#plusstudent3").on("click", function() {
-        $("#divstudent3").show();
-        $("#plusstudent3").hide();
-        $("#minusstudent3").show();
-
-    });
-    $("#plusstudent2").on("click", function() {
-        $("#divstudent2").show();
-        $("#plusstudent2").hide();
-        $("#minusstudent2").show();
-
-    });
-    $("#minusstudent1").on("click", function() {
-        $("#divstudent1").hide();
-        $("#minusstudent1").hide();
-        $("#plusstudent1").show();
-    });
-    $("#minusstudent2").on("click", function() {
-        $("#divstudent2").hide();
-        $("#minusstudent2").hide();
-        $("#plusstudent2").show();
-
-    });
-    $("#minusstudent3").on("click", function() {
-        $("#divstudent3").hide();
-        $("#minusstudent3").hide();
-        $("#plusstudent3").show();
-
-    });
-    $(".select_batch_id").on("change", function() {
-        var batchid = $(this).val();
-
-        if (batchid == "" || batchid == 0) {
-            $("#mmmmm").html("* Select a Batch");
-
-        } else {
-            $("#mmmmm").html("");
+    $(document).ready(function() {
+        function view_syllabus_modal_functions(subjectid, pageno) {
             $.ajax({
-                url: "../coordinator/loadData/loadsemesterno.php",
+                url: "loaddata/loadsyllabus.php",
                 type: "POST",
                 data: {
-                    batchid: batchid,
-                    connection: true
-                },
-                success: function(data) {
-                    $(".selectsemesterno").html(data);
-                }
-
-
-            });
-
-        }
-    });
-    $("#addStudentData_batch_Select_id_group").attr('disabled', true);
-    $("#addStudentData_batch_Select_id").on('change', function() {
-        var value = $(this).val();
-
-
-        if (value == 0) {
-            $("#addStudentData_batch_Select_id_group").attr('disabled', true);
-        } else {
-            $("#addStudentData_batch_Select_id_group").attr('disabled', false);
-        }
-
-
-    });
-    $("#some1").hide();
-    $("#minus1").hide();
-    $("#plus1").on('click', function() {
-        $("#minus1").show();
-        $("#some1").show();
-        $("#plus1").hide();
-    });
-    $("#minus1").on('click', function() {
-        $("#minus1").hide();
-        $("#some1").hide();
-        $("#plus1").show();
-    });
-
-
-
-    $("#selectsemesterno").on("change", function() {
-        var semesterid = $(this).val();
-        if (semesterid == "" || semesterid == 0) {
-
-        } else {
-            $.ajax({
-                url: "../coordinator/loadData/loadsubjectsem.php",
-                type: "POST",
-                data: {
-                    semesterid: semesterid,
-                    connection: true
+                    connection: true,
+                    get_subjectid: subjectid,
+                    get_pageno: pageno
                 },
                 success: function(data) {
 
-                    $("#selectsemestersubject").html(data);
+                    $("#view_syllabus_book").html(data);
 
                 }
 
 
-            });
-
-        }
-
-
-    });
-    $("#selectsemesterno1").on("change", function() {
-        var semesterid = $(this).val();
-        if (semesterid == "" || semesterid == 0) {
-            $("#selectsemestersubject1").html("");
-        } else {
-            $.ajax({
-                url: "../coordinator/loadData/loadsubjectsem1.php",
-                type: "POST",
-                data: {
-                    semesterid: semesterid,
-                    connection: true
-                },
-                success: function(data) {
-
-                    $("#selectsemestersubject1").html(data);
-
-                }
-
 
             });
 
         }
+        $(document).on('click', "#paginationsyllabus a", function(e) {
+            e.preventDefault();
+            var pageno = $(this).attr('id');
+            var subjectid = $(this).data('subjectid');
+            view_syllabus_modal_functions(subjectid, pageno);
 
-
-    });
-
-    $("#addStudentData_batch_Select_id").on("change", function() {
-        var batchid = $(this).val();
-        if (batchid == "" || batchid == 0 || batchid == null || batchid == undefined) {
-            $("#load_goups_of_batch").html("");
-        } else {
-            load_Groups(batchid);
-
-        }
-    });
-
-    $(document).on("click", "#send_group", function() {
-
-        var group = $("#group_id").val();
-        var id = [null];
-        var batchid = $("#addStudentData_batch_Select_id").val();
-
-
-        if (group == "G1" || group == "G2") {
-            $(":checkbox:checked").each(function(key) {
-                id[key] = $(this).val();
-            });
-            id.shift();
-            console.log(id);
-            if (id[0] == null) {
-                $("#mess").html("* Select Student's ");
-
+        });
+        $(document).on('click', "#select_a_batch_for_syllabus_button", function(e) {
+            e.preventDefault();
+            var batchid = $("#select_a_batch_for_syllabus").val();
+            var syllabus = $("#syllabus_id").val();
+            if (batchid == "" || syllabus == "" || batchid == undefined || syllabus == undefined) {
+                swal("ohoho!", " Enter Correct details.. ", "error");
             } else {
-                $("#mess").html("");
                 $.ajax({
-                    url: "../coordinator/modal/sendmodaldata/sendgroup.php",
+                    url: "modal/sendmodaldata/assignbatch.php",
                     type: "POST",
+                    beforeSend: function() {
+                        $("#select_a_batch_for_syllabus_button").html("Assigning..")
+                    },
                     data: {
-                        group: group,
-                        id: id,
+                        get_batchid: batchid,
+                        get_syllabus: syllabus,
                         connection: true
                     },
                     success: function(data) {
                         if (data == 3) {
-                            swal("Good job!", " Student's  Added to Group!! ", "success");
-                            load_Groups(batchid)
+                            swal("Good job!", "Syllabus Assigned to Batch ", "success");
 
-                        } else if (data == 1) {
-                            swal("ohoho!", " Failed!! ", "error");
+                        } else if (data == 0) {
+                            swal("ohoho!", " Failed! try again later! ", "error");
+
+                        } else if (data == 2) {
+                            swal("ohoho!", "Syllabus already exists!", "error");
 
                         } else {
-                            swal("ohoho!", " Failed!! ", "error");
+                            swal("ohoho!", " Failed! try again later! ", "error");
+                        }
+                        $("#select_a_batch_for_syllabus_button").html("Assign")
+                    }
+                });
+
+            }
+
+        });
+
+        $(document).on('click', "#add_syllabus_modal_button", function() {
+            var subjectid = $(this).data('id');
+            $("#subjectid_for_syllabus").val(subjectid);
+
+
+        });
+        $(document).on('click', "#view_syllabus_modal_button", function() {
+            var subjectid = $(this).data('id');
+            view_syllabus_modal_functions(subjectid, 0);
+
+
+        });
+        $("#enter_syllabus_button").on('click', function(e) {
+            e.preventDefault();
+            var letters = /^[A-Za-z-0-9-.]+$/;
+            var syllabus = $("#enter_syllabus").val().trim();
+            var subjectid = $("#subjectid_for_syllabus").val();
+            if (syllabus == "" || subjectid == "" || syllabus == null || subjectid == null) {
+                swal("ohohoh!", "Please enter Correct details", "error");
+            }
+            //  else if (!syllabus.match(letters)) {
+            //     alert("Please enter a valid syllabus");
+            // } 
+            else {
+                $.ajax({
+                    url: "modal/sendmodaldata/sendsyllabus.php",
+                    type: "POST",
+                    data: {
+                        get_syllabus: syllabus,
+                        get_subjectid: subjectid,
+                        connection: true
+                    },
+                    success: function(data) {
+                        if (data == 3) {
+                            swal("Good job!", "Syllabus Added to Subject ", "success");
+
+
+                        } else {
+                            swal("ohohoh!", "Something went wrong", "error");
                         }
                     }
 
-
-
                 });
-            }
-
-
-        } else {
-            $("#mess").html("* Select  a group");
-
-        }
-
-    });
-
-    function load_Groups(batchid) {
-        $.ajax({
-            url: "../coordinator/loadData/loadgroup.php",
-            type: "post",
-            data: {
-                batchid: batchid
-            },
-            success: function(data) {
-
-                $("#load_goups_of_batch").html(data);
-            }
-
-
-        });
-
-    }
-
-    $(document).on("click", "#clickonupdate", function() {
-
-        var studentid = $(this).data("studentid");
-        var semesterid = $(this).data("semesterid");
-        var subjectid = $(this).data("subjectid");
-        $("#selectdateandlecture").html("");
-        $("#updatedrecordofstudent").html("");
-        getdateandlecture(studentid, semesterid, subjectid);
-        $('#selectdateandlecture').data('studentid', studentid);
-
-
-    });
-
-    function getdateandlecture(studentid, semesterid, subjectid) {
-
-        $.ajax({
-            url: "../../DMS/teacher/loaddata/loaddate.php",
-            type: "POST",
-            data: {
-                getsemesterid: semesterid,
-                getsubjectid: subjectid,
-                connection: true
-            },
-            success: function(data) {
-                $("#selectdateandlecture").html(data);
 
             }
-
 
         });
 
 
-    }
 
-    $(document).on("click", "#marknew", function() {
-        var id = $(this).data("value");
-        var remarkmessage = $("#remakmessage").val();
-        var studentid = $("#selectdateandlecture").data("studentid");
-        var semesterid = $("#clickonupdate").data("semesterid");
-        var subjectid = $("#clickonupdate").data("subjectid");
-        var date = $("#selectdateandlecture").val();
-        $("#selectdateandlecture").prop("disabled", true);
+        $(".page-content").on("click", function() {
+            $('body').removeClass('mob-menu-opened');
+        });
 
-        if (remarkmessage == "" || date == 0) {
-            $("#mess").html("* enter a remark- or check the date");
+        $("#minuspdf1").hide();
+        $("#pdf1").hide();
+        $("#pluspdf1").on('click', function() {
+            $("#minuspdf1").show();
+            $("#pluspdf1").hide();
+            $("#pdf1").show();
 
-        } else {
-            $("#mess").html("");
+        });
+        $("#minuspdf1").on('click', function() {
+            $("#minuspdf1").hide();
+            $("#pluspdf1").show();
+            $("#pdf1").hide();
 
-            swal({
-                    title: "Are you sure?",
-                    text: "You want to Update this record!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
+        });
+        $("#minuspdf2").hide();
+        $("#pdf2").hide();
+        $("#pluspdf2").on('click', function() {
+            $("#minuspdf2").show();
+            $("#pluspdf2").hide();
+            $("#pdf2").show();
 
-                        marknewattendance(id, studentid, subjectid, semesterid, date,
-                            remarkmessage);
-                    } else {
-                        swal("Cancled Record is safe!");
+        });
+        $("#minuspdf2").on('click', function() {
+            $("#minuspdf2").hide();
+            $("#pluspdf2").show();
+            $("#pdf2").hide();
+
+        });
+        $("#minuspdf3").hide();
+        $("#pdf3").hide();
+        $("#pluspdf3").on('click', function() {
+            $("#minuspdf3").show();
+            $("#pluspdf3").hide();
+            $("#pdf3").show();
+
+        });
+        $("#minuspdf3").on('click', function() {
+            $("#minuspdf3").hide();
+            $("#pluspdf3").show();
+            $("#pdf3").hide();
+
+        });
+
+
+        $("#minusstudent1").hide();
+        $("#minusstudent3").hide();
+        $("#divstudent1").hide();
+        $("#divstudent2").hide();
+        $("#divstudent3").hide();
+        $("#minusstudent2").hide();
+        $("#plusstudent1").on("click", function() {
+            $("#divstudent1").show();
+            $("#plusstudent1").hide();
+            $("#minusstudent1").show();
+
+        });
+        $("#plusstudent3").on("click", function() {
+            $("#divstudent3").show();
+            $("#plusstudent3").hide();
+            $("#minusstudent3").show();
+
+        });
+        $("#plusstudent2").on("click", function() {
+            $("#divstudent2").show();
+            $("#plusstudent2").hide();
+            $("#minusstudent2").show();
+
+        });
+        $("#minusstudent1").on("click", function() {
+            $("#divstudent1").hide();
+            $("#minusstudent1").hide();
+            $("#plusstudent1").show();
+        });
+        $("#minusstudent2").on("click", function() {
+            $("#divstudent2").hide();
+            $("#minusstudent2").hide();
+            $("#plusstudent2").show();
+
+        });
+        $("#minusstudent3").on("click", function() {
+            $("#divstudent3").hide();
+            $("#minusstudent3").hide();
+            $("#plusstudent3").show();
+
+        });
+        $(".select_batch_id").on("change", function() {
+            var batchid = $(this).val();
+
+            if (batchid == "" || batchid == 0) {
+                $("#mmmmm").html("* Select a Batch");
+
+            } else {
+                $("#mmmmm").html("");
+                $.ajax({
+                    url: "../coordinator/loadData/loadsemesterno.php",
+                    type: "POST",
+                    data: {
+                        batchid: batchid,
+                        connection: true
+                    },
+                    success: function(data) {
+                        $(".selectsemesterno").html(data);
                     }
+
+
                 });
 
-        }
+            }
+        });
+        $("#addStudentData_batch_Select_id_group").attr('disabled', true);
+        $("#addStudentData_batch_Select_id").on('change', function() {
+            var value = $(this).val();
 
 
-    });
+            if (value == 0) {
+                $("#addStudentData_batch_Select_id_group").attr('disabled', true);
+            } else {
+                $("#addStudentData_batch_Select_id_group").attr('disabled', false);
+            }
 
 
-    function marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage) {
-        var coordinator = 0;
-        $.ajax({
-            url: "../../DMS/teacher/senddata/sendupdated.php",
-            type: "POST",
-            data: {
-                getid: id,
-                getsemesterid: semesterid,
-                getstudentid: studentid,
-                getsubjectid: subjectid,
-                getdate: date,
-                connection: true,
-                getremarkmessage: remarkmessage,
-                accesslevel: coordinator,
-            },
-            success: function(data) {
+        });
+        $("#some1").hide();
+        $("#minus1").hide();
+        $("#plus1").on('click', function() {
+            $("#minus1").show();
+            $("#some1").show();
+            $("#plus1").hide();
+        });
+        $("#minus1").on('click', function() {
+            $("#minus1").hide();
+            $("#some1").hide();
+            $("#plus1").show();
+        });
 
 
-                if (data == 3) {
-                    gettheupdaterecord(studentid, semesterid, subjectid, date);
-                    $("#selectdateandlecture").prop("disabled", false);
+
+        $("#selectsemesterno").on("change", function() {
+            var semesterid = $(this).val();
+            if (semesterid == "" || semesterid == 0) {
+
+            } else {
+                $.ajax({
+                    url: "../coordinator/loadData/loadsubjectsem.php",
+                    type: "POST",
+                    data: {
+                        semesterid: semesterid,
+                        connection: true
+                    },
+                    success: function(data) {
+
+                        $("#selectsemestersubject").html(data);
+
+                    }
 
 
-                } else if (data == 1) {
+                });
 
-                    swal("ohoohoh!", "Updating not Successfully! try again", "error");
-                    $("#selectdateandlecture").prop("disabled", false);
+            }
 
 
+        });
+        $("#selectsemesterno1").on("change", function() {
+            var semesterid = $(this).val();
+            if (semesterid == "" || semesterid == 0) {
+                $("#selectsemestersubject1").html("");
+            } else {
+                $.ajax({
+                    url: "../coordinator/loadData/loadsubjectsem1.php",
+                    type: "POST",
+                    data: {
+                        semesterid: semesterid,
+                        connection: true
+                    },
+                    success: function(data) {
+
+                        $("#selectsemestersubject1").html(data);
+
+                    }
+
+
+                });
+
+            }
+
+
+        });
+
+        $("#addStudentData_batch_Select_id").on("change", function() {
+            var batchid = $(this).val();
+            if (batchid == "" || batchid == 0 || batchid == null || batchid == undefined) {
+                $("#load_goups_of_batch").html("");
+            } else {
+                load_Groups(batchid);
+
+            }
+        });
+
+        $(document).on("click", "#send_group", function() {
+
+            var group = $("#group_id").val();
+            var id = [null];
+            var batchid = $("#addStudentData_batch_Select_id").val();
+
+
+            if (group == "G1" || group == "G2") {
+                $(":checkbox:checked").each(function(key) {
+                    id[key] = $(this).val();
+                });
+                id.shift();
+                console.log(id);
+                if (id[0] == null) {
+                    $("#mess").html("* Select Student's ");
 
                 } else {
-                    swal("ohoohoh!", "Something went wrong! try again", "error");
-                    $("#selectdateandlecture").prop("disabled", false);
+                    $("#mess").html("");
+                    $.ajax({
+                        url: "../coordinator/modal/sendmodaldata/sendgroup.php",
+                        type: "POST",
+                        data: {
+                            group: group,
+                            id: id,
+                            connection: true
+                        },
+                        success: function(data) {
+                            if (data == 3) {
+                                swal("Good job!", " Student's  Added to Group!! ", "success");
+                                load_Groups(batchid)
+
+                            } else if (data == 1) {
+                                swal("ohoho!", " Failed!! ", "error");
+
+                            } else {
+                                swal("ohoho!", " Failed!! ", "error");
+                            }
+                        }
+
+
+
+                    });
+                }
+
+
+            } else {
+                $("#mess").html("* Select  a group");
+
+            }
+
+        });
+
+        function load_Groups(batchid) {
+            $.ajax({
+                url: "../coordinator/loadData/loadgroup.php",
+                type: "post",
+                data: {
+                    batchid: batchid
+                },
+                success: function(data) {
+
+                    $("#load_goups_of_batch").html(data);
+                }
+
+
+            });
+
+        }
+
+        $(document).on("click", "#clickonupdate", function() {
+
+            var studentid = $(this).data("studentid");
+            var semesterid = $(this).data("semesterid");
+            var subjectid = $(this).data("subjectid");
+            $("#selectdateandlecture").html("");
+            $("#updatedrecordofstudent").html("");
+            getdateandlecture(studentid, semesterid, subjectid);
+            $('#selectdateandlecture').data('studentid', studentid);
+
+
+        });
+
+        function getdateandlecture(studentid, semesterid, subjectid) {
+
+            $.ajax({
+                url: "../../DMS/teacher/loaddata/loaddate.php",
+                type: "POST",
+                data: {
+                    getsemesterid: semesterid,
+                    getsubjectid: subjectid,
+                    connection: true
+                },
+                success: function(data) {
+                    $("#selectdateandlecture").html(data);
 
                 }
 
+
+            });
+
+
+        }
+
+        $(document).on("click", "#marknew", function() {
+            var id = $(this).data("value");
+            var remarkmessage = $("#remakmessage").val();
+            var studentid = $("#selectdateandlecture").data("studentid");
+            var semesterid = $("#clickonupdate").data("semesterid");
+            var subjectid = $("#clickonupdate").data("subjectid");
+            var date = $("#selectdateandlecture").val();
+            $("#selectdateandlecture").prop("disabled", true);
+
+            if (remarkmessage == "" || date == 0) {
+                $("#mess").html("* enter a remark- or check the date");
+
+            } else {
+                $("#mess").html("");
+
+                swal({
+                        title: "Are you sure?",
+                        text: "You want to Update this record!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+
+                            marknewattendance(id, studentid, subjectid, semesterid, date,
+                                remarkmessage);
+                        } else {
+                            swal("Cancled Record is safe!");
+                        }
+                    });
+
             }
-
-
 
 
         });
 
-    }
+
+        function marknewattendance(id, studentid, subjectid, semesterid, date, remarkmessage) {
+            var coordinator = 0;
+            $.ajax({
+                url: "../../DMS/teacher/senddata/sendupdated.php",
+                type: "POST",
+                data: {
+                    getid: id,
+                    getsemesterid: semesterid,
+                    getstudentid: studentid,
+                    getsubjectid: subjectid,
+                    getdate: date,
+                    connection: true,
+                    getremarkmessage: remarkmessage,
+                    accesslevel: coordinator,
+                },
+                success: function(data) {
+
+
+                    if (data == 3) {
+                        gettheupdaterecord(studentid, semesterid, subjectid, date);
+                        $("#selectdateandlecture").prop("disabled", false);
+
+
+                    } else if (data == 1) {
+
+                        swal("ohoohoh!", "Updating not Successfully! try again", "error");
+                        $("#selectdateandlecture").prop("disabled", false);
 
 
 
-    $("#selectdateandlecture").on("change", function() {
-        var studentid = $(this).data("studentid");
-        var semesterid = $("#clickonupdate").data("semesterid");
-        var subjectid = $("#clickonupdate").data("subjectid");
-        var value = $(this).val();
-        if (value == 0) {
-            $("#updatedrecordofstudent").html("");
-        } else {
-            gettheupdaterecord(studentid, semesterid, subjectid, value);
+                    } else {
+                        swal("ohoohoh!", "Something went wrong! try again", "error");
+                        $("#selectdateandlecture").prop("disabled", false);
+
+                    }
+
+                }
+
+
+
+
+            });
+
         }
 
-    });
 
-    function gettheupdaterecord(studentid, semesterid, subjectid, value) {
-        var coordinator = 0;
-        $.ajax({
-            url: "../../DMS/teacher/loaddata/loadattedancerecord.php",
-            type: "POST",
-            data: {
-                getsemesterid: semesterid,
-                getsubjectid: subjectid,
-                getstudentid: studentid,
-                getvalue: value,
-                connection: true,
-                accesslevel: coordinator,
-            },
-            success: function(data) {
 
+        $("#selectdateandlecture").on("change", function() {
+            var studentid = $(this).data("studentid");
+            var semesterid = $("#clickonupdate").data("semesterid");
+            var subjectid = $("#clickonupdate").data("subjectid");
+            var value = $(this).val();
+            if (value == 0) {
                 $("#updatedrecordofstudent").html("");
-                $("#updatedrecordofstudent").html(data);
-                viewstudenttable(subjectid, semesterid, 0)
+            } else {
+                gettheupdaterecord(studentid, semesterid, subjectid, value);
+            }
+
+        });
+
+        function gettheupdaterecord(studentid, semesterid, subjectid, value) {
+            var coordinator = 0;
+            $.ajax({
+                url: "../../DMS/teacher/loaddata/loadattedancerecord.php",
+                type: "POST",
+                data: {
+                    getsemesterid: semesterid,
+                    getsubjectid: subjectid,
+                    getstudentid: studentid,
+                    getvalue: value,
+                    connection: true,
+                    accesslevel: coordinator,
+                },
+                success: function(data) {
+
+                    $("#updatedrecordofstudent").html("");
+                    $("#updatedrecordofstudent").html(data);
+                    viewstudenttable(subjectid, semesterid, 0)
+
+                }
+
+
+            });
+
+        }
+
+        $("#subjectlecture1new").on("change", function() {
+
+            var value = $(this).val().split(',')[1];
+            var semesterid = $(this).find(':selected').data('city');
+            var permission = $(this).find(':selected').data('permission');
+
+            if (value == 0 || value == undefined) {
+                $('#pdf_button').css('display', 'none');
+                $("#mm1").html("* Select a Subject");
+
+            } else {
+                $('#pdf_button').css('display', 'block');
+                $("#mm1").html("");
+                viewstudenttable(value, semesterid, permission);
+                $("#exportstudents").css("display", "block");
 
             }
 
 
         });
 
-    }
+        function viewstudenttable(value, semesterid, permission) {
+            var coordinator = 0;
+            $.ajax({
+                url: "../../DMS/teacher/loaddata/loadstudent.php",
+                type: "POST",
+                data: {
+                    getsubjectid: value,
+                    connection: true,
+                    getsemesterid: semesterid,
+                    getper: permission,
+                    accesslevel: coordinator,
+                },
+                success: function(data) {
+                    $("#addstudenttable").html(data);
 
-    $("#subjectlecture1new").on("change", function() {
 
-        var value = $(this).val().split(',')[1];
-        var semesterid = $(this).find(':selected').data('city');
-        var permission = $(this).find(':selected').data('permission');
 
-        if (value == 0 || value == undefined) {
-            $('#pdf_button').css('display', 'none');
-            $("#mm1").html("* Select a Subject");
-
-        } else {
-            $('#pdf_button').css('display', 'block');
-            $("#mm1").html("");
-            viewstudenttable(value, semesterid, permission);
-            $("#exportstudents").css("display", "block");
+                }
+            });
 
         }
 
 
-    });
 
-    function viewstudenttable(value, semesterid, permission) {
-        var coordinator = 0;
-        $.ajax({
-            url: "../../DMS/teacher/loaddata/loadstudent.php",
-            type: "POST",
-            data: {
-                getsubjectid: value,
-                connection: true,
-                getsemesterid: semesterid,
-                getper: permission,
-                accesslevel: coordinator,
-            },
-            success: function(data) {
-                $("#addstudenttable").html(data);
-
-
-
-            }
+        $(".seachstudent").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".addstudenttable tr").filter(function() {
+                $(this).toggle($(this).text()
+                    .toLowerCase().indexOf(value) > -1)
+            });
         });
 
-    }
-
-
-
-    $(".seachstudent").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $(".addstudenttable tr").filter(function() {
-            $(this).toggle($(this).text()
-                .toLowerCase().indexOf(value) > -1)
-        });
-    });
 
 
 
@@ -1984,93 +2114,25 @@ $(document).ready(function() {
 
 
 
-
-    $("#some").hide();
-    $("#minus").hide();
-    $("#plus").on("click", function() {
-        $("#some").show();
-        $("#plus").hide();
-        $("#minus").show();
-    });
-    $("#minus").on("click", function() {
         $("#some").hide();
         $("#minus").hide();
-        $("#plus").show();
-
-    });
-    $(document).on("click", "#opensemester", function(event) {
-        var batchid = $(this).data("id");
-
-        swal({
-                title: "Are you sure?",
-                text: "You want to open the first semester of this batch!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-
-                    sendactivesemester(batchid);
-                } else {
-                    swal("Open Semester Cancled!");
-                }
-            });
-
-
-    });
-    $(document).on("click", "#closesemester", function(event) {
-        var batchid = $(this).data("id");
-
-        swal({
-                title: "Are you sure?",
-                text: "You want to open the Close this semester and open a new semester of this batch!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    sendactivesemester(batchid);
-                } else {
-                    swal("Open Semester Cancled!");
-                }
-            });
-
-
-
-    });
-    $(document).on("click", "#subjectassignedtoteacher", function(event) {
-        var teacherid = $(this).data("id");
-        $.ajax({
-            url: "../coordinator/loadData/loadteacherassignedsubject.php",
-            type: "POST",
-            data: {
-                get_Teacherid: teacherid,
-                connection: true
-            },
-            success: function(data) {
-
-                $("#modal-body-assign-teacher").html(data);
-            }
-
+        $("#plus").on("click", function() {
+            $("#some").show();
+            $("#plus").hide();
+            $("#minus").show();
+        });
+        $("#minus").on("click", function() {
+            $("#some").hide();
+            $("#minus").hide();
+            $("#plus").show();
 
         });
-    });
-    $(document).on("click", "#assignsubjecthere", function(event) {
-        var semesterid = $(this).data("id");
-        var subejctid = $("#assignedselect").val();
-        var teacherid = $("#assignedselectteacher").val();
-        var coordinate = $("#coordinator_hidden").val().trim();
-        if (subejctid == 0 || teacherid == 0) {
-
-            $("#messagesubjects").html("*Select a Subject and Teacher");
-        } else {
-
+        $(document).on("click", "#opensemester", function(event) {
+            var batchid = $(this).data("id");
 
             swal({
                     title: "Are you sure?",
-                    text: "You want to add this teacher with this subject!",
+                    text: "You want to open the first semester of this batch!",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -2078,421 +2140,490 @@ $(document).ready(function() {
                 .then((willDelete) => {
                     if (willDelete) {
 
-                        $.ajax({
-                            url: "../coordinator/modal/sendmodaldata/sendassignedsubject.php",
-                            type: "POST",
-                            data: {
-                                get_Semesterid: semesterid,
-                                get_Subjectid: subejctid,
-                                get_Teacherid: teacherid,
-                                connection: true
-                            },
-                            success: function(data) {
-
-                                if (data == 2) {
-                                    swal("ohoho!",
-                                        "Subject already Assigned to this semester? try with different Subject ",
-                                        "error");
-                                } else if (data == 9) {
-                                    swal("ohoho!",
-                                        "Teacher already assigned to this subject and is disabled. you can't enable the teacher? try with different teacher ",
-                                        "error");
-
-                                } else if (data == 3) {
-                                    swal("Good job ",
-                                        "Subjectt Assigned Sucessfully! ",
-                                        "success");
-                                    assignsubjectbox(semesterid, coordinate);
+                        sendactivesemester(batchid);
+                    } else {
+                        swal("Open Semester Cancled!");
+                    }
+                });
 
 
-                                } else {
-                                    swal("ohoho!",
-                                        "Something went wrong! try again later",
-                                        "error");
+        });
+        $(document).on("click", "#closesemester", function(event) {
+            var batchid = $(this).data("id");
 
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to open the Close this semester and open a new semester of this batch!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        sendactivesemester(batchid);
+                    } else {
+                        swal("Open Semester Cancled!");
+                    }
+                });
+
+
+
+        });
+        $(document).on("click", "#subjectassignedtoteacher", function(event) {
+            var teacherid = $(this).data("id");
+            $.ajax({
+                url: "../coordinator/loadData/loadteacherassignedsubject.php",
+                type: "POST",
+                data: {
+                    get_Teacherid: teacherid,
+                    connection: true
+                },
+                success: function(data) {
+
+                    $("#modal-body-assign-teacher").html(data);
+                }
+
+
+            });
+        });
+        $(document).on("click", "#assignsubjecthere", function(event) {
+            var semesterid = $(this).data("id");
+            var subejctid = $("#assignedselect").val();
+            var teacherid = $("#assignedselectteacher").val();
+            var coordinate = $("#coordinator_hidden").val().trim();
+            if (subejctid == 0 || teacherid == 0) {
+
+                $("#messagesubjects").html("*Select a Subject and Teacher");
+            } else {
+
+
+                swal({
+                        title: "Are you sure?",
+                        text: "You want to add this teacher with this subject!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+
+                            $.ajax({
+                                url: "../coordinator/modal/sendmodaldata/sendassignedsubject.php",
+                                type: "POST",
+                                data: {
+                                    get_Semesterid: semesterid,
+                                    get_Subjectid: subejctid,
+                                    get_Teacherid: teacherid,
+                                    connection: true
+                                },
+                                success: function(data) {
+
+                                    if (data == 2) {
+                                        swal("ohoho!",
+                                            "Subject already Assigned to this semester? try with different Subject ",
+                                            "error");
+                                    } else if (data == 9) {
+                                        swal("ohoho!",
+                                            "Teacher already assigned to this subject and is disabled. you can't enable the teacher? try with different teacher ",
+                                            "error");
+
+                                    } else if (data == 3) {
+                                        swal("Good job ",
+                                            "Subjectt Assigned Sucessfully! ",
+                                            "success");
+                                        assignsubjectbox(semesterid, coordinate);
+
+
+                                    } else {
+                                        swal("ohoho!",
+                                            "Something went wrong! try again later",
+                                            "error");
+
+                                    }
                                 }
-                            }
 
-                        });
+                            });
 
-                    } else {
-                        swal("Assign Function Canacled!");
-                    }
-                });
-
-
-        }
-    });
-
-    $(document).on('click', "#update_days", function() {
-
-        var days = $("#daystoupdate").val();
-        if (days == "") {
-            $("#daysmessage").html('* enter a day in the field');
-        } else if (isNaN(days)) {
-            $("#daysmessage").html('* enter a valid number');
-        } else {
-            $("#daysmessage").html('');
-            swal({
-                    title: "Are you sure?",
-                    text: "",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        UpdateDays(days);
-                    } else {
-                        swal("Ohoho Action Cancled");
-                    }
-                });
-
-        }
+                        } else {
+                            swal("Assign Function Canacled!");
+                        }
+                    });
 
 
+            }
+        });
 
-    });
-    $(document).on('click', "#settimeslot", function() {
-        var start = $("#menutimeslotstart").val();
-        var end = $("#menutimeslotend").val();
-        if (start == 0 || end == 0) {
-            $("#timemessage").html("* Please select a valid time")
-        } else if (start >= end) {
-            $("#timemessage").html("* Start time must be greater or equal to end time");
-        } else {
-            $("#timemessage").html("");
-            swal({
-                    title: "Are you sure?",
-                    text: "",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        sendtimeslot(start, end);
-                    } else {
-                        swal("Ohoho Action Cancled");
-                    }
-                });
+        $(document).on('click', "#update_days", function() {
 
-        }
+            var days = $("#daystoupdate").val();
+            if (days == "") {
+                $("#daysmessage").html('* enter a day in the field');
+            } else if (isNaN(days)) {
+                $("#daysmessage").html('* enter a valid number');
+            } else {
+                $("#daysmessage").html('');
+                swal({
+                        title: "Are you sure?",
+                        text: "",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            UpdateDays(days);
+                        } else {
+                            swal("Ohoho Action Cancled");
+                        }
+                    });
 
-    });
+            }
 
-    function sendtimeslot(start, end) {
-        $.ajax({
-            url: "../coordinator/modal/sendmodaldata/sendtimeslot.php",
-            type: "post",
-            data: {
-                getstart: start,
-                getend: end
-            },
-            success: function(data) {
-                if (data == 3) {
-                    swal("Good Job!", "Time  Updated", "success");
-                    window.location.reload();
-
-
-
-                } else if (data == 1) {
-                    swal("ohooho ",
-                        "Couldn't Update Time...!",
-                        "error");
-
-
-                } else {
-                    swal("ohooho ",
-                        "Something went wrong...!",
-                        "error");
-
-                }
-            },
 
 
         });
+        $(document).on('click', "#settimeslot", function() {
+            var start = $("#menutimeslotstart").val();
+            var end = $("#menutimeslotend").val();
+            if (start == 0 || end == 0) {
+                $("#timemessage").html("* Please select a valid time")
+            } else if (start >= end) {
+                $("#timemessage").html("* Start time must be greater or equal to end time");
+            } else {
+                $("#timemessage").html("");
+                swal({
+                        title: "Are you sure?",
+                        text: "",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            sendtimeslot(start, end);
+                        } else {
+                            swal("Ohoho Action Cancled");
+                        }
+                    });
 
-    }
+            }
 
-    function UpdateDays(days) {
+        });
+
+        function sendtimeslot(start, end) {
+            $.ajax({
+                url: "../coordinator/modal/sendmodaldata/sendtimeslot.php",
+                type: "post",
+                data: {
+                    getstart: start,
+                    getend: end
+                },
+                success: function(data) {
+                    if (data == 3) {
+                        swal("Good Job!", "Time  Updated", "success");
+                        window.location.reload();
+
+
+
+                    } else if (data == 1) {
+                        swal("ohooho ",
+                            "Couldn't Update Time...!",
+                            "error");
+
+
+                    } else {
+                        swal("ohooho ",
+                            "Something went wrong...!",
+                            "error");
+
+                    }
+                },
+
+
+            });
+
+        }
+
+        function UpdateDays(days) {
+            $.ajax({
+                url: "../coordinator/modal/sendmodaldata/senddays.php",
+                type: "POST",
+                beforeSend: function() {
+
+                    $("#update_days").html("wait..");
+                },
+                data: {
+                    getdays: days,
+                    connection: true
+                },
+                success: function(data) {
+
+                    if (data == 3) {
+                        swal("Good Job!", "Day Updated", "success");
+                        $("#update_days").html("Update Days");
+
+
+                    } else if (data == 1) {
+                        swal("ohooho ",
+                            "Couldn't Update Days...!",
+                            "error");
+                        $("#update_days").html("Update Days");
+
+                    } else {
+                        swal("ohooho ",
+                            "Something went wrong...!",
+                            "error");
+                        $("#update_days").html("Update Days");
+                    }
+                }
+
+
+
+            });
+
+
+        }
+
+
+        function sendactivesemester(batchid) {
+            $.ajax({
+                url: "modal/sendmodaldata/opensemester.php",
+                type: "POST",
+                data: {
+                    get_Batchid: batchid,
+                    connection: true
+                },
+                success: function(data) {
+                    if (data == 3) {
+                        swal("Good Job!", "First Semester of the Batch has been Opened ",
+                            "success");
+                        bodyofbatch();
+
+
+                    } else if (data == 5) {
+                        swal("Good job ",
+                            "Batch has been Closed...!",
+                            "success");
+                        bodyofbatch();
+
+                    } else if (data == 4) {
+                        swal("Good job ",
+                            "Previous semester has been Closed and New Semester has be Opend!",
+                            "success");
+                        bodyofbatch();
+
+                    } else {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
+                        $("#sendBranch").html("Add Branch");
+                    }
+                }
+
+
+
+            });
+        }
+    });
+</script>
+<script type='text/javascript'>
+    $("#addrequest").on('click', function() {
+        getrequest();
+
+    });
+
+    function getrequest() {
+        var coordinate = $("#coordinator_hidden").val().trim();
         $.ajax({
-            url: "../coordinator/modal/sendmodaldata/senddays.php",
+            url: "loadData/loadrequest.php",
             type: "POST",
-            beforeSend: function() {
-
-                $("#update_days").html("wait..");
-            },
             data: {
-                getdays: days,
+                getcoordinatorid: coordinate,
                 connection: true
             },
             success: function(data) {
 
-                if (data == 3) {
-                    swal("Good Job!", "Day Updated", "success");
-                    $("#update_days").html("Update Days");
-
-
-                } else if (data == 1) {
-                    swal("ohooho ",
-                        "Couldn't Update Days...!",
-                        "error");
-                    $("#update_days").html("Update Days");
-
-                } else {
-                    swal("ohooho ",
-                        "Something went wrong...!",
-                        "error");
-                    $("#update_days").html("Update Days");
-                }
+                $("#tablerequest").html(data);
             }
 
 
 
         });
 
-
     }
 
 
-    function sendactivesemester(batchid) {
+    $(document).on('click', "#grantpermission", function() {
+        var teacherid = $(this).data("teacherid");
+        var semesterid = $(this).data("semesterid");
+        var subjectid = $(this).data("subjectid");
+        swal({
+                title: "Are you sure?",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    sendrequestresponse(teacherid, semesterid, subjectid, "1");
+                } else {
+                    swal("Ohoho Action Cancled");
+                }
+            });
+
+
+
+    });
+    $(document).on('click', "#rejectpermission", function() {
+        var teacherid = $(this).data("teacherid");
+        var semesterid = $(this).data("semesterid");
+        var subjectid = $(this).data("subjectid");
+        swal({
+                title: "Are you sure?",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    sendrequestresponse(teacherid, semesterid, subjectid, "2");
+                } else {
+                    swal("Ohoho Action Cancled");
+                }
+            });
+
+
+    });
+
+    function sendrequestresponse(teacherid, semesterid, subjectid, value) {
         $.ajax({
-            url: "modal/sendmodaldata/opensemester.php",
+            url: "../coordinator/modal/sendmodaldata/sendrequest.php",
             type: "POST",
             data: {
-                get_Batchid: batchid,
+
+                getteacherid: teacherid,
+                getsemesterid: semesterid,
+                getsubjectid: subjectid,
+                getvalue: value,
                 connection: true
             },
             success: function(data) {
+
+                getrequest();
                 if (data == 3) {
-                    swal("Good Job!", "First Semester of the Batch has been Opened ",
-                        "success");
-                    bodyofbatch();
+                    swal("Good Job!", "Permission Granted! Untill You Revoke Permission ", "success");
 
-
-                } else if (data == 5) {
-                    swal("Good job ",
-                        "Batch has been Closed...!",
-                        "success");
-                    bodyofbatch();
 
                 } else if (data == 4) {
-                    swal("Good job ",
-                        "Previous semester has been Closed and New Semester has be Opend!",
-                        "success");
-                    bodyofbatch();
+                    swal("oohoho ",
+                        "Permission denied",
+                        "error");
 
                 } else {
                     swal("ohoho!", "Something went wrong! try again later", "error");
                     $("#sendBranch").html("Add Branch");
                 }
+
             }
 
 
-
         });
+
     }
-});
-</script>
-<script type='text/javascript'>
-$("#addrequest").on('click', function() {
-    getrequest();
 
-});
+    $("#get_student").attr("disabled", true);
+    $("#get_active_semester_no").on("change", function() {
+        $("#get_in_this_student").html("");
+        var sem = $(this).val();
+        if (sem == "" || sem == 0 || sem == undefined || sem == null) {
+            $("#get_student").attr("disabled", true);
+        } else {
+            $("#get_student").attr("disabled", false);
+        }
+    });
+    $("#get_student_button").on("click", function() {
+        var ids = $("option:not(:selected)", '#get_active_semester_no_copy').map(function() {
+            return this.value
+        }).get();
+        var semesterid = $("#get_active_semester_no").val();
+        var rollno = $("#get_student").val();
+        if (semesterid == "" || semesterid == 0 || semesterid == undefined || semesterid == null || rollno == "" ||
+            !ids.includes(semesterid)) {
+            $("#message_sem").html("*Please select a semester and Enter a Valid Roll No");
+        } else {
+            $("#message_sem").html("");
+            $.ajax({
+                url: "../coordinator/loadData/get_student.php",
+                type: "POST",
+                data: {
+                    semesterid: semesterid,
+                    rollno: rollno,
+                    connection: true
+                },
+                success: function(data) {
+                    if (data == 2) {
+                        $("#message_sem").html("*Something went wrong! try again");
+                    } else {
+                        $("#get_in_this_student").html(data);
+                    }
+                }
 
-function getrequest() {
-    var coordinate = $("#coordinator_hidden").val().trim();
-    $.ajax({
-        url: "loadData/loadrequest.php",
-        type: "POST",
-        data: {
-            getcoordinatorid: coordinate,
-            connection: true
-        },
-        success: function(data) {
 
-            $("#tablerequest").html(data);
+            });
+
         }
 
 
 
     });
+    A
 
-}
+    $(document).on('click', "#send_extra", function() {
+        var semesterid = $(this).data('semesterid');
+        var studentid = $(this).data('studentid');
+        var percentage = $("#percentage_student").val().trim();
+        var remarkmessage = $("#remarkofextra").val().trim();
+        if (percentage == "" || semesterid == "" || studentid == "" || remarkmessage == "" || percentage > 99) {
+            $("#inp_message").html("* Enter a Valid Percentage or Remark");
+        } else {
+            $("#inp_message").html("");
+            $.ajax({
+                url: "../coordinator/modal/sendmodaldata/sendextra.php",
+                type: 'POST',
+                data: {
+                    percentage: percentage,
+                    remark: remarkmessage,
+                    studentid: studentid,
+                    semesterid: semesterid,
+                    connection: true
+                },
+                success: function(data) {
+                    if (data == 3) {
+                        swal("Good Job!", "Extra Attendance added successfully", "success");
 
+                    } else if (data == 2) {
+                        swal("Good Job!",
+                            "Extra Attendance was aleady assigned to this student! We have Updated new extra attendance ",
+                            "success");
 
-$(document).on('click', "#grantpermission", function() {
-    var teacherid = $(this).data("teacherid");
-    var semesterid = $(this).data("semesterid");
-    var subjectid = $(this).data("subjectid");
-    swal({
-            title: "Are you sure?",
-            text: "",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                sendrequestresponse(teacherid, semesterid, subjectid, "1");
-            } else {
-                swal("Ohoho Action Cancled");
-            }
-        });
+                    } else {
+                        swal("ohoho!", "Something went wrong! try again later", "error");
 
+                    }
 
-
-});
-$(document).on('click', "#rejectpermission", function() {
-    var teacherid = $(this).data("teacherid");
-    var semesterid = $(this).data("semesterid");
-    var subjectid = $(this).data("subjectid");
-    swal({
-            title: "Are you sure?",
-            text: "",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                sendrequestresponse(teacherid, semesterid, subjectid, "2");
-            } else {
-                swal("Ohoho Action Cancled");
-            }
-        });
+                }
 
 
-});
-
-function sendrequestresponse(teacherid, semesterid, subjectid, value) {
-    $.ajax({
-        url: "../coordinator/modal/sendmodaldata/sendrequest.php",
-        type: "POST",
-        data: {
-
-            getteacherid: teacherid,
-            getsemesterid: semesterid,
-            getsubjectid: subjectid,
-            getvalue: value,
-            connection: true
-        },
-        success: function(data) {
-
-            getrequest();
-            if (data == 3) {
-                swal("Good Job!", "Permission Granted! Untill You Revoke Permission ", "success");
 
 
-            } else if (data == 4) {
-                swal("oohoho ",
-                    "Permission denied",
-                    "error");
+            });
 
-            } else {
-                swal("ohoho!", "Something went wrong! try again later", "error");
-                $("#sendBranch").html("Add Branch");
-            }
 
         }
 
 
+
     });
-
-}
-
-$("#get_student").attr("disabled", true);
-$("#get_active_semester_no").on("change", function() {
-    $("#get_in_this_student").html("");
-    var sem = $(this).val();
-    if (sem == "" || sem == 0 || sem == undefined || sem == null) {
-        $("#get_student").attr("disabled", true);
-    } else {
-        $("#get_student").attr("disabled", false);
-    }
-});
-$("#get_student_button").on("click", function() {
-    var ids = $("option:not(:selected)", '#get_active_semester_no_copy').map(function() {
-        return this.value
-    }).get();
-    var semesterid = $("#get_active_semester_no").val();
-    var rollno = $("#get_student").val();
-    if (semesterid == "" || semesterid == 0 || semesterid == undefined || semesterid == null || rollno == "" ||
-        !ids.includes(semesterid)) {
-        $("#message_sem").html("*Please select a semester and Enter a Valid Roll No");
-    } else {
-        $("#message_sem").html("");
-        $.ajax({
-            url: "../coordinator/loadData/get_student.php",
-            type: "POST",
-            data: {
-                semesterid: semesterid,
-                rollno: rollno,
-                connection: true
-            },
-            success: function(data) {
-                if (data == 2) {
-                    $("#message_sem").html("*Something went wrong! try again");
-                } else {
-                    $("#get_in_this_student").html(data);
-                }
-            }
-
-
-        });
-
-    }
-
-
-
-});
-
-$(document).on('click', "#send_extra", function() {
-    var semesterid = $(this).data('semesterid');
-    var studentid = $(this).data('studentid');
-    var percentage = $("#percentage_student").val().trim();
-    var remarkmessage = $("#remarkofextra").val().trim();
-    if (percentage == "" || semesterid == "" || studentid == "" || remarkmessage == "" || percentage > 99) {
-        $("#inp_message").html("* Enter a Valid Percentage or Remark");
-    } else {
-        $("#inp_message").html("");
-        $.ajax({
-            url: "../coordinator/modal/sendmodaldata/sendextra.php",
-            type: 'POST',
-            data: {
-                percentage: percentage,
-                remark: remarkmessage,
-                studentid: studentid,
-                semesterid: semesterid,
-                connection: true
-            },
-            success: function(data) {
-                if (data == 3) {
-                    swal("Good Job!", "Extra Attendance added successfully", "success");
-
-                } else if (data == 2) {
-                    swal("Good Job!",
-                        "Extra Attendance was aleady assigned to this student! We have Updated new extra attendance ",
-                        "success");
-
-                } else {
-                    swal("ohoho!", "Something went wrong! try again later", "error");
-
-                }
-
-            }
-
-
-
-
-        });
-
-
-    }
-
-
-});
 </script>
 
 </html>

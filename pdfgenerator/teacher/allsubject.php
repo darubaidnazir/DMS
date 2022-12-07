@@ -43,7 +43,7 @@ class myPDF extends FPDF
     function createHeader($subjectname)
     {
 
-        $this->Cell(30, 10, $subjectname, 1, 0, 'C');
+        $this->Cell(50, 10, $subjectname, 1, 0, 'C');
     }
     function createline()
     {
@@ -69,7 +69,7 @@ class myPDF extends FPDF
     }
     function viewSubject($percentage)
     {
-        $this->Cell(30, 10, $percentage, 1, 0, 'C');
+        $this->Cell(50, 10, $percentage, 1, 0, 'C');
     }
 }
 
@@ -111,7 +111,7 @@ if (isset($_POST['subjectlecturepdf']) &&  $_POST['selectsemesterno'] != 0 && $_
             $sql1->execute();
             $student_rollno = $sql1->fetchAll();
             foreach ($student_rollno as $rollno) {
-                $pdf->viewTable($rollno['studentemail']);
+                $pdf->viewTable($rollno['studentrollno']);
                 foreach ($subjects as $subjects_row) {
 
 
@@ -165,7 +165,7 @@ if (isset($_POST['subjectlecturepdf']) &&  $_POST['selectsemesterno'] != 0 && $_
                 $sql1->execute();
                 $student_rollno = $sql1->fetchAll();
                 foreach ($student_rollno as $rollno) {
-                    $pdf->viewTable($rollno['studentemail']);
+                    $pdf->viewTable($rollno['studentrollno']);
                     foreach ($subjects as $subjects_row) {
 
 
