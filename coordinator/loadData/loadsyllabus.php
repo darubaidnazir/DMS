@@ -41,7 +41,7 @@ class loadsyllabus extends db_connection
                 $getbatch = $this->conn->prepare("SELECT * FROM `assignedsyllabus` INNER JOIN batch ON assignedsyllabus.batchid = batch.batchid WHERE assignedsyllabus.syllabusid = ?");
                 $getbatch->bindParam(1, $row2['syllabusid']);
                 $getbatch->execute();
-                $output .= "<h3 style='color:green'>Asigned syllabus  to batch year</h3>
+                $output .= "<h3 style='color:green'>Assigned syllabus  to batch year</h3>
                 <p>";
                 foreach ($getbatch->fetchAll(PDO::FETCH_ASSOC) as $batchname) {
                     $output .= "<button class='btn btn-dark'>{$batchname['batchyear']}</button>";
@@ -72,6 +72,7 @@ class loadsyllabus extends db_connection
                 }
                 $output .= "    </select>
                 <input type='hidden' name='syllabus_id' id='syllabus_id' value='{$row2['syllabusid']}' >
+                <input type='hidden' name='subject_ids' id='subject_ids' value='{$getsubjectid}' >
                 <button style='margin: 0 auto;
                 display: block;' class='btn btn-danger' id='select_a_batch_for_syllabus_button'>Assign</button>
                 </p>";
