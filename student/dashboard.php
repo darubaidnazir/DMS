@@ -445,35 +445,44 @@ $(document).ready(function() {
         var studentregno = $("#update_studentregno").val();
         var studentdob = $("#update_studentdob").val();
         var studentid = $("#student_id").val();
-        $.ajax({
-            url: "inner/updatestudent.php",
-            type: "post",
-            data: {
-                get_studentid: studentid,
-                get_studentname: studentname,
-                get_studentrollno: studentrollno,
-                get_studentregno: studentregno,
-                get_studentdob: studentdob,
-                connection: true
-            },
-            success: function(data) {
-                if (data == 3) {
-                    swal("Good Job!", "Profile Updated!", "success");
-                    $("#update_student_details").hide();
-                    $("#update_student_details_refresh").show();
+        const last2Str = String(studentrollno).slice(-2); // 👉️ '68'
+        const last2Num = Number(last2Str);
+
+        if (studentrollno == "" || studentrollno == undefined || studentrollno == null) {
+            swal("ohoho!", "Roll no can not be empty!", "error");
+        } else if (!Number.isInteger(last2Num)) {
+            swal("ohoho!", "Last two digits must be a number!", "error");
+        } else {
+            $.ajax({
+                url: "inner/updatestudent.php",
+                type: "post",
+                data: {
+                    get_studentid: studentid,
+                    get_studentname: studentname,
+                    get_studentrollno: studentrollno,
+                    get_studentregno: studentregno,
+                    get_studentdob: studentdob,
+                    connection: true
+                },
+                success: function(data) {
+                    if (data == 3) {
+                        swal("Good Job!", "Profile Updated!", "success");
+                        $("#update_student_details").hide();
+                        $("#update_student_details_refresh").show();
 
 
-                } else if (data == 2) {
-                    swal("ohoho!", "Failed to Update Profile! try again!", "error");
-                } else {
-                    swal("ohoho!", "Something went wrong!", "error");
+                    } else if (data == 2) {
+                        swal("ohoho!", "Failed to Update Profile! try again!", "error");
+                    } else {
+                        swal("ohoho!", "Something went wrong!", "error");
+                    }
                 }
-            }
 
-        });
-
+            });
+        }
 
     });
+
     $("#update_student_details_refresh").on("click", function(e) {
         e.preventDefault();
         window.location.reload();

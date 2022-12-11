@@ -87,10 +87,14 @@ foreach ($result as $batch_id) {
 $check = $conn->prepare("SELECT * FROM `student` WHERE batchid = ? && group_id = 'NA'");
 $check->bindParam(1, $batchid);
 $check->execute();
-if ($check->rowCount() > 0) {
+$check2 = $conn->prepare("SELECT * FROM `student` WHERE batchid = ? && `studentrollno` IS NULL");
+$check2->bindParam(1, $batchid);
+$check2->execute();
+
+if ($check->rowCount() > 0 || $check2->rowCount() > 0) {
 
     echo '<div class="alert alert-primary" role="alert">
-   All Students in this batch has not been added to groups! Contact your Coordinator.<a href="../teacher/dashboard.php" class="alert-link">Go Back</a>.
+   All Students in this batch has not been added to groups or some students have not updated there enrollments! Contact your Coordinator.<a href="../teacher/dashboard.php" class="alert-link">Go Back</a>.
   </div>';
 
     die();
