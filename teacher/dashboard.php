@@ -237,11 +237,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th colspan="3"></th>
-                            </tr>
-                        </tfoot>
+
                         <tbody id="addlecturetable">
 
                         </tbody>
@@ -318,11 +314,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
 
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th colspan="3"></th>
-                            </tr>
-                        </tfoot>
+
                         <tbody id="addstudenttable">
 
                         </tbody>
@@ -514,7 +506,7 @@ $_SESSION['$coordinatorinfo'] = $coordinatorinfo;
                     </div>
                 </div>
             </div>
-        </div>s
+        </div>
 
 </body>
 

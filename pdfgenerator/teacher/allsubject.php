@@ -106,7 +106,7 @@ if (isset($_POST['subjectlecturepdf']) &&  $_POST['selectsemesterno'] != 0 && $_
         }
         $pdf->createline();
         if ($subjectLevel == "T") {
-            $sql1 = $conn->prepare("SELECT * FROM student where batchid = ?");
+            $sql1 = $conn->prepare("SELECT * FROM student where batchid = ? ORDER BY `studentrollno` ASC");
             $sql1->bindParam(1, $batchid);
             $sql1->execute();
             $student_rollno = $sql1->fetchAll();
@@ -159,7 +159,7 @@ if (isset($_POST['subjectlecturepdf']) &&  $_POST['selectsemesterno'] != 0 && $_
             $group = array("G1", "G2");
             $groups = "BOTH";
             for ($i = 0; $i <= 1; $i++) {
-                $sql1 = $conn->prepare("SELECT * FROM student where batchid = ? && group_id = ?");
+                $sql1 = $conn->prepare("SELECT * FROM student where batchid = ? && group_id = ? ORDER BY `studentrollno` ASC");
                 $sql1->bindParam(1, $batchid);
                 $sql1->bindParam(2, $group[$i]);
                 $sql1->execute();

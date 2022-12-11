@@ -67,7 +67,7 @@ class myPDF extends FPDF
         if ($percentage < 75) {
             $this->SetFont('Times', 'B', 12);
 
-            $this->Cell(70, 10, $row["studentemail"], 1, 0, 'C');
+            $this->Cell(70, 10, $row["studentrollno"], 1, 0, 'C');
             $this->Cell(70, 10, $row["studentname"], 1, 0, 'C');
             $this->Cell(30, 10, $totalclass, 1, 0, 'C');
             $this->Cell(30, 10, $presentcount, 1, 0, 'C');
@@ -77,7 +77,7 @@ class myPDF extends FPDF
         } else {
             $this->SetFont('Times', 'B', 12);
             $this->SetTextColor(0, 0, 0);
-            $this->Cell(70, 10, $row["studentemail"], 1, 0, 'C');
+            $this->Cell(70, 10, $row["studentrollno"], 1, 0, 'C');
             $this->Cell(70, 10, $row["studentname"], 1, 0, 'C');
             $this->Cell(30, 10, $totalclass, 1, 0, 'C');
             $this->Cell(30, 10, $presentcount, 1, 0, 'C');
@@ -194,7 +194,7 @@ if (isset($_POST['pdf_button']) && $_POST['pdf_generator_free'] != 0) {
     } else {
 
 
-        $getallstudent = $conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
+        $getallstudent = $conn->prepare("SELECT * FROM `student`  WHERE `batchid` = ? ORDER BY `studentrollno` ASC");
         $getallstudent->bindParam(1, $batchid);
         $getallstudent->execute();
         if ($getallstudent->rowCount() == 0) {

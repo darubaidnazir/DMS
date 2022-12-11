@@ -11,7 +11,7 @@ class loadlecture extends db_connection
         parent::__construct();
 
         $output = "";
-        $sql = $this->conn->prepare("SELECT * FROM `lectureplan` WHERE `subjectid` = ? && `semesterid` = ?");
+        $sql = $this->conn->prepare("SELECT * FROM `lectureplan` WHERE `subjectid` = ? && `semesterid` = ? ORDER BY `lecturedate` ASC");
         $sql->bindParam(1, $getsubjectid);
         $sql->bindParam(2, $getsemeterid);
         $sql->execute();

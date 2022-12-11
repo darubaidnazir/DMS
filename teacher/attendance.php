@@ -220,13 +220,13 @@ if ($checkcountsemester > 0 && $checkcountteacher > 0 && $checkcountsubject > 0)
         $newbatchid = $rows['batchid'];
         break;
     }
-    $sql = $conn->prepare("SELECT *  FROM `student` WHERE `batchid` = ? ");
+    $sql = $conn->prepare("SELECT *  FROM `student` WHERE `batchid` = ? ORDER BY `studentrollno` ASC");
     $sql->bindParam(1, $newbatchid);
     $sql->execute();
     $resultnew = $sql->fetchAll(PDO::FETCH_ASSOC);
     echo "<div class='modalattendance'>";
     foreach ($resultnew as $row) {
-        $my_array1 = str_split($row['studentid']);
+        $my_array1 = str_split($row['studentrollno']);
         $length = count($my_array1);
         $name = $my_array1[$length - 2];
         $name .= $my_array1[$length - 1];

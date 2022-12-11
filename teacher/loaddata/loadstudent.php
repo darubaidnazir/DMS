@@ -102,7 +102,7 @@ class loadstudent extends db_connection
                     $output .= "<tr>
             <td data-title='Sno'>{$Sno}
            </td>
-           <td data-title='Student Roll no'>{$row["studentemail"]}</td>
+           <td data-title='Student Roll no'>{$row["studentrollno"]}</td>
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
@@ -123,7 +123,7 @@ class loadstudent extends db_connection
                 $group = array("G1", "G2");
                 for ($i = 0; $i <= 1; $i++) {
                     $gropus = "BOTH";
-                    $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? && group_id = ?");
+                    $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? && group_id = ? ORDER BY `studentrollno` ASC");
                     $getallstudent->bindParam(1, $batchid);
                     $getallstudent->bindParam(2, $group[$i]);
                     $getallstudent->execute();
@@ -198,7 +198,7 @@ class loadstudent extends db_connection
                         $output .= "<tr>
             <td data-title='Sno'>{$Sno}
            </td>
-           <td data-title='Student Roll no'>{$row["studentemail"]}</td>
+           <td data-title='Student Roll no'>{$row["studentrollno"]}</td>
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
@@ -240,7 +240,7 @@ class loadstudent extends db_connection
                 $group = array("G1", "G2");
                 for ($i = 0; $i <= 1; $i++) {
                     $groups = "BOTH";
-                    $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? && group_id = ?");
+                    $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? && group_id = ? ORDER BY `studentrollno` ASC");
                     $getallstudent->bindParam(1, $batchid);
                     $getallstudent->bindParam(2, $group[$i]);
                     $getallstudent->execute();
@@ -252,7 +252,7 @@ class loadstudent extends db_connection
                             if ($accesslevel == 0) {
                                 $output = "";
                             } else {
-                                $output = "<tr><td></td><td></td> <td></td><td></td><td></td><td></td><td></td><td><button class='btn btn-primary' id='requestupdatebox' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>Request</button></td></tr>";
+                                $output = "<tr><td></td><td></td> <td></td><td></td><td></td><td></td><td></td><td><button class='btn btn-primary' id='requestupdatebox' data-semesterid='{$getsemeterid}' data-subjectid='{$getsubjectid}'>Request</button></td><td></td></tr>";
                             }
                         }
                     } else {
@@ -318,7 +318,7 @@ class loadstudent extends db_connection
                         $output .= "
             <td data-title='Sno'>{$Sno}
            </td>
-           <td data-title='Student Roll no'>{$row["studentemail"]}</td>
+           <td data-title='Student Roll no'>{$row["studentrollno"]}</td>
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>
@@ -351,7 +351,7 @@ class loadstudent extends db_connection
                     $batchid = $some["batchid"];
                     break;
                 }
-                $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ?");
+                $getallstudent = $this->conn->prepare("SELECT * FROM `student` WHERE `batchid` = ? ORDER BY `studentrollno` ASC");
                 $getallstudent->bindParam(1, $batchid);
                 $getallstudent->execute();
                 if ($getallstudent->rowCount() == 0) {
@@ -419,7 +419,7 @@ class loadstudent extends db_connection
                     $output .= "
             <td data-title='Sno'>{$Sno}
            </td>
-           <td data-title='Student Roll no'>{$row["studentemail"]}</td>
+           <td data-title='Student Roll no'>{$row["studentrollno"]}</td>
            <td data-title='Student Name   '>{$row["studentname"]}</td>
            <td data-title='Total Class   '>{$totalclass}</td>
            <td data-title='Present'>{$presentcount}</td>

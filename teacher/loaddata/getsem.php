@@ -19,14 +19,14 @@ class loadStudentLab extends db_connection
                 $newbatchid = $rows['batchid'];
                 break;
             }
-            $sql = $this->conn->prepare("SELECT *  FROM `student` WHERE `batchid` = ? && group_id = ? ");
+            $sql = $this->conn->prepare("SELECT *  FROM `student` WHERE `batchid` = ? && group_id = ? ORDER BY `studentrollno` ASC");
             $sql->bindParam(1, $newbatchid);
             $sql->bindParam(2, $group);
             $sql->execute();
             if ($sql->rowCount() > 0) {
                 $resultnew = $sql->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($resultnew as $row) {
-                    $my_array1 = str_split($row['studentid']);
+                    $my_array1 = str_split($row['studentrollno']);
                     $length = count($my_array1);
                     $name = $my_array1[$length - 2];
                     $name .= $my_array1[$length - 1];
@@ -52,7 +52,7 @@ class loadStudentLab extends db_connection
                 $newbatchid = $rows['batchid'];
                 break;
             }
-            $sql = $this->conn->prepare("SELECT *  FROM `student` WHERE `batchid` = ?  ");
+            $sql = $this->conn->prepare("SELECT *  FROM `student` WHERE `batchid` = ? ORDER BY `studentrollno` ASC ");
             $sql->bindParam(1, $newbatchid);
 
             $sql->execute();

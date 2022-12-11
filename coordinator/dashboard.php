@@ -251,11 +251,7 @@ require_once('dbcon.php');
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th colspan="3"></th>
-                            </tr>
-                        </tfoot>
+
                         <tbody id="bodybatch">
                         </tbody>
                     </table>
@@ -281,11 +277,7 @@ require_once('dbcon.php');
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th colspan="3"></th>
-                            </tr>
-                        </tfoot>
+
                         <tbody id="bodybranch">
 
 
@@ -356,11 +348,7 @@ require_once('dbcon.php');
 
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3"></th>
-                                </tr>
-                            </tfoot>
+
                             <tbody id="addTeachertable">
 
                             </tbody>
@@ -407,11 +395,6 @@ require_once('dbcon.php');
                                 </tr>
                             </thead>
 
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3"></th>
-                                </tr>
-                            </tfoot>
                             <tbody id="addStudentData" class="addstudenttable">
 
                             </tbody>
@@ -560,11 +543,7 @@ require_once('dbcon.php');
 
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3"></th>
-                                </tr>
-                            </tfoot>
+
                             <tbody id="addstudenttable" class="addstudenttable">
 
                             </tbody>
@@ -637,11 +616,7 @@ require_once('dbcon.php');
 
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3"></th>
-                                </tr>
-                            </tfoot>
+
                             <tbody id="bodysubject">
 
                             </tbody>
@@ -2628,7 +2603,7 @@ $("#get_student_button").on("click", function() {
 
 
 });
-A
+
 
 $(document).on('click', "#send_extra", function() {
     var semesterid = $(this).data('semesterid');

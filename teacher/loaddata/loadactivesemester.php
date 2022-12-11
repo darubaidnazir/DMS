@@ -33,11 +33,7 @@ if (!isset($_SESSION['active'])) {
                     <th>Action</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th colspan="3"></th>
-                </tr>
-            </tfoot>
+
             <tbody>
                 <?php
                 $sqlnew = $conn->prepare("SELECT * FROM  teacher INNER join coordinator on teacher.coordinatorid = coordinator.coordinatiorid INNER join branch on branch.coordinatorid = coordinator.coordinatiorid INNER join batch on batch.branchid = branch.branchid INNER join semester on batch.batchid = semester.batchid WHERE teacher.teacherid = ?");
@@ -99,11 +95,7 @@ if (!isset($_SESSION['active'])) {
                     <th>Action</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th colspan="3"></th>
-                </tr>
-            </tfoot>
+
             <tbody>
                 <?php
 

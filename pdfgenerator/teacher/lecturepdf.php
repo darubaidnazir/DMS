@@ -81,7 +81,7 @@ if (isset($_POST['subjectlecturepdf']) && $_POST['subjectlecture'] != 0) {
     $getsemeterid = $result[1];
     $title = $result[2];
     $coursecode = $result[3];
-    $sql = $conn->prepare("SELECT * FROM `lectureplan` WHERE `subjectid` = ? && `semesterid` = ?");
+    $sql = $conn->prepare("SELECT * FROM `lectureplan` WHERE `subjectid` = ? && `semesterid` = ? ORDER BY `lecturedate` ASC");
     $sql->bindParam(1, $getsubjectid);
     $sql->bindParam(2, $getsemeterid);
     $sql->execute();
