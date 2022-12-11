@@ -29,7 +29,7 @@ class loadBranch extends db_connection
                   
                     <button type='button' class='btn btn-warning btn-sm' id='deleteBranch'
                         data-id='{$row['branchid']}'>
-                        Remove Branch
+                        Remove Program
                     </button>
 
                 </span>

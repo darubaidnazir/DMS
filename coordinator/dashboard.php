@@ -82,7 +82,7 @@ require_once('dbcon.php');
                         <svg>
                             <use xlink:href="#home"></use>
                         </svg>
-                        <span class="maindashbutton"> Home</span>
+                        <span class="maindashbutton">Profile</span>
                     </a>
                 </li>
                 <li>
@@ -212,23 +212,128 @@ require_once('dbcon.php');
             </div>
         </section>
         <section class="grid" id="maindashboardsection">
-            <article>1</article>
-            <article>2</article>
-            <article>3</article>
-            <article>4</article>
-            <article>5</article>
-            <article>6</article>
-            <article>7</article>
-            <article>8</article>
+            <style>
+            .student-profile .card {
+                border-radius: 10px;
+            }
+
+            .student-profile .card .card-header .profile_img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                margin: 10px auto;
+                border: 10px solid #ccc;
+                border-radius: 50%;
+            }
+
+            .student-profile .card h3 {
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .student-profile .card p {
+                font-size: 16px;
+                color: #000;
+            }
+
+            .student-profile .table th,
+            .student-profile .table td {
+                font-size: 14px;
+                padding: 5px 10px;
+                color: #000;
+            }
+            </style>
+            <!-- Student Profile -->
+            <!-- Student Profile -->
+            <section class="student-profile py-6">
+                <section class="container">
+                    <section class="row">
+                        <section class="col-lg-10">
+                            <section class="card shadow-sm">
+                                <section class="card-header bg-transparent text-center">
+                                    <img class="profile_img" src="../student/images/coordinator.jpg" alt="Coordinator">
+                                    <h3>Testing...</h3>
+                                </section>
+                                <section class="card-body">
+                                    <p class="mb-0"><strong class="pr-1">Coordinator ID:</strong><span
+                                            class='btn btn-light text-uppercase fs-5'>EMP-121</span></p>
+                                    <p class="mb-0"><strong class="pr-1">Department:</strong><span
+                                            class='btn btn-light text-uppercase fs-5'>Computer Science and
+                                            Engineering</span></p>
+                                    <p class="mb-0"><strong class="pr-1">Position:</strong><span
+                                            class='btn btn-light text-uppercase fs-5'>Assistant Professor</span></p>
+                                </section>
+                            </section>
+                        </section>
+                        <section class="col-lg-10">
+                            <section class="card shadow-lg">
+                                <section class="card-header bg-transparent border-0">
+                                    <h2 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h2>
+                                </section>
+                                <section class="card-body pt-0">
+                                    <table class="table table-bordered">
+                                        <style>
+                                        .student-profile .table th,
+                                        .student-profile .table td {
+                                            font-size: 14px;
+                                            padding: 5px 10px;
+                                            /* color: #000; */
+                                            all: revert;
+                                        }
+                                        </style>
+                                        <tr>
+                                            <th width="30%">Name</th>
+                                            <td width="2%">:</td>
+                                            <td>Test</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Email Id</th>
+                                            <td width="2%">:</td>
+                                            <td>test@gmail.com</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Gender</th>
+                                            <td width="2%">:</td>
+                                            <td>Male</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Father Name</th>
+                                            <td width="2%">:</td>
+                                            <td>Test</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Phone Number</th>
+                                            <td width="2%">:</td>
+                                            <td>XXXXXXXX99</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%"></th>
+                                            <td width="2%"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%"><button class='btn btn-primary btn-sm'>Change
+                                                    Password</button></th>
+                                            <td width="2%"></td>
+                                            <td><button class='btn btn-primary btn-sm'>Update Info</button></td>
+                                        </tr>
+                                    </table>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+
+
+
         </section>
         <section class="grid" id="addbatchsection">
 
-
-            <style></style>
             <div id="viewbatch">
 
                 <h2>
-                    <button id="addbranchview" class="btn btn-outline-dark"> View Branch</button>
+                    <button id="addbranchview" class="btn btn-outline-dark"> View Program</button>
 
 
                     <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
@@ -242,7 +347,7 @@ require_once('dbcon.php');
                         <thead>
                             <tr>
                                 <th>Batch Year</th>
-                                <th>Branch Name</th>
+                                <th>Program Name</th>
                                 <th>Current Semster</th>
                                 <th>Total Student's</th>
                                 <th>Add Student</th>
@@ -262,7 +367,7 @@ require_once('dbcon.php');
                     <button id="addbatchview" class="btn btn-outline-dark"> View Batch</button>
                     <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
                         data-bs-target="#add-branch-modal">
-                        Add Branch
+                        Add Program
                     </button>
                 </h2>
 
@@ -270,8 +375,8 @@ require_once('dbcon.php');
                     <table>
                         <thead>
                             <tr>
-                                <th>Branch ID</th>
-                                <th>Branch Name</th>
+                                <th>Program ID</th>
+                                <th>Program Name</th>
                                 <th>Hod/Coordinator</th>
                                 <th>Total Semester</th>
                                 <th>Action</th>
@@ -952,8 +1057,10 @@ require_once('dbcon.php');
             </div>
         </section>
     </section>
-    <footer class="page-footer">
-        <span>Department Management System North Campus</span>
+    <footer class="page-footer text-uppercase fst-italic">
+
+        Department Management System North Campus
+
 
     </footer>
     </section>
